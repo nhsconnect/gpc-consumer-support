@@ -1,3 +1,11 @@
+---
+title: Introduction to GP Connect API
+keywords: homepage
+permalink: index.html
+toc: false
+summary: A brief introduction to getting started with the GP Connect FHIR&reg; APIs
+---
+
 **Draft**
 
 ![Test svg](images/test.svg)
