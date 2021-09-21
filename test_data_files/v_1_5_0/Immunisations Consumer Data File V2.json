@@ -1,0 +1,2090 @@
+{
+    "resourceType": "Bundle",
+    "id": "219b7cb8-da9e-447a-b279-82be7a3299da",
+    "meta": {
+        "profile": [
+            "https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-StructuredRecord-Bundle-1"
+        ]
+    },
+    "type": "collection",
+    "entry": [
+        {
+            "resource": {
+                "resourceType": "List",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-List-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-CareConnect-GPC-ClinicalSetting-1",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "1060971000000108",
+                                    "display": "General practice service"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-CareConnect-GPC-ListWarningCode-1",
+                        "valueCode": "data-in-transit"
+                    }
+                ],
+                "status": "current",
+                "mode": "snapshot",
+                "title": "Immunisations",
+                "code": {
+                    "coding": [
+                        {
+                            "system": "http://snomed.info/sct",
+                            "code": "1102181000000102",
+                            "display": "Immunisations"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "date": "2021-03-17T16:23:39.152+00:00",
+                "orderedBy": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/list-order",
+                            "code": "event-date",
+                            "display": "Sorted by Event Date"
+                        }
+                    ]
+                },
+                "note": [
+                    {
+                        "text": "Patient record transfer from previous GP practice not yet complete; information recorded before 15-Oct-2020 may be missing."
+                    }
+                ],
+                "entry": [
+                    {
+                        "item": {
+                            "reference": "Immunization/8418B740-F803-4271-925E-8C8AA464248E"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Immunization/D679B3E9-4B8D-4C59-A900-FE00C2F249A7"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Immunization/722FC282-53D4-4679-BCE9-8CF068593F07"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Immunization/9569AEF5-9527-4F6A-8EFB-417D0AB3E6B6"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Immunization/E151BC23-8CC1-479F-A8EC-5CB9998BA1E5"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Immunization/F9E8BB3C-B465-4B2D-BB39-CBC4DD0A470C"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Immunization/C93659E1-1107-441C-BE25-C5EF4B7831D1"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Immunization/CEBBBD09-4D1C-11E3-A2DD-010000000161"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Observation/52441478-9CA5-4A71-84DD-FE7599CAFC9D"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Observation/F1A61F71-4857-4BC9-AA5F-6F7CC1BC4829"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Observation/A1692457-1537-4E55-B711-9F91B89CDC9B"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Observation/7499F1D6-5C58-43A0-8D0D-823CA7BD15B7"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Observation/70F5DAD2-AE7C-4C3A-B19B-DB23306FC945"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Patient",
+                "id": "144A1A2E-B3B3-4A66-B33B-148A5B75959D",
+                "meta": {
+                    "versionId": "1624651194859004536",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Patient-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-CareConnect-GPC-RegistrationDetails-1",
+                        "extension": [
+                            {
+                                "url": "preferredBranchSurgery",
+                                "valueReference": {
+                                    "reference": "Location/EB3994A6-5A87-4B53-A414-913137072F57"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "identifier": [
+                    {
+                        "extension": [
+                            {
+                                "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-CareConnect-GPC-NHSNumberVerificationStatus-1",
+                                "valueCodeableConcept": {
+                                    "coding": [
+                                        {
+                                            "system": "https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-NHSNumberVerificationStatus-1",
+                                            "code": "01",
+                                            "display": "Number present and verified"
+                                        }
+                                    ],
+                                    "text": "Number present and verified"
+                                }
+                            }
+                        ],
+                        "system": "https://fhir.nhs.uk/Id/nhs-number",
+                        "value": "9465701262"
+                    }
+                ],
+                "name": [
+                    {
+                        "use": "official",
+                        "family": "Meyers",
+                        "given": [
+                            "Yannis",
+                            "Rafal"
+                        ],
+                        "prefix": [
+                            "Mr"
+                        ]
+                    }
+                ],
+                "gender": "male",
+                "birthDate": "1946-04-10",
+                "address": [
+                    {
+                        "use": "home",
+                        "type": "physical",
+                        "line": [
+                            "Roxton",
+                            "West Marsh Lane",
+                            "Barrow Haven"
+                        ],
+                        "city": "Barrow-Upon-Humber",
+                        "district": "S Humberside",
+                        "postalCode": "DN19 7HA"
+                    }
+                ],
+                "generalPractitioner": [
+                    {
+                        "reference": "Practitioner/2DB481A3-306A-4133-9491-1558161D6A2B"
+                    }
+                ],
+                "managingOrganization": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                }
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Immunization",
+                "id": "8418B740-F803-4271-925E-8C8AA464248E",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Immunization-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-DateRecorded-1",
+                        "valueDateTime": "2020-11-18T14:27:53.827+00:00"
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-VaccinationProcedure-1",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "extension": [
+                                        {
+                                            "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                            "extension": [
+                                                {
+                                                    "url": "descriptionId",
+                                                    "valueId": "458774010"
+                                                },
+                                                {
+                                                    "url": "descriptionDisplay",
+                                                    "valueString": "Second meningitis C vaccination"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "system": "http://snomed.info/sct",
+                                    "code": "314415008",
+                                    "display": "Administration of second dose of meningitis C vaccine",
+                                    "userSelected": true
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D8418B740F8034271925E8C8AA464248E"
+                    }
+                ],
+                "status": "completed",
+                "notGiven": false,
+                "vaccineCode": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/v3/NullFlavor",
+                            "code": "UNK",
+                            "display": "unknown"
+                        }
+                    ]
+                },
+                "patient": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "primarySource": true,
+                "manufacturer": {
+                    "reference": "Organization/0D4D8C3BBF6C2736CA91BC7DD50659B4D61D71B6-XMO"
+                },
+                "practitioner": [
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "AP",
+                                    "display": "Administering Provider"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/C8FD0E2C-3124-4C72-AC8D-ABEA65537D1B"
+                        }
+                    }
+                ],
+                "note": [
+                    {
+                        "text": "Date of Entry unpopulated"
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Immunization",
+                "id": "D679B3E9-4B8D-4C59-A900-FE00C2F249A7",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Immunization-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-DateRecorded-1",
+                        "valueDateTime": "2021-03-12T13:15:05.917+00:00"
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-VaccinationProcedure-1",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "extension": [
+                                        {
+                                            "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                            "extension": [
+                                                {
+                                                    "url": "descriptionId",
+                                                    "valueId": "419726015"
+                                                },
+                                                {
+                                                    "url": "descriptionDisplay",
+                                                    "valueString": "Tick-borne encephalitis vaccination"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "system": "http://snomed.info/sct",
+                                    "code": "281658005",
+                                    "display": "Administration of tick-borne encephalitis vaccine",
+                                    "userSelected": true
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DD679B3E94B8D4C59A900FE00C2F249A7"
+                    }
+                ],
+                "status": "completed",
+                "notGiven": false,
+                "vaccineCode": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/v3/NullFlavor",
+                            "code": "UNK",
+                            "display": "unknown"
+                        }
+                    ]
+                },
+                "patient": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "date": "2006-02-22",
+                "primarySource": true,
+                "practitioner": [
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "AP",
+                                    "display": "Administering Provider"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/6D340A1B-BC15-4D4E-93CF-BBCB5B74DF73"
+                        }
+                    }
+                ],
+                "note": [
+                    {
+                        "text": "Stage: 0, Status: Given, Method: Intramuscular, Reason: Special Risk Group, Nature of Risk: Flying Monkeys, Batch No: 454321, Site: Left arm. NOTES: Tick borne enceph."
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Immunization",
+                "id": "722FC282-53D4-4679-BCE9-8CF068593F07",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Immunization-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-DateRecorded-1",
+                        "valueDateTime": "2021-03-10T15:57:53.5+00:00"
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-VaccinationProcedure-1",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "extension": [
+                                        {
+                                            "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                            "extension": [
+                                                {
+                                                    "url": "descriptionId",
+                                                    "valueId": "2142081000000112"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "system": "http://snomed.info/sct",
+                                    "code": "822851000000102",
+                                    "display": "Seasonal influenza vaccination",
+                                    "userSelected": true
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D722FC28253D44679BCE98CF068593F07"
+                    }
+                ],
+                "status": "completed",
+                "notGiven": false,
+                "vaccineCode": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/v3/NullFlavor",
+                            "code": "UNK",
+                            "display": "unknown"
+                        }
+                    ]
+                },
+                "patient": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "date": "2020-10",
+                "primarySource": true,
+                "manufacturer": {
+                    "reference": "Organization/4DBB2AC2949F2968E25CE6217769757CEC0825A5-XMO"
+                },
+                "lotNumber": "FLU-87654",
+                "expirationDate": "2020-11",
+                "practitioner": [
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "AP",
+                                    "display": "Administering Provider"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/2DB481A3-306A-4133-9491-1558161D6A2B"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Immunization",
+                "id": "9569AEF5-9527-4F6A-8EFB-417D0AB3E6B6",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Immunization-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-DateRecorded-1",
+                        "valueDateTime": "2020-11-18T13:56:52.87+00:00"
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-VaccinationProcedure-1",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "extension": [
+                                        {
+                                            "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                            "extension": [
+                                                {
+                                                    "url": "descriptionId",
+                                                    "valueId": "2533976011"
+                                                },
+                                                {
+                                                    "url": "descriptionDisplay",
+                                                    "valueString": "First diphtheria tetanus and five component acellular pertussis, haemophilus influenzae type b, inactivated polio vaccination"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "system": "http://snomed.info/sct",
+                                    "code": "414259000",
+                                    "display": "Administration of first dose of diphtheria and Haemophilus influenza B and five component acellular pertussis and inactivated poliomyelitis and tetanus vaccine",
+                                    "userSelected": true
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D9569AEF595274F6A8EFB417D0AB3E6B6"
+                    }
+                ],
+                "status": "completed",
+                "notGiven": false,
+                "vaccineCode": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/v3/NullFlavor",
+                            "code": "UNK",
+                            "display": "unknown"
+                        }
+                    ]
+                },
+                "patient": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "date": "2020-11-02",
+                "primarySource": true,
+                "manufacturer": {
+                    "reference": "Organization/0D4D8C3BBF6C2736CA91BC7DD50659B4D61D71B6-XMO"
+                },
+                "lotNumber": "batch001",
+                "expirationDate": "2025-12-01",
+                "site": {
+                    "coding": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "1697871000006117"
+                                        },
+                                        {
+                                            "url": "descriptionDisplay",
+                                            "valueString": "Right buttock"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "1697871000006101",
+                            "display": "Right buttock"
+                        }
+                    ]
+                },
+                "practitioner": [
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "AP",
+                                    "display": "Administering Provider"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/6D340A1B-BC15-4D4E-93CF-BBCB5B74DF73"
+                        }
+                    },
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "EP",
+                                    "display": "Entering Provider (probably not the same as transcriptionist?)"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/C8FD0E2C-3124-4C72-AC8D-ABEA65537D1B"
+                        }
+                    }
+                ],
+                "note": [
+                    {
+                        "text": "GMS : GMS, Scheduled/Unscheduled : Unscheduled - Significance : Minor - Episodicity : First - historical date"
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Immunization",
+                "id": "E151BC23-8CC1-479F-A8EC-5CB9998BA1E5",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Immunization-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-DateRecorded-1",
+                        "valueDateTime": "2020-11-18T13:59:05.83+00:00"
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-VaccinationProcedure-1",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "extension": [
+                                        {
+                                            "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                            "extension": [
+                                                {
+                                                    "url": "descriptionId",
+                                                    "valueId": "458773016"
+                                                },
+                                                {
+                                                    "url": "descriptionDisplay",
+                                                    "valueString": "First meningitis C vaccination"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "system": "http://snomed.info/sct",
+                                    "code": "314414007",
+                                    "display": "Administration of first dose of meningitis C vaccine",
+                                    "userSelected": true
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DE151BC238CC1479FA8EC5CB9998BA1E5"
+                    }
+                ],
+                "status": "completed",
+                "notGiven": false,
+                "vaccineCode": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/v3/NullFlavor",
+                            "code": "UNK",
+                            "display": "unknown"
+                        }
+                    ]
+                },
+                "patient": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "encounter": {
+                    "reference": "Encounter/79649222-3B68-4905-A4DC-7410D29A4565"
+                },
+                "date": "2020-11-18T13:56:00+00:00",
+                "primarySource": true,
+                "location": {
+                    "reference": "Location/EB3994A6-5A87-4B53-A414-913137072F57"
+                },
+                "manufacturer": {
+                    "reference": "Organization/D7CFC8DB301548C1A3DB153C7FDDEDBC21624C4C-XMO"
+                },
+                "lotNumber": "batch002",
+                "expirationDate": "2023",
+                "practitioner": [
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "AP",
+                                    "display": "Administering Provider"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/3F42A9D0-65A9-4E2D-9CA4-67474CB83CA4"
+                        }
+                    },
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "EP",
+                                    "display": "Entering Provider (probably not the same as transcriptionist?)"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/C8FD0E2C-3124-4C72-AC8D-ABEA65537D1B"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Immunization",
+                "id": "F9E8BB3C-B465-4B2D-BB39-CBC4DD0A470C",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Immunization-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-DateRecorded-1",
+                        "valueDateTime": "2021-03-10T15:51:10.21+00:00"
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-VaccinationProcedure-1",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "extension": [
+                                        {
+                                            "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                            "extension": [
+                                                {
+                                                    "url": "descriptionId",
+                                                    "valueId": "264160017"
+                                                },
+                                                {
+                                                    "url": "descriptionDisplay",
+                                                    "valueString": "First hepatitis B vaccination"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "system": "http://snomed.info/sct",
+                                    "code": "170370000",
+                                    "display": "Administration of first dose of hepatitis B vaccine",
+                                    "userSelected": true
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DF9E8BB3CB4654B2DBB39CBC4DD0A470C"
+                    }
+                ],
+                "status": "completed",
+                "notGiven": false,
+                "vaccineCode": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/v3/NullFlavor",
+                            "code": "UNK",
+                            "display": "unknown"
+                        }
+                    ]
+                },
+                "patient": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "date": "2020",
+                "primarySource": true,
+                "lotNumber": "&hep\\12345-12",
+                "practitioner": [
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "AP",
+                                    "display": "Administering Provider"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/2DB481A3-306A-4133-9491-1558161D6A2B"
+                        }
+                    }
+                ],
+                "note": [
+                    {
+                        "text": "This is the descriptive text which includes special characters: !'Â£$%^7*()-={}][|\":/.,@<>~#`"
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Immunization",
+                "id": "C93659E1-1107-441C-BE25-C5EF4B7831D1",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Immunization-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-DateRecorded-1",
+                        "valueDateTime": "2010-06-30T05:48:06.91+01:00"
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-VaccinationProcedure-1",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "system": "http://read.info/readv2",
+                                    "code": "65M1.00",
+                                    "display": "Measles/mumps/rubella vaccn.",
+                                    "userSelected": true
+                                },
+                                {
+                                    "extension": [
+                                        {
+                                            "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                            "extension": [
+                                                {
+                                                    "url": "descriptionId",
+                                                    "valueId": "65004017"
+                                                },
+                                                {
+                                                    "url": "descriptionDisplay",
+                                                    "valueString": "Measles-mumps-rubella vaccination"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "system": "http://snomed.info/sct",
+                                    "code": "38598009",
+                                    "display": "Administration of measles and mumps and rubella vaccine"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "58B02021E70A4B30A149A02E3A5296C7C93659E11107441CBE25C5EF4B7831D1"
+                    }
+                ],
+                "status": "completed",
+                "notGiven": false,
+                "vaccineCode": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/v3/NullFlavor",
+                            "code": "UNK",
+                            "display": "unknown"
+                        }
+                    ]
+                },
+                "patient": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "encounter": {
+                    "reference": "Encounter/6CE8318F-2230-47CE-86CC-5210130A00F5"
+                },
+                "date": "2010-06-30T05:59:00+01:00",
+                "primarySource": true,
+                "location": {
+                    "reference": "Location/EB3994A6-5A87-4B53-A414-913137072F57"
+                },
+                "manufacturer": {
+                    "reference": "Organization/8A8003CF93711335AA96BD321415118D274026DB-XMO"
+                },
+                "lotNumber": "123456",
+                "expirationDate": "2011-06-21",
+                "site": {
+                    "coding": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "1697821000006118"
+                                        },
+                                        {
+                                            "url": "descriptionDisplay",
+                                            "valueString": "Left arm"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "1697821000006102",
+                            "display": "Left arm"
+                        }
+                    ]
+                },
+                "practitioner": [
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "AP",
+                                    "display": "Administering Provider"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/6D340A1B-BC15-4D4E-93CF-BBCB5B74DF73"
+                        }
+                    }
+                ],
+                "note": [
+                    {
+                        "text": "GMS : GMS\nThis is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is a long paragraph. This is the END of the long paragraph."
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Immunization",
+                "id": "CEBBBD09-4D1C-11E3-A2DD-010000000161",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Immunization-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-DateRecorded-1",
+                        "valueDateTime": "2021-01-12T13:18:13.977+00:00"
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-VaccinationProcedure-1",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "extension": [
+                                        {
+                                            "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                            "extension": [
+                                                {
+                                                    "url": "descriptionId",
+                                                    "valueId": "264176014"
+                                                },
+                                                {
+                                                    "url": "descriptionDisplay",
+                                                    "valueString": "First hepatitis A vaccination"
+                                                }
+                                            ]
+                                        }
+                                    ],
+                                    "system": "http://snomed.info/sct",
+                                    "code": "170378007",
+                                    "display": "Administration of first dose of paediatric hepatitis A vaccine",
+                                    "userSelected": true
+                                }
+                            ],
+                            "text": "Avaxim 1"
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "CB13020CD293422A8C5D0CDE73315A00CEBBBD094D1C11E3A2DD010000000161"
+                    }
+                ],
+                "status": "completed",
+                "notGiven": false,
+                "vaccineCode": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/v3/NullFlavor",
+                            "code": "UNK",
+                            "display": "unknown"
+                        }
+                    ]
+                },
+                "patient": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "encounter": {
+                    "reference": "Encounter/CDFFE716-4D1C-11E3-A2DD-010000000161"
+                },
+                "date": "2009-04",
+                "primarySource": true,
+                "location": {
+                    "reference": "Location/9A978391-4BF9-4028-AC31-F955809AAFF0"
+                },
+                "practitioner": [
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "AP",
+                                    "display": "Administering Provider"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/CE6A1A90-4D1C-11E3-9E6B-010000001205"
+                        }
+                    },
+                    {
+                        "role": {
+                            "coding": [
+                                {
+                                    "system": "http://hl7.org/fhir/v2/0443",
+                                    "code": "EP",
+                                    "display": "Entering Provider (probably not the same as transcriptionist?)"
+                                }
+                            ]
+                        },
+                        "actor": {
+                            "reference": "Practitioner/A6D3B7DE-E5F4-49FC-9F7F-6A9781829009"
+                        }
+                    }
+                ],
+                "note": [
+                    {
+                        "text": "Reason: Routine Measure\nBatch No: hhh\nDosage: 0.5 ml"
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "id": "52441478-9CA5-4A71-84DD-FE7599CAFC9D",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Observation-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D524414789CA54A7184DDFE7599CAFC9D"
+                    }
+                ],
+                "status": "final",
+                "code": {
+                    "coding": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "404291000000115"
+                                        },
+                                        {
+                                            "url": "descriptionDisplay",
+                                            "valueString": "MMR vaccination declined"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "247151000000100",
+                            "display": "Measles, mumps and rubella vaccination declined",
+                            "userSelected": true
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "effectiveDateTime": "2001-03-04",
+                "issued": "2021-03-10T16:57:47.29+00:00",
+                "performer": [
+                    {
+                        "reference": "Practitioner/2DB481A3-306A-4133-9491-1558161D6A2B"
+                    }
+                ],
+                "comment": "Immunisation (Given Unknown)\nMMR vaccination declined\nRefused triple"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "id": "F1A61F71-4857-4BC9-AA5F-6F7CC1BC4829",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Observation-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DF1A61F7148574BC9AA5F6F7CC1BC4829"
+                    }
+                ],
+                "status": "final",
+                "code": {
+                    "coding": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "299931000000111"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "198811000000100",
+                            "display": "No consent for hepatitis A vaccination",
+                            "userSelected": true
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "effectiveDateTime": "2020-02-29",
+                "issued": "2021-03-15T16:40:41.45+00:00",
+                "performer": [
+                    {
+                        "reference": "Practitioner/6D340A1B-BC15-4D4E-93CF-BBCB5B74DF73"
+                    }
+                ],
+                "comment": "Immunisation (Given Unknown)\nNo consent for hepatitis A vaccination\nDescriptive text - No consent for hepatitis A vaccination"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "id": "A1692457-1537-4E55-B711-9F91B89CDC9B",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Observation-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DA169245715374E55B7119F91B89CDC9B"
+                    }
+                ],
+                "status": "final",
+                "code": {
+                    "coding": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "459245012"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "314848002",
+                            "display": "Consent given for pneumococcal vaccine",
+                            "userSelected": true
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "effectiveDateTime": "2021-03-15",
+                "issued": "2021-03-15T16:24:39.847+00:00",
+                "performer": [
+                    {
+                        "reference": "Practitioner/6D340A1B-BC15-4D4E-93CF-BBCB5B74DF73"
+                    }
+                ],
+                "comment": "Immunisation (Given Unknown)\nConsent given for pneumococcal vaccine\nDescriptive text - Consent for pneumococcal vaccine"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "id": "7499F1D6-5C58-43A0-8D0D-823CA7BD15B7",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Observation-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D7499F1D65C5843A08D0D823CA7BD15B7"
+                    }
+                ],
+                "status": "final",
+                "code": {
+                    "coding": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "284159018"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "183936003",
+                            "display": "Contraindication to live immunisation",
+                            "userSelected": true
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "effectiveDateTime": "2021-03-17",
+                "issued": "2021-03-17T14:40:14.35+00:00",
+                "performer": [
+                    {
+                        "reference": "Practitioner/2DB481A3-306A-4133-9491-1558161D6A2B"
+                    }
+                ],
+                "comment": "Immunisation (Given Unknown)\nContraindication to live immunisation"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Observation",
+                "id": "70F5DAD2-AE7C-4C3A-B19B-DB23306FC945",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Observation-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D70F5DAD2AE7C4C3AB19BDB23306FC945"
+                    }
+                ],
+                "status": "final",
+                "code": {
+                    "coding": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "2248461000000112"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "870011000000106",
+                            "display": "Did not attend first rotavirus vaccination",
+                            "userSelected": true
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "effectiveDateTime": "2021-03-17",
+                "issued": "2021-03-17T14:35:30.657+00:00",
+                "performer": [
+                    {
+                        "reference": "Practitioner/6D340A1B-BC15-4D4E-93CF-BBCB5B74DF73"
+                    }
+                ],
+                "comment": "Immunisation (Given Unknown)\nDid not attend first rotavirus vaccination\n'Did not attend' vaccination entry"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Organization",
+                "id": "5E496953-065B-41F2-9577-BE8F2FBD0757",
+                "meta": {
+                    "versionId": "1112974926854455048",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-CareConnect-GPC-MainLocation-1",
+                        "valueReference": {
+                            "reference": "Location/EB3994A6-5A87-4B53-A414-913137072F57"
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://fhir.nhs.uk/Id/ods-organization-code",
+                        "value": "A82038"
+                    }
+                ],
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1",
+                                "code": "gp-practice"
+                            }
+                        ],
+                        "text": "GP Practice"
+                    }
+                ],
+                "name": "TEMPLE SOWERBY MEDICAL PRACTICE",
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "01133800000",
+                        "use": "work",
+                        "rank": 1
+                    }
+                ],
+                "address": [
+                    {
+                        "use": "work",
+                        "type": "physical",
+                        "line": [
+                            "Fulford Grange",
+                            "Micklefield Lane",
+                            "Rawdon",
+                            "Rawdon"
+                        ],
+                        "city": "Leeds",
+                        "district": "Yorkshire",
+                        "postalCode": "LS19 6BA"
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Practitioner",
+                "id": "2DB481A3-306A-4133-9491-1558161D6A2B",
+                "meta": {
+                    "versionId": "4333436790463129417",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Practitioner-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://fhir.nhs.uk/Id/sds-user-id",
+                        "value": "555079033108"
+                    },
+                    {
+                        "system": "https://fhir.nhs.uk/Id/sds-role-profile-id",
+                        "value": "555079046103"
+                    }
+                ],
+                "name": [
+                    {
+                        "use": "official",
+                        "family": "TEMPLE SOWERBY",
+                        "given": [
+                            "GPONE"
+                        ],
+                        "prefix": [
+                            "Mr"
+                        ]
+                    }
+                ],
+                "gender": "male"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Location",
+                "id": "EB3994A6-5A87-4B53-A414-913137072F57",
+                "meta": {
+                    "versionId": "6653785719080073703",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Location-1"
+                    ]
+                },
+                "status": "active",
+                "name": "EMIS Test Practice Location",
+                "type": {
+                    "text": "Main Surgery"
+                },
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "01133800000",
+                        "use": "work",
+                        "rank": 1
+                    }
+                ],
+                "address": {
+                    "use": "work",
+                    "type": "physical",
+                    "line": [
+                        "Fulford Grange",
+                        "Micklefield Lane",
+                        "Rawdon",
+                        "Rawdon"
+                    ],
+                    "city": "Leeds",
+                    "district": "Yorkshire",
+                    "postalCode": "LS19 6BA"
+                },
+                "managingOrganization": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757",
+                    "display": "TEMPLE SOWERBY MEDICAL PRACTICE"
+                }
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Location",
+                "id": "9A978391-4BF9-4028-AC31-F955809AAFF0",
+                "meta": {
+                    "versionId": "2941299615456452548",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Location-1"
+                    ]
+                },
+                "status": "active",
+                "name": "Testvale Surgery",
+                "description": "",
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "tel:01414221031",
+                        "use": "work",
+                        "rank": 1
+                    }
+                ],
+                "address": {
+                    "use": "work",
+                    "type": "physical",
+                    "line": [
+                        "22 Northern Parade",
+                        "Portsmouth",
+                        "Hampshire"
+                    ],
+                    "postalCode": "PO2 9PF"
+                }
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Practitioner",
+                "id": "C8FD0E2C-3124-4C72-AC8D-ABEA65537D1B",
+                "meta": {
+                    "versionId": "7786052607397903776",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Practitioner-1"
+                    ]
+                },
+                "name": [
+                    {
+                        "use": "official",
+                        "family": "Test",
+                        "given": [
+                            "NHS"
+                        ],
+                        "prefix": [
+                            "Mr"
+                        ]
+                    }
+                ],
+                "gender": "male"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Organization",
+                "id": "0D4D8C3BBF6C2736CA91BC7DD50659B4D61D71B6-XMO",
+                "meta": {
+                    "versionId": "5939580616327273888",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "name": "imakedrugs"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Practitioner",
+                "id": "6D340A1B-BC15-4D4E-93CF-BBCB5B74DF73",
+                "meta": {
+                    "versionId": "4749697187075864793",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Practitioner-1"
+                    ]
+                },
+                "name": [
+                    {
+                        "use": "official",
+                        "family": "McAvenue",
+                        "given": [
+                            "David"
+                        ],
+                        "prefix": [
+                            "Dr"
+                        ]
+                    }
+                ],
+                "gender": "male"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Organization",
+                "id": "4DBB2AC2949F2968E25CE6217769757CEC0825A5-XMO",
+                "meta": {
+                    "versionId": "3467880042696824743",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "name": "Astra Zeneca"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Practitioner",
+                "id": "3F42A9D0-65A9-4E2D-9CA4-67474CB83CA4",
+                "meta": {
+                    "versionId": "6855069453919254394",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Practitioner-1"
+                    ]
+                },
+                "name": [
+                    {
+                        "use": "official",
+                        "family": "Kennedy",
+                        "given": [
+                            "Frederick"
+                        ],
+                        "prefix": [
+                            "Dr"
+                        ]
+                    }
+                ],
+                "gender": "unknown"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Practitioner",
+                "id": "CE6A1A90-4D1C-11E3-9E6B-010000001205",
+                "meta": {
+                    "versionId": "4465736822165199997",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Practitioner-1"
+                    ]
+                },
+                "name": [
+                    {
+                        "use": "official",
+                        "family": "McAvenue",
+                        "given": [
+                            "David"
+                        ]
+                    }
+                ],
+                "gender": "unknown"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Practitioner",
+                "id": "A6D3B7DE-E5F4-49FC-9F7F-6A9781829009",
+                "meta": {
+                    "versionId": "954275709207252868",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Practitioner-1"
+                    ]
+                },
+                "name": [
+                    {
+                        "use": "official",
+                        "family": "Porteous",
+                        "given": [
+                            "Josh"
+                        ],
+                        "prefix": [
+                            "Mr"
+                        ]
+                    }
+                ],
+                "gender": "male"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Organization",
+                "id": "D7CFC8DB301548C1A3DB153C7FDDEDBC21624C4C-XMO",
+                "meta": {
+                    "versionId": "2151807447256333870",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "name": "imakedrugs4u"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Organization",
+                "id": "8A8003CF93711335AA96BD321415118D274026DB-XMO",
+                "meta": {
+                    "versionId": "6708460689857944543",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "name": "Pete"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Organization",
+                "id": "F4D020C6-EAFF-4528-83BA-E81A1CFD30DC",
+                "meta": {
+                    "versionId": "8763263137657800212",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "name": "National"
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "PractitionerRole",
+                "id": "2DB481A3306A413394911558161D6A2B5E496953065B41F29577BE8F2FBD0757",
+                "meta": {
+                    "versionId": "2896411073564168692",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-PractitionerRole-1"
+                    ]
+                },
+                "practitioner": {
+                    "reference": "Practitioner/2DB481A3-306A-4133-9491-1558161D6A2B"
+                },
+                "organization": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "code": [
+                    {
+                        "coding": [
+                            {
+                                "system": "https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1",
+                                "code": "R0260",
+                                "display": "General Medical Practitioner"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "PractitionerRole",
+                "id": "C8FD0E2C31244C72AC8DABEA65537D1B5E496953065B41F29577BE8F2FBD0757",
+                "meta": {
+                    "versionId": "5132273260413983624",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-PractitionerRole-1"
+                    ]
+                },
+                "practitioner": {
+                    "reference": "Practitioner/C8FD0E2C-3124-4C72-AC8D-ABEA65537D1B"
+                },
+                "organization": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "code": [
+                    {
+                        "coding": [
+                            {
+                                "system": "https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1",
+                                "code": "R0260",
+                                "display": "General Medical Practitioner"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "PractitionerRole",
+                "id": "6D340A1BBC154D4E93CFBBCB5B74DF735E496953065B41F29577BE8F2FBD0757",
+                "meta": {
+                    "versionId": "8380942905747068072",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-PractitionerRole-1"
+                    ]
+                },
+                "practitioner": {
+                    "reference": "Practitioner/6D340A1B-BC15-4D4E-93CF-BBCB5B74DF73"
+                },
+                "organization": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "code": [
+                    {
+                        "coding": [
+                            {
+                                "system": "https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1",
+                                "code": "R0260",
+                                "display": "General Medical Practitioner"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "PractitionerRole",
+                "id": "3F42A9D065A94E2D9CA467474CB83CA45E496953065B41F29577BE8F2FBD0757",
+                "meta": {
+                    "versionId": "2936722197028477647",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-PractitionerRole-1"
+                    ]
+                },
+                "practitioner": {
+                    "reference": "Practitioner/3F42A9D0-65A9-4E2D-9CA4-67474CB83CA4"
+                },
+                "organization": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "code": [
+                    {
+                        "coding": [
+                            {
+                                "system": "https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1",
+                                "code": "R0260",
+                                "display": "General Medical Practitioner"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "PractitionerRole",
+                "id": "CE6A1A904D1C11E39E6B010000001205F4D020C6EAFF452883BAE81A1CFD30DC",
+                "meta": {
+                    "versionId": "9141787148829119050",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-PractitionerRole-1"
+                    ]
+                },
+                "practitioner": {
+                    "reference": "Practitioner/CE6A1A90-4D1C-11E3-9E6B-010000001205"
+                },
+                "organization": {
+                    "reference": "Organization/F4D020C6-EAFF-4528-83BA-E81A1CFD30DC"
+                },
+                "code": [
+                    {
+                        "coding": [
+                            {
+                                "system": "https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1",
+                                "code": "R1720",
+                                "display": "Clerical Worker"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Condition",
+                "id": "9569AEF5-9527-4F6A-8EFB-417D0AB3E6B6-PROB",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-ProblemHeader-Condition-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-ActualProblem-1",
+                        "valueReference": {
+                            "reference": "Immunization/9569AEF5-9527-4F6A-8EFB-417D0AB3E6B6"
+                        }
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-ProblemSignificance-1",
+                        "valueCode": "minor"
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D9569AEF595274F6A8EFB417D0AB3E6B6PROB"
+                    }
+                ],
+                "clinicalStatus": "inactive",
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-ConditionCategory-1",
+                                "code": "problem-list-item",
+                                "display": "Problem List Item"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "2533976011"
+                                        },
+                                        {
+                                            "url": "descriptionDisplay",
+                                            "valueString": "First diphtheria tetanus and five component acellular pertussis, haemophilus influenzae type b, inactivated polio vaccination"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "414259000",
+                            "display": "Administration of first dose of diphtheria and Haemophilus influenza B and five component acellular pertussis and inactivated poliomyelitis and tetanus vaccine",
+                            "userSelected": true
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "assertedDate": "2020-11-18T13:56:52.87+00:00",
+                "asserter": {
+                    "reference": "Practitioner/6D340A1B-BC15-4D4E-93CF-BBCB5B74DF73"
+                },
+                "note": [
+                    {
+                        "text": "historical date\nhistorical date"
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "Condition",
+                "id": "F6FCF37E-F5D9-46FB-B39A-F94C32A69B11-PROB",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-ProblemHeader-Condition-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-ActualProblem-1",
+                        "valueReference": {
+                            "reference": "Observation/F6FCF37E-F5D9-46FB-B39A-F94C32A69B11"
+                        }
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-RelatedClinicalContent-1",
+                        "valueReference": {
+                            "reference": "Observation/534E8774-16A4-48CB-A187-2A7683839A24"
+                        }
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-RelatedClinicalContent-1",
+                        "valueReference": {
+                            "reference": "Encounter/79649222-3B68-4905-A4DC-7410D29A4565"
+                        }
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-RelatedClinicalContent-1",
+                        "valueReference": {
+                            "reference": "List/79649222-3B68-4905-A4DC-7410D29A4565-PG0"
+                        }
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-RelatedClinicalContent-1",
+                        "valueReference": {
+                            "reference": "Immunization/E151BC23-8CC1-479F-A8EC-5CB9998BA1E5"
+                        }
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-RelatedClinicalContent-1",
+                        "valueReference": {
+                            "reference": "Observation/C94B1851-0AF6-4DE9-A405-63B4C8BA2205"
+                        }
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-RelatedClinicalContent-1",
+                        "valueReference": {
+                            "reference": "Observation/20063759-2032-4474-AA6D-07472A213261"
+                        }
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-RelatedClinicalContent-1",
+                        "valueReference": {
+                            "reference": "DocumentReference/7189F0C8-639C-45BB-806F-7E156DABA151"
+                        }
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-ProblemSignificance-1",
+                        "valueCode": "minor"
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-RelatedProblemHeader-1",
+                        "extension": [
+                            {
+                                "url": "type",
+                                "valueCode": "parent"
+                            },
+                            {
+                                "url": "target",
+                                "valueReference": {
+                                    "reference": "Condition/FACC8DEB-9D81-476D-AA42-B90F56FF1846-PROB"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "url": "https://fhir.hl7.org.uk/STU3/StructureDefinition/Extension-CareConnect-RelatedProblemHeader-1",
+                        "extension": [
+                            {
+                                "url": "type",
+                                "valueCode": "child"
+                            },
+                            {
+                                "url": "target",
+                                "valueReference": {
+                                    "reference": "Condition/2BE35191-475E-4D5A-8CC8-EB769562B566-PROB"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DF6FCF37EF5D946FBB39AF94C32A69B11PROB"
+                    }
+                ],
+                "clinicalStatus": "active",
+                "category": [
+                    {
+                        "coding": [
+                            {
+                                "system": "https://fhir.hl7.org.uk/STU3/CodeSystem/CareConnect-ConditionCategory-1",
+                                "code": "problem-list-item",
+                                "display": "Problem List Item"
+                            }
+                        ]
+                    }
+                ],
+                "code": {
+                    "coding": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "252385016"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "161939006",
+                            "display": "Breathless - moderate exertion",
+                            "userSelected": true
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "onsetDateTime": "2020-09-15",
+                "assertedDate": "2021-03-26T16:34:39.213+00:00",
+                "asserter": {
+                    "reference": "Practitioner/2DB481A3-306A-4133-9491-1558161D6A2B"
+                },
+                "note": [
+                    {
+                        "text": "The descriptive text includes special characters!'Â£$%^7*()-={}][|\":/.#@, -~ (Grouped with Chest pain)\nThe descriptive text includes special characters!'Â£$%^7*()-={}][|\":/.,\n(Grouped with Chest pain)"
+                    }
+                ]
+            }
+        },
+        {
+            "resource": {
+                "resourceType": "List",
+                "meta": {
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-List-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-CareConnect-GPC-ClinicalSetting-1",
+                        "valueCodeableConcept": {
+                            "coding": [
+                                {
+                                    "system": "http://snomed.info/sct",
+                                    "code": "1060971000000108",
+                                    "display": "General practice service"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "status": "current",
+                "mode": "snapshot",
+                "title": "Problems - linked problems not relating to the primary query",
+                "code": {
+                    "coding": [
+                        {
+                            "system": "https://fhir.hl7.org.uk/STU3/CodeSystem/GPConnect-SecondaryListValues-1",
+                            "code": "problems-linked-problems-not-relating-to-the-primary-query",
+                            "display": "Problems - linked problems not relating to the primary query"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "date": "2021-03-17T16:23:39.355+00:00",
+                "orderedBy": {
+                    "coding": [
+                        {
+                            "system": "http://hl7.org/fhir/list-order",
+                            "code": "event-date",
+                            "display": "Sorted by Event Date"
+                        }
+                    ]
+                },
+                "entry": [
+                    {
+                        "item": {
+                            "reference": "Condition/9569AEF5-9527-4F6A-8EFB-417D0AB3E6B6-PROB"
+                        }
+                    },
+                    {
+                        "item": {
+                            "reference": "Condition/F6FCF37E-F5D9-46FB-B39A-F94C32A69B11-PROB"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}
