@@ -1,0 +1,1569 @@
+{
+    "resourceType": "Bundle",
+    "id": "e6195e55-1dd7-4bce-99d3-4785139ad293",
+    "meta": {
+        "profile": [
+            "https://fhir.nhs.uk/STU3/StructureDefinition/GPConnect-Searchset-Bundle-1"
+        ]
+    },
+    "type": "searchset",
+    "entry": [
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D",
+            "resource": {
+                "resourceType": "Patient",
+                "id": "144A1A2E-B3B3-4A66-B33B-148A5B75959D",
+                "meta": {
+                    "versionId": "1624651194859004536",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Patient-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-CareConnect-GPC-RegistrationDetails-1",
+                        "extension": [
+                            {
+                                "url": "preferredBranchSurgery",
+                                "valueReference": {
+                                    "reference": "Location/EB3994A6-5A87-4B53-A414-913137072F57"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "identifier": [
+                    {
+                        "extension": [
+                            {
+                                "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-CareConnect-GPC-NHSNumberVerificationStatus-1",
+                                "valueCodeableConcept": {
+                                    "coding": [
+                                        {
+                                            "system": "https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-NHSNumberVerificationStatus-1",
+                                            "code": "01",
+                                            "display": "Number present and verified"
+                                        }
+                                    ],
+                                    "text": "Number present and verified"
+                                }
+                            }
+                        ],
+                        "system": "https://fhir.nhs.uk/Id/nhs-number",
+                        "value": "9465701262"
+                    }
+                ],
+                "name": [
+                    {
+                        "use": "official",
+                        "family": "Meyers",
+                        "given": [
+                            "Yannis",
+                            "Rafal"
+                        ],
+                        "prefix": [
+                            "Mr"
+                        ]
+                    }
+                ],
+                "gender": "male",
+                "birthDate": "1946-04-10",
+                "address": [
+                    {
+                        "use": "home",
+                        "type": "physical",
+                        "line": [
+                            "Roxton",
+                            "West Marsh Lane",
+                            "Barrow Haven"
+                        ],
+                        "city": "Barrow-Upon-Humber",
+                        "district": "S Humberside",
+                        "postalCode": "DN19 7HA"
+                    }
+                ],
+                "generalPractitioner": [
+                    {
+                        "reference": "Practitioner/2DB481A3-306A-4133-9491-1558161D6A2B"
+                    }
+                ],
+                "managingOrganization": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/6347EC01-94A0-414D-9CEC-11AFDE4D3AC1",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "6347EC01-94A0-414D-9CEC-11AFDE4D3AC1",
+                "meta": {
+                    "versionId": "3620175966011300748",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D6347EC0194A0414D9CEC11AFDE4D3AC1"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Clinical report"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-26T14:43:00+00:00",
+                "indexed": "2021-03-26T14:43:43.743+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Clinical report (26-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/xml",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D6347EC0194A0414D9CEC11AFDE4D3AC1",
+                            "size": 98148
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/A8EEB8CF-90D5-4644-BCA1-B8E4278B4AD0"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/7189F0C8-639C-45BB-806F-7E156DABA151",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "7189F0C8-639C-45BB-806F-7E156DABA151",
+                "meta": {
+                    "versionId": "1782816043182506730",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D7189F0C8639C45BB806F7E156DABA151"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Referral for further care"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-26T11:43:00+00:00",
+                "indexed": "2021-03-26T11:45:24.763+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "This document is linked to a Problem",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "text/plain",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D7189F0C8639C45BB806F7E156DABA151",
+                            "size": 33
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/86EC1A71-6739-4A43-8484-896F863E851B"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/DE7BAC18-8AC6-4DF2-8A38-E450B7ACA6D9",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "DE7BAC18-8AC6-4DF2-8A38-E450B7ACA6D9",
+                "meta": {
+                    "versionId": "4598486842744803736",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DDE7BAC188AC64DF28A38E450B7ACA6D9"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Date records held from"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-22T00:00:00+00:00",
+                "indexed": "2021-03-26T14:44:48.9+00:00",
+                "author": [
+                    {
+                        "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                    }
+                ],
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Date records held from from Dr Peter Whitcombe, General Medical Practitioner at EMIS LV Test Practice 1 (22-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/octet-stream",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959DDE7BAC188AC64DF28A38E450B7ACA6D9",
+                            "size": 2830
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/A08DCE7A-59DF-4319-8C4A-7E79949F4610"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/B78867DE-69DE-4692-A4F2-E05A1C6DC267",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "B78867DE-69DE-4692-A4F2-E05A1C6DC267",
+                "meta": {
+                    "versionId": "2890070913876735222",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DB78867DE69DE4692A4F2E05A1C6DC267"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Third meningitis C vaccination"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-21T00:00:00+00:00",
+                "indexed": "2021-03-26T14:43:21.343+00:00",
+                "author": [
+                    {
+                        "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                    }
+                ],
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Third meningitis C vaccination from Referral Service at TEMPLE SOWERBY MEDICAL PRACTICE (21-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959DB78867DE69DE4692A4F2E05A1C6DC267",
+                            "size": 8236
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/59352835-E6CE-4A30-A2C7-DA7F0FC11496"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/5219F3A3-5F5F-43E4-AA30-E360E3AF697F",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "5219F3A3-5F5F-43E4-AA30-E360E3AF697F",
+                "meta": {
+                    "versionId": "4541611592527307722",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D5219F3A35F5F43E4AA30E360E3AF697F"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Date records held from"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-19T00:00:00+00:00",
+                "indexed": "2021-03-26T14:42:12.48+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Date records held from (19-Mar-2021) 4.94mb file",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D5219F3A35F5F43E4AA30E360E3AF697F",
+                            "size": 5186654
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/6F2DA8A9-BA83-4AD4-A2CF-11658D5C23E6"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/F8100685-F219-467F-81BA-9A14C87C1CD0",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "F8100685-F219-467F-81BA-9A14C87C1CD0",
+                "meta": {
+                    "versionId": "3959576175880542500",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DF8100685F219467F81BA9A14C87C1CD0"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Third meningitis C vaccination"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-18T00:00:00+00:00",
+                "indexed": "2021-03-26T14:41:20.103+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Third meningitis C vaccination (18-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/octet-stream",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959DF8100685F219467F81BA9A14C87C1CD0",
+                            "size": 369565
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/31810034-4548-46EE-8802-8DC418BE383D",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "31810034-4548-46EE-8802-8DC418BE383D",
+                "meta": {
+                    "versionId": "7057338690401606197",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D31810034454846EE88028DC418BE383D"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Referral for further care"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-17T00:00:00+00:00",
+                "indexed": "2021-03-26T14:40:54.98+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Referral for further care (17-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "image/tiff",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D31810034454846EE88028DC418BE383D",
+                            "size": 54304
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/0AAED6EB-91BB-47CB-9D6B-88B6B0569252"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/4E0C0873-E3AE-49E1-BDDC-750ED6D9AA7B",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "4E0C0873-E3AE-49E1-BDDC-750ED6D9AA7B",
+                "meta": {
+                    "versionId": "832921364810892900",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D4E0C0873E3AE49E1BDDC750ED6D9AA7B"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Clinical report"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-15T00:00:00+00:00",
+                "indexed": "2021-03-26T14:40:15.743+00:00",
+                "author": [
+                    {
+                        "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                    }
+                ],
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "!@£$%^&*()_==-][}[ Document Title",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D4E0C0873E3AE49E1BDDC750ED6D9AA7B",
+                            "size": 83611
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/A999CC31-6016-4C6A-B4E6-C63A0E609B82"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/9D9282D4-BDEE-48ED-A3D4-C9B698880D47",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "9D9282D4-BDEE-48ED-A3D4-C9B698880D47",
+                "meta": {
+                    "versionId": "4474110225117212676",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D9D9282D4BDEE48EDA3D4C9B698880D47"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Sore throat"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-14T00:00:00+00:00",
+                "indexed": "2021-03-26T14:39:24.317+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Sore throat (14-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "text/richtext",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D9D9282D4BDEE48EDA3D4C9B698880D47",
+                            "size": 176
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/73AD0A10-3270-4647-B4A0-A190E73921B8",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "73AD0A10-3270-4647-B4A0-A190E73921B8",
+                "meta": {
+                    "versionId": "8515512223919802080",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D73AD0A1032704647B4A0A190E73921B8"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Breathless - mild exertion"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-13T00:00:00+00:00",
+                "indexed": "2021-03-26T14:39:00.993+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Breathless - mild exertion (13-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/msword",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D73AD0A1032704647B4A0A190E73921B8",
+                            "size": 24064
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/89C8BD07-BB41-4AD7-AE98-9DCD929513D5",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "89C8BD07-BB41-4AD7-AE98-9DCD929513D5",
+                "meta": {
+                    "versionId": "3554999702874283459",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D89C8BD07BB414AD7AE989DCD929513D5"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Letter sent to patient"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-12T00:00:00+00:00",
+                "indexed": "2021-03-26T14:38:33.76+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Letter sent to patient (12-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "video/mpeg",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D89C8BD07BB414AD7AE989DCD929513D5",
+                            "size": 340640
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/DFA757B6-B62E-4548-A827-7D079D9A9357",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "DFA757B6-B62E-4548-A827-7D079D9A9357",
+                "meta": {
+                    "versionId": "8424547927021987295",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DDFA757B6B62E4548A8277D079D9A9357"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Diabetes monitoring first letter"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-11T00:00:00+00:00",
+                "indexed": "2021-03-26T14:38:09.07+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Diabetes monitoring first letter (11-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "video/mpeg",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959DDFA757B6B62E4548A8277D079D9A9357",
+                            "size": 340640
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/56616910-F8C5-44C8-8785-2A21A6757AAF"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/162EB7EB-C9D5-45D9-9728-198260ED6928",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "162EB7EB-C9D5-45D9-9728-198260ED6928",
+                "meta": {
+                    "versionId": "5963434687075276564",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D162EB7EBC9D545D99728198260ED6928"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Referral for further care"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-08T00:00:00+00:00",
+                "indexed": "2021-03-26T14:36:55.467+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Referral for further care (08-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "text/html",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D162EB7EBC9D545D99728198260ED6928",
+                            "size": 121542
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/853D1BC8-E033-4654-A66C-922705CC2053",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "853D1BC8-E033-4654-A66C-922705CC2053",
+                "meta": {
+                    "versionId": "2289122908456356623",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D853D1BC8E0334654A66C922705CC2053"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Letter from specialist"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-07T00:00:00+00:00",
+                "indexed": "2021-03-26T14:36:31.55+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Letter from specialist (07-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "text/html",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D853D1BC8E0334654A66C922705CC2053",
+                            "size": 1701
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/445EFF01-1B0E-4611-A1B4-B46E37B142FE"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/5BBCB11E-511B-4D49-9F96-3FBE9A661412",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "5BBCB11E-511B-4D49-9F96-3FBE9A661412",
+                "meta": {
+                    "versionId": "336408394072279746",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D5BBCB11E511B4D499F963FBE9A661412"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Date records held from"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-06T00:00:00+00:00",
+                "indexed": "2021-03-26T14:35:57.637+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Date records held from (06-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "image/gif",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D5BBCB11E511B4D499F963FBE9A661412",
+                            "size": 1896
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/FDC3C38B-9A72-42CC-96FF-2B5D232B38A6"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/140FE322-A20F-4947-A85E-AC98F6304226",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "140FE322-A20F-4947-A85E-AC98F6304226",
+                "meta": {
+                    "versionId": "2349518693226887840",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D140FE322A20F4947A85EAC98F6304226"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Sore throat"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-04T00:00:00+00:00",
+                "indexed": "2021-03-26T14:33:38.31+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Sore throat (04-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/octet-stream",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D140FE322A20F4947A85EAC98F6304226",
+                            "size": 13
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/267D5B49-C093-4E0A-813B-E1B886470FC6",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "267D5B49-C093-4E0A-813B-E1B886470FC6",
+                "meta": {
+                    "versionId": "7318032496146679137",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D267D5B49C0934E0A813BE1B886470FC6"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Letter sent to patient"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-02T00:00:00+00:00",
+                "indexed": "2021-03-26T14:31:39.403+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "AU Attachment file type",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "audio/x-au",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D267D5B49C0934E0A813BE1B886470FC6",
+                            "size": 71897
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/9FD40EF6-ED39-44EB-8613-99F6F91A2168"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/904F2C97-8C6E-456E-90C4-88AEF5D810CB",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "904F2C97-8C6E-456E-90C4-88AEF5D810CB",
+                "meta": {
+                    "versionId": "1389363167950309894",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D904F2C978C6E456E90C488AEF5D810CB"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Diabetes monitoring first letter"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-01T00:00:00+00:00",
+                "indexed": "2021-03-26T14:30:17.187+00:00",
+                "author": [
+                    {
+                        "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                    }
+                ],
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "This is the Document Title field",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "image/bmp",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D904F2C978C6E456E90C488AEF5D810CB",
+                            "size": 460366
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/9F96C484-3037-4142-BFD0-2819635F0628"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/9D5966BF-E10F-4E78-99D1-5F86E80E27ED",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "9D5966BF-E10F-4E78-99D1-5F86E80E27ED",
+                "meta": {
+                    "versionId": "4876465362017776701",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D9D5966BFE10F4E7899D15F86E80E27ED"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Referral for further care"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2020-11-17T11:02:00+00:00",
+                "indexed": "2020-11-17T11:06:20.813+00:00",
+                "author": [
+                    {
+                        "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                    }
+                ],
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Referral for further care from Dr David McAvenue at EMIS LV Test Practice 1 (17-Nov-2020)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/pdf",
+                            "size": 18551238,
+                            "title": "File size 18551238 bytes greater than maximum allowable (5MB)"
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/1157AF86-A6AD-4FD8-9E29-61AFC272ADE2"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/D86C129C-525B-4F7C-A52D-986774EA4043",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "D86C129C-525B-4F7C-A52D-986774EA4043",
+                "meta": {
+                    "versionId": "5928333844073168077",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DD86C129C525B4F7CA52D986774EA4043"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Postoperative urine specimen collection"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2020-11-17T00:00:00+00:00",
+                "indexed": "2020-11-17T11:11:52.513+00:00",
+                "author": [
+                    {
+                        "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                    }
+                ],
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Postoperative urine specimen collection (17-Nov-2020)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "image/png",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959DD86C129C525B4F7CA52D986774EA4043",
+                            "size": 22021
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/3BFC3A43-D3C0-4394-AB3F-727CAB2714F9"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/E0AA40DB-D6EB-4E1F-B9BB-0E3F7F305731",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "E0AA40DB-D6EB-4E1F-B9BB-0E3F7F305731",
+                "meta": {
+                    "versionId": "8195225890269808535",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DE0AA40DBD6EB4E1FB9BB0E3F7F305731"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Clinical report"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2019-09-04T00:00:00+01:00",
+                "indexed": "2020-11-25T14:04:44.47+00:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Clinical report (04-Sep-2019)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "image/jpeg",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959DE0AA40DBD6EB4E1FB9BB0E3F7F305731",
+                            "size": 70402
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/6E172462-3BC4-4269-8AB8-9F848CAEDA33"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/8B172D18-7ED2-4EA4-81C7-E879C0718813",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "8B172D18-7ED2-4EA4-81C7-E879C0718813",
+                "meta": {
+                    "versionId": "2740277398483713351",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D8B172D187ED24EA481C7E879C0718813"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "coding": [
+                        {
+                            "system": "http://read.info/readv2",
+                            "code": "9b0g.00",
+                            "display": "Referral letter",
+                            "userSelected": true
+                        },
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "63301000000111"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "25611000000107",
+                            "display": "Referral letter"
+                        }
+                    ]
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2010-01-19",
+                "indexed": "2010-01-19T11:40:24.543+00:00",
+                "author": [
+                    {
+                        "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                    }
+                ],
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "from Unknown Consultant at L G I (19-Jan-2010)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/msword",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/4C903809CADA442E8FA5655E5EFEB1F58B172D187ED24EA481C7E879C0718813",
+                            "size": 19456
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/468CA880-E3C3-481F-8563-EC49164041AF"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/BF10A8C3-C57C-4787-BC4E-D3F55E80371F",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "BF10A8C3-C57C-4787-BC4E-D3F55E80371F",
+                "meta": {
+                    "versionId": "5316190249965011203",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DBF10A8C3C57C4787BC4ED3F55E80371F"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Clinical report"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-03-31T14:49:00+01:00",
+                "indexed": "2021-03-31T14:49:46.777+01:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Unknown file type - Clinical report (31-Mar-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/octet-stream",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959DBF10A8C3C57C4787BC4ED3F55E80371F",
+                            "size": 22021
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/6E1742E6-8C16-4B03-95D3-22EB272CF2FF"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/B7F98787-5828-4ED7-8EC7-78F0472A5665",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "B7F98787-5828-4ED7-8EC7-78F0472A5665",
+                "meta": {
+                    "versionId": "7568406798291150071",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DB7F9878758284ED78EC778F0472A5665"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Out of hours report"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-04-01T11:58:00+01:00",
+                "indexed": "2021-04-01T11:59:26.97+01:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Kettering .dat Out of hours report (01-Apr-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/octet-stream",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959DB7F9878758284ED78EC778F0472A5665",
+                            "size": 718201
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/7133273C-99FE-4454-A2CB-FF4531DFB7D8"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/32518562-6329-4339-B201-07EA8243E4F7",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "32518562-6329-4339-B201-07EA8243E4F7",
+                "meta": {
+                    "versionId": "4137698095513934434",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D3251856263294339B20107EA8243E4F7"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Discharge report"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-04-01T11:52:00+01:00",
+                "indexed": "2021-04-01T11:53:01.037+01:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Kettering File .Ket Discharge report (01-Apr-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/octet-stream",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D3251856263294339B20107EA8243E4F7",
+                            "size": 6819
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/3CBEBF4E-D1FC-417D-8E2E-4799A0E02E36"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/32518562-6329-4339-B201-07EA8243E4F7",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "32518562-6329-4339-B201-07EA8243E4F7",
+                "meta": {
+                    "versionId": "4137698095513934434",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959D3251856263294339B20107EA8243E4F7"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "text": "Discharge report"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2021-04-01T11:52:00+01:00",
+                "indexed": "2021-04-01T11:53:01.037+01:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "Kettering File .Ket Discharge report (01-Apr-2021)",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "application/octet-stream",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/144A1A2EB3B34A66B33B148A5B75959D3251856263294339B20107EA8243E4F7",
+                            "size": 6819
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/3CBEBF4E-D1FC-417D-8E2E-4799A0E02E36"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/DocumentReference/C29731AE-D49C-435C-A24D-F6C105855974",
+            "resource": {
+                "resourceType": "DocumentReference",
+                "id": "C29731AE-D49C-435C-A24D-F6C105855974",
+                "meta": {
+                    "versionId": "5950799877708741546",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-DocumentReference-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://EMISWeb/A82038",
+                        "value": "144A1A2EB3B34A66B33B148A5B75959DC29731AED49C435CA24DF6C105855974"
+                    }
+                ],
+                "status": "current",
+                "type": {
+                    "coding": [
+                        {
+                            "extension": [
+                                {
+                                    "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-coding-sctdescid",
+                                    "extension": [
+                                        {
+                                            "url": "descriptionId",
+                                            "valueId": "63301000000111"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "system": "http://snomed.info/sct",
+                            "code": "25611000000107",
+                            "display": "Referral letter",
+                            "userSelected": true
+                        }
+                    ],
+                    "text": "Referral Letter (21-Sep-2020)"
+                },
+                "subject": {
+                    "reference": "Patient/144A1A2E-B3B3-4A66-B33B-148A5B75959D"
+                },
+                "created": "2020-09-21",
+                "indexed": "2020-09-21T13:54:58.25+01:00",
+                "custodian": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "description": "for 2 week rule referral - brain",
+                "content": [
+                    {
+                        "attachment": {
+                            "contentType": "text/richtext",
+                            "url": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Binary/7DC1C5D8540B4A7C8E19CBD3426A8CC6C29731AED49C435CA24DF6C105855974",
+                            "size": 42027
+                        }
+                    }
+                ],
+                "context": {
+                    "encounter": {
+                        "reference": "Encounter/D4E0575F-DF80-41F4-A888-A92CFE4E6257"
+                    }
+                }
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Organization/E30264A4-98FB-4E3B-8130-5A57CCA569F2",
+            "resource": {
+                "resourceType": "Organization",
+                "id": "E30264A4-98FB-4E3B-8130-5A57CCA569F2",
+                "meta": {
+                    "versionId": "3579857738989578241",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "name": "Dr Peter Whitcombe, General Medical Practitioner"
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Organization/44CD87A2-8BA1-4E3E-90AD-9264ABB9ED8C",
+            "resource": {
+                "resourceType": "Organization",
+                "id": "44CD87A2-8BA1-4E3E-90AD-9264ABB9ED8C",
+                "meta": {
+                    "versionId": "7788384060453762031",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "name": "Referral Service"
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Organization/1F90B10F-CF14-4D6F-8C0D-585059DA4EC5",
+            "resource": {
+                "resourceType": "Organization",
+                "id": "1F90B10F-CF14-4D6F-8C0D-585059DA4EC5",
+                "meta": {
+                    "versionId": "7153758870300784442",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "name": "Dr David McAvenue"
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Organization/AFAB5E4A-C039-4578-8B31-60B3689AEDA8",
+            "resource": {
+                "resourceType": "Organization",
+                "id": "AFAB5E4A-C039-4578-8B31-60B3689AEDA8",
+                "meta": {
+                    "versionId": "7298910079455808754",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "name": "Dr  A  Richard Holder"
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Organization/5E496953-065B-41F2-9577-BE8F2FBD0757",
+            "resource": {
+                "resourceType": "Organization",
+                "id": "5E496953-065B-41F2-9577-BE8F2FBD0757",
+                "meta": {
+                    "versionId": "1112974926854455048",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Organization-1"
+                    ]
+                },
+                "extension": [
+                    {
+                        "url": "https://fhir.nhs.uk/STU3/StructureDefinition/Extension-CareConnect-GPC-MainLocation-1",
+                        "valueReference": {
+                            "reference": "Location/EB3994A6-5A87-4B53-A414-913137072F57"
+                        }
+                    }
+                ],
+                "identifier": [
+                    {
+                        "system": "https://fhir.nhs.uk/Id/ods-organization-code",
+                        "value": "A82038"
+                    }
+                ],
+                "type": [
+                    {
+                        "coding": [
+                            {
+                                "system": "https://fhir.nhs.uk/STU3/CodeSystem/GPConnect-OrganisationType-1",
+                                "code": "gp-practice"
+                            }
+                        ],
+                        "text": "GP Practice"
+                    }
+                ],
+                "name": "TEMPLE SOWERBY MEDICAL PRACTICE",
+                "telecom": [
+                    {
+                        "system": "phone",
+                        "value": "01133800000",
+                        "use": "work",
+                        "rank": 1
+                    }
+                ],
+                "address": [
+                    {
+                        "use": "work",
+                        "type": "physical",
+                        "line": [
+                            "Fulford Grange",
+                            "Micklefield Lane",
+                            "Rawdon",
+                            "Rawdon"
+                        ],
+                        "city": "Leeds",
+                        "district": "Yorkshire",
+                        "postalCode": "LS19 6BA"
+                    }
+                ]
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/Practitioner/2DB481A3-306A-4133-9491-1558161D6A2B",
+            "resource": {
+                "resourceType": "Practitioner",
+                "id": "2DB481A3-306A-4133-9491-1558161D6A2B",
+                "meta": {
+                    "versionId": "4333436790463129417",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-Practitioner-1"
+                    ]
+                },
+                "identifier": [
+                    {
+                        "system": "https://fhir.nhs.uk/Id/sds-user-id",
+                        "value": "555079033108"
+                    },
+                    {
+                        "system": "https://fhir.nhs.uk/Id/sds-role-profile-id",
+                        "value": "555079046103"
+                    }
+                ],
+                "name": [
+                    {
+                        "use": "official",
+                        "family": "TEMPLE SOWERBY",
+                        "given": [
+                            "GPONE"
+                        ],
+                        "prefix": [
+                            "Mr"
+                        ]
+                    }
+                ],
+                "gender": "male"
+            }
+        },
+        {
+            "fullUrl": "https://gpcassurance-b86047.emis.thirdparty.nhs.uk/A82038/STU3/1/GPConnect/Documents/PractitionerRole/2DB481A3306A413394911558161D6A2B5E496953065B41F29577BE8F2FBD0757",
+            "resource": {
+                "resourceType": "PractitionerRole",
+                "id": "2DB481A3306A413394911558161D6A2B5E496953065B41F29577BE8F2FBD0757",
+                "meta": {
+                    "versionId": "2896411073564168692",
+                    "profile": [
+                        "https://fhir.nhs.uk/STU3/StructureDefinition/CareConnect-GPC-PractitionerRole-1"
+                    ]
+                },
+                "practitioner": {
+                    "reference": "Practitioner/2DB481A3-306A-4133-9491-1558161D6A2B"
+                },
+                "organization": {
+                    "reference": "Organization/5E496953-065B-41F2-9577-BE8F2FBD0757"
+                },
+                "code": [
+                    {
+                        "coding": [
+                            {
+                                "system": "https://fhir.nhs.uk/STU3/CodeSystem/CareConnect-SDSJobRoleName-1",
+                                "code": "R0260",
+                                "display": "General Medical Practitioner"
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
