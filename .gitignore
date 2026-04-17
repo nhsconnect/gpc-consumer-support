@@ -1,0 +1,17 @@
+# Environment and secrets
+.env
+local.env
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+
+# Test output
+test-results/
+.pytest_cache/
+
+# OS
+.DS_Store

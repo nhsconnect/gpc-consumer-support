@@ -1,0 +1,286 @@
+"""Shared fixtures and test data for GP Connect Consumer Support Tests."""
+import pytest
+
+
+# ---------------------------------------------------------------------------
+# EMIS Test Patients
+# ---------------------------------------------------------------------------
+
+EMIS_PATIENTS = {
+    "liston_janine": {
+        "nhs_number": "9730147140", "name": "Ms Janine Liston",
+        "dob": "2011-01-24", "gender": "Female",
+        "address": "3 COUNCIL HOUSES, LOW HESKET, CARLISLE, CA4 0HF",
+        "notes": "Do not amend, main AR:S test patient",
+    },
+    "munyaradzi_naaif": {
+        "nhs_number": "9730146896", "name": "Mr Naaif Munyaradzi",
+        "dob": "1980-07-08", "gender": "Male",
+        "address": "1 GLENWILLEY, GREAT CORBY, CARLISLE, CA4 8NF",
+        "notes": "Do not amend",
+    },
+    "dai_ya_qiu": {
+        "nhs_number": "9730333939", "name": "Mrs Ya Qiu Dai",
+        "dob": "1998-02-24", "gender": "Female",
+        "address": "BRAMPTON, SKIRWITH, PENRITH, CA10 1RB",
+        "notes": "Do not amend",
+    },
+    "howitt_doreas": {
+        "nhs_number": "9730333831", "name": "Ms Doreas Howitt",
+        "dob": "1984-01-10", "gender": "Female",
+        "address": "1 OLD LONDON ROAD, PENRITH, CUMBRIA, CA11 8JL",
+        "notes": "Do not amend",
+    },
+    "gandy_stan": {
+        "nhs_number": "9730147019", "name": "Mr Stan Gandy",
+        "dob": "2016-06-12", "gender": "Male",
+        "address": "2 STATION TERRACE, SHAP, PENRITH, CUMBRIA, CA10 3PX",
+        "notes": "Do not amend",
+    },
+    "fennar_edina": {
+        "nhs_number": "9730333874", "name": "Ms Edina Susan Fennar",
+        "dob": "2003-01-20", "gender": "Female",
+        "address": "10 WETHERIGGS LANE, PENRITH, CUMBRIA, CA11 8PD",
+    },
+    "brawn_annie": {
+        "nhs_number": "9730333882", "name": "Mrs Annie Evelyn Brawn",
+        "dob": "1994-05-06", "gender": "Female",
+        "address": "MIDDLE SCEUGH FOOT, IVEGILL, CARLISLE, CA4 0NN",
+    },
+    "huxtable_dorothy": {
+        "nhs_number": "9730333890", "name": "Mrs Dorothy Kristen Huxtable",
+        "dob": "1993-12-11", "gender": "Female",
+        "address": "GARTH MARR, CASTLE CARROCK, BRAMPTON, CUMBRIA, CA8 9NF",
+    },
+    "onion_dulcie": {
+        "nhs_number": "9730333904", "name": "Ms Dulcie Onion",
+        "dob": "1989-04-08", "gender": "Female",
+        "address": "EAST COTTAGE, EASBY LANE END, BRAMPTON, CUMBRIA, CA8 2EZ",
+    },
+    "falvey_anita": {
+        "nhs_number": "9730333912", "name": "Mrs Anita Falvey",
+        "dob": "1989-01-24", "gender": "Female",
+        "address": "2 THE LANE, GLASSONBY, PENRITH, CUMBRIA, CA10 1DS",
+    },
+    "ducie_ron": {
+        "nhs_number": "9730333920", "name": "Mrs Ron Kimberlyn Ducie",
+        "dob": "2004-11-24", "gender": "Female",
+        "address": "ASKERTON CASTLE, ASKERTON, BRAMPTON, CA8 2BD",
+    },
+    "wharf_rhetta": {
+        "nhs_number": "9730147078", "name": "Ms Rhetta Wharf",
+        "dob": "2019-05-29", "gender": "Female",
+        "address": "COANWOOD MANOR BROW KESWICK CUMBRIA CA12 4AW",
+    },
+    "heber_debra": {
+        "nhs_number": "9730147116", "name": "Miss Debra Heber",
+        "dob": "2023-07-29", "gender": "Female",
+        "address": "10 MILLFIELD, BRAMPTON, CUMBRIA, CA8 1TT",
+    },
+    "cherupara_deviprasad": {
+        "nhs_number": "9730146950", "name": "Mr Deviprasad Cherupara",
+        "dob": "2000-12-30", "gender": "Male",
+        "address": "STANLEY HOUSE, KIRKLINTON, CARLISLE, CA6 6DZ",
+    },
+    "boyce_archie": {
+        "nhs_number": "9730146942", "name": "Mr Archie Boyce",
+        "dob": "2015-06-12", "gender": "Male",
+        "address": "21 HUNTLEY AVENUE, PENRITH, CUMBRIA, CA11 8NU",
+    },
+    "bold_mikala": {
+        "nhs_number": "9730147035", "name": "Ms Mikala Grace Bold",
+        "dob": "1928-01-01", "gender": "Female",
+        "address": "BEECHWOOD, Park Lane, Alston, Cumbria, CA9 3AB",
+    },
+}
+
+# Primary EMIS test patient for Access Record: Structured
+EMIS_PRIMARY_PATIENT = EMIS_PATIENTS["liston_janine"]
+
+
+# ---------------------------------------------------------------------------
+# TPP Test Patients
+# ---------------------------------------------------------------------------
+
+TPP_PATIENTS = {
+    "job_louise": {
+        "nhs_number": "9692136744", "name": "Miss Louise Job",
+        "dob": "2010-05-02", "gender": "Female",
+        "address": "103 High Street, Belton, Doncaster DN9 1NR",
+        "notes": "Do not amend, main AR:S test patient",
+    },
+    "hitchcott_derryl": {
+        "nhs_number": "9465693839", "name": "Mr Derryl Hitchcott",
+        "dob": "1977-02-06", "gender": "Male",
+        "address": "The House, 1 Northern Parade, Portsmouth PO2 9PF",
+        "notes": "Do not amend",
+    },
+    "adams_sophia": {
+        "nhs_number": "9692136701", "name": "Mrs Sophia Adams",
+        "dob": "1986-10-13", "gender": "Female",
+        "address": "2 Rectory Croft, High Street, Wroot, Doncaster DN9 2BF",
+        "notes": "Do not amend",
+    },
+    "greenford_oliver": {
+        "nhs_number": "5990275439", "name": "Oliver Greenford",
+        "dob": "2020-11-08", "gender": "Male",
+        "address": "22 West Green Drive, Crawley RH11 7DH",
+        "notes": "Do not amend",
+    },
+    "nirmal_sumanna": {
+        "nhs_number": "9465694819", "name": "Ms Sumanna Nirmal",
+        "dob": "1997-01-29", "gender": "Female",
+        "address": "1 Bentley Grove, Leeds LS6 4AT",
+    },
+    "cudmore_maleah": {
+        "nhs_number": "9450038082", "name": "Ms Maleah Cudmore",
+        "dob": "1991-04-11", "gender": "Female",
+        "address": "21 West Green Drive, Crawley RH11 7DH",
+    },
+    "greenrod_corrine": {
+        "nhs_number": "9450067899", "name": 'Ms Corrine Greenrod "Corrie"',
+        "dob": "1997-01-01", "gender": "Female",
+        "address": "22 West Green Drive, Crawley RH11 7DH",
+    },
+    "panganiban_bryana": {
+        "nhs_number": "9465730793", "name": "Ms Bryana Panganiban",
+        "dob": "2001-08-04", "gender": "Female",
+        "address": "N/a, Thelwall Cottage, Little Redbourne, Gainsborough DN21 4QL",
+    },
+    "assadi_najeema": {
+        "nhs_number": "9437702047", "name": "Ms Najeema Assadi",
+        "dob": "2008-11-03", "gender": "Female",
+        "address": "18 Broadway Avenue, Birmingham B9 5FD",
+    },
+    "daniel_arlene": {
+        "nhs_number": "9692137996", "name": "Ms Arlene Daniel",
+        "dob": "2019-01-24", "gender": "Female",
+        "address": "10 Queen Elizabeth Way, Barton-upon-Humber, S Humberside DN18 6AJ",
+    },
+    "gavin_gorsedd": {
+        "nhs_number": "9437702055", "name": "Mr Gorsedd Gavin",
+        "dob": "2000-06-12", "gender": "Male",
+        "address": "1 Bramble Dell, Birmingham B9 5FE",
+    },
+    "galli_wade": {
+        "nhs_number": "9465736678", "name": "Mr Wade Galli",
+        "dob": "2000-09-29", "gender": "Male",
+        "address": "355 Ashby Road, Scunthorpe DN16 2RT",
+    },
+    "hitchcox_quanah": {
+        "nhs_number": "9450076340", "name": "Mr Quanah Hitchcox",
+        "dob": "2001-03-20", "gender": "Male",
+        "address": "10 Howe Close, New Milton BH25 5LS",
+    },
+    "wynne_pete": {
+        "nhs_number": "9692136728", "name": "Mr Pete Wynne",
+        "dob": "2003-08-27", "gender": "Male",
+        "address": "1A High Street, Crowle, Scunthorpe DN17 4LD",
+    },
+}
+
+# Primary TPP test patient for Access Record: Structured
+TPP_PRIMARY_PATIENT = TPP_PATIENTS["job_louise"]
+
+
+# ---------------------------------------------------------------------------
+# Medicus Test Patients
+# ---------------------------------------------------------------------------
+
+MEDICUS_ORGANISATION = {
+    "name": "TBC",
+    "ods_code": "N82090",
+    "asid": "200000001865",
+    "endpoint": "https://gpc-YGMYW-staging.medicus.thirdparty.nhs.uk/N82090/STU3/1/gpconnect/structured",
+}
+
+MEDICUS_PATIENTS = {
+    "baggs_james": {
+        "nhs_number": "9693646525", "name": "Mr James Baggs",
+        "dob": "1971-07-09", "gender": "Male",
+    },
+    "sachsukh": {
+        "nhs_number": "9465704954", "name": "Mrs Sachsukh",
+        "dob": "1948-03-22", "gender": "Female",
+    },
+    "tower_katy": {
+        "nhs_number": "9465704970", "name": "Mrs Katy Tower",
+        "dob": "1985-09-09", "gender": "Female",
+    },
+    "garthside_liliana": {
+        "nhs_number": "9465704997", "name": "Mrs Liliana Garthside",
+        "dob": "1955-02-04", "gender": "Female",
+    },
+    "leedham_nigella": {
+        "nhs_number": "9465705039", "name": "Mrs Nigella Leedham",
+        "dob": "1953-11-18", "gender": "Female",
+    },
+    "hayley_lynda": {
+        "nhs_number": "9726623545", "name": "Mrs Lynda Clare Hayley",
+        "dob": "1995-11-07", "gender": "Female",
+    },
+    "smout_ivor": {
+        "nhs_number": "9727400299", "name": "Mr Ivor Smout",
+        "dob": "1943-03-07", "gender": "Male",
+    },
+    "conley_alison": {
+        "nhs_number": "9726623588", "name": "Ms Alison Conley",
+        "dob": "1983-07-21", "gender": "Female",
+    },
+    "wadham_basil": {
+        "nhs_number": "9726905230", "name": "Mr Basil Wadham",
+        "dob": "1999-03-14", "gender": "Male",
+    },
+}
+
+# Invalid / special NHS numbers for error testing
+INVALID_NHS_NUMBER = "9999999999"
+
+# Primary Medicus test patient
+MEDICUS_PRIMARY_PATIENT = MEDICUS_PATIENTS["baggs_james"]
+
+
+# ---------------------------------------------------------------------------
+# Fixtures
+# ---------------------------------------------------------------------------
+
+@pytest.fixture(scope="session")
+def emis_patients():
+    """Return EMIS test patient data."""
+    return EMIS_PATIENTS
+
+
+@pytest.fixture(scope="session")
+def tpp_patients():
+    """Return TPP test patient data."""
+    return TPP_PATIENTS
+
+
+@pytest.fixture(scope="session")
+def medicus_patients():
+    """Return Medicus test patient data."""
+    return MEDICUS_PATIENTS
+
+
+@pytest.fixture(scope="session")
+def medicus_organisation():
+    """Return Medicus organisation data."""
+    return MEDICUS_ORGANISATION
+
+
+@pytest.fixture(scope="session")
+def emis_primary_patient():
+    """Return the primary EMIS test patient (Liston, Janine)."""
+    return EMIS_PRIMARY_PATIENT
+
+
+@pytest.fixture(scope="session")
+def tpp_primary_patient():
+    """Return the primary TPP test patient (Job, Louise)."""
+    return TPP_PRIMARY_PATIENT
+
+
+@pytest.fixture(scope="session")
+def medicus_primary_patient():
+    """Return the primary Medicus test patient (Baggs, James)."""
+    return MEDICUS_PRIMARY_PATIENT

@@ -1,0 +1,7 @@
+pytest>=9.0.0
+pytest-bdd>=8.1.0
+pytest-playwright>=0.7.0
+playwright>=1.58.0
+pytest-html>=4.2.0
+pytest-json-report>=1.5.0
+python-dotenv>=1.2.0
