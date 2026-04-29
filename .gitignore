@@ -20,5 +20,8 @@ test-results/
 reference_cegedim__automated_tests_implementation/.playwright-cli/
 reference_cegedim__automated_tests_implementation/.playwright/
 
+# Agent-local metadata
+reference_cegedim__automated_tests_implementation/.claude/
+
 # Runtime logs
 *.log
