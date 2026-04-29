@@ -1,7 +1,7 @@
 """Step definitions for Access Record Structured Extended feature."""
 from pytest_bdd import scenarios, given, when, then, parsers
 
-scenarios('../features/access_record_structured_extended.feature')
+scenarios('access_record_structured_extended.feature')
 
 # ---------------------------------------------------------------------------
 # General - Given steps

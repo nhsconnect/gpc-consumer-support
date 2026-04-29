@@ -15,3 +15,10 @@ test-results/
 
 # OS
 .DS_Store
+
+# Playwright local artifacts
+reference_cegedim__automated_tests_implementation/.playwright-cli/
+reference_cegedim__automated_tests_implementation/.playwright/
+
+# Runtime logs
+*.log

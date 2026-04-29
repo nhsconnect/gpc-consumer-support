@@ -3,11 +3,70 @@
 Wraps a Playwright Page and provides common interaction helpers
 used by all capability-specific page objects.
 """
+import uuid
+
 from playwright.sync_api import Page, expect
 
 
 class BasePage:
     """Base class for all page objects."""
+
+    JWT_STORAGE_LOOKUP = r"""
+        () => {
+            const jwtPattern = /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/;
+            const visited = new Set();
+
+            const collectCandidates = value => {
+                if (value == null) {
+                    return [];
+                }
+
+                if (typeof value === 'string') {
+                    const trimmed = value.trim();
+                    if (!trimmed) {
+                        return [];
+                    }
+
+                    const direct = trimmed.replace(/^Bearer\s+/i, '');
+                    if (jwtPattern.test(direct)) {
+                        return [direct];
+                    }
+
+                    try {
+                        return collectCandidates(JSON.parse(trimmed));
+                    } catch {
+                        return [];
+                    }
+                }
+
+                if (typeof value !== 'object') {
+                    return [];
+                }
+
+                if (visited.has(value)) {
+                    return [];
+                }
+                visited.add(value);
+
+                if (Array.isArray(value)) {
+                    return value.flatMap(collectCandidates);
+                }
+
+                return Object.values(value).flatMap(collectCandidates);
+            };
+
+            const findInStorage = storage => {
+                const results = [];
+                for (let index = 0; index < storage.length; index += 1) {
+                    const key = storage.key(index);
+                    results.push(...collectCandidates(storage.getItem(key)));
+                }
+                return results;
+            };
+
+            return [...findInStorage(window.localStorage), ...findInStorage(window.sessionStorage)][0] || null;
+        }
+    """
 
     def __init__(self, page: Page, base_url: str = ""):
         self.page = page
@@ -101,6 +160,75 @@ class BasePage:
             if self.is_visible(sel):
                 return self.get_text(sel).strip()
         return ""
+
+    # ------------------------------------------------------------------
+    # API helpers
+    # ------------------------------------------------------------------
+
+    def get_bearer_token(self) -> str | None:
+        token = self.page.evaluate(self.JWT_STORAGE_LOOKUP)
+        if not token:
+            return None
+        return str(token)
+
+    def perform_authenticated_get(
+        self,
+        path: str,
+        params: dict[str, str],
+        *,
+        include_empty_params: bool = False,
+        extra_headers: dict[str, str] | None = None,
+    ) -> dict:
+        token = self.get_bearer_token()
+        headers = {
+            "Accept": "application/json, text/plain, */*",
+            "x-correlation-id": str(uuid.uuid4()),
+        }
+        if extra_headers:
+            headers.update(extra_headers)
+        if token:
+            headers["Authorization"] = f"Bearer {token}"
+
+        return self.page.evaluate(
+            """async ({ path, params, headers, includeEmptyParams }) => {
+                const url = new URL(path, window.location.origin);
+                for (const [key, value] of Object.entries(params)) {
+                    const hasValue = value !== null && value !== undefined && value !== '';
+                    if (hasValue || includeEmptyParams) {
+                        url.searchParams.set(key, value);
+                    }
+                }
+
+                const response = await fetch(url.toString(), {
+                    method: 'GET',
+                    headers,
+                    credentials: 'include',
+                });
+
+                const contentType = response.headers.get('content-type') || '';
+                let body;
+                if (contentType.includes('application/json')) {
+                    body = await response.json();
+                } else {
+                    body = await response.text();
+                }
+
+                return {
+                    ok: response.ok,
+                    status: response.status,
+                    statusText: response.statusText,
+                    url: response.url,
+                    headers: Object.fromEntries(response.headers.entries()),
+                    body,
+                };
+            }""",
+            {
+                "path": path,
+                "params": params,
+                "headers": headers,
+                "includeEmptyParams": include_empty_params,
+            },
+        )
 
     def dismiss_modal(self) -> None:
         """Close any visible modal dialog."""

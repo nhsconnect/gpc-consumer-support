@@ -52,6 +52,8 @@ def authenticated_context(browser, base_url, credentials):
     Performs the Keycloak OIDC login once per session and stores the
     auth state so all tests reuse the same session cookie.
     """
+    video_dir = os.getenv("PLAYWRIGHT_VIDEO_DIR", "").strip()
+
     context = browser.new_context(
         ignore_https_errors=True,
         viewport={"width": 1920, "height": 1080},
@@ -76,11 +78,16 @@ def authenticated_context(browser, base_url, credentials):
     context.close()
 
     # Return a new context pre-loaded with the auth cookies
-    authenticated = browser.new_context(
-        storage_state=storage,
-        ignore_https_errors=True,
-        viewport={"width": 1920, "height": 1080},
-    )
+    context_options = {
+        "storage_state": storage,
+        "ignore_https_errors": True,
+        "viewport": {"width": 1920, "height": 1080},
+    }
+    if video_dir:
+        Path(video_dir).mkdir(parents=True, exist_ok=True)
+        context_options["record_video_dir"] = video_dir
+
+    authenticated = browser.new_context(**context_options)
     yield authenticated
     authenticated.close()
 

@@ -1,6 +1,6 @@
-# GP Connect Consumer Assurance Tests
+# GP Connect Consumer Assurance Tests — Access Record: Structured
 
-This folder contains the **BDD feature files** (Gherkin) that define the GP Connect consumer assurance test scenarios.
+This folder contains the **BDD feature files** (Gherkin) that define the GP Connect consumer assurance test scenarios for the **Access Record: Structured** capability.
 
 Every consumer supplier must implement and pass these tests to gather the assurance evidence required. The scenarios are supplier-agnostic — they describe _what_ must be tested, not _how_ to automate it.
 
@@ -8,15 +8,8 @@ Every consumer supplier must implement and pass these tests to gather the assura
 
 | Feature file | Capability |
 |---|---|
-| `foundations.feature` | Find/Read Patient, Practitioner, Organisation, Location |
-| `spine_integration.feature` | SDS lookup, JWT generation, SSP routing, HTTP headers |
-| `access_record_html.feature` | Access Record HTML |
 | `access_record_structured.feature` | Access Record Structured — Medications & Allergies |
 | `access_record_structured_extended.feature` | Access Record Structured — Problems, Immunisations, Consultations |
-| `access_document.feature` | Access Document |
-| `send_document_consultation_summary.feature` | Send Document — Consultation Summary |
-| `send_document_online_consultation.feature` | Send Document — Online Consultation |
-| `structured_documents_migrate.feature` | Structured to Documents Migration |
 
 ## How to Use
 

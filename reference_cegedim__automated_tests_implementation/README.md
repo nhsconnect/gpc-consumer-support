@@ -25,25 +25,13 @@ reference_cegedim__automated_tests_implementation/
 ├── pages/                        # Page Object Model (Cegedim-specific)
 │   ├── base_page.py
 │   ├── login_page.py
-│   ├── foundations_page.py
-│   ├── spine_integration_page.py
-│   ├── send_document_page.py
-│   ├── access_record_html_page.py
-│   ├── access_record_structured_page.py
-│   └── access_document_page.py
+│   └── access_record_structured_page.py
 └── tests/
     ├── conftest.py               # Test patient data (EMIS, TPP, Medicus)
     └── step_defs/                # Step definitions wiring Gherkin → Playwright
         ├── conftest.py
-        ├── test_foundations.py
-        ├── test_spine_integration.py
-        ├── test_access_record_html.py
         ├── test_access_record_structured.py
-        ├── test_access_record_structured_extended.py
-        ├── test_access_document.py
-        ├── test_send_document_consultation_summary.py
-        ├── test_send_document_online_consultation.py
-        └── test_structured_documents_migrate.py
+        └── test_access_record_structured_extended.py
 ```
 
 ## Prerequisites
@@ -78,11 +66,10 @@ cd reference_cegedim__automated_tests_implementation
 pytest
 
 # Run a specific capability
-pytest -m foundations
 pytest -m access_record_structured
 
 # Run a single feature file
-pytest tests/step_defs/test_foundations.py
+pytest tests/step_defs/test_access_record_structured.py
 
 # Run with headed browser
 pytest --headed
@@ -92,4 +79,4 @@ pytest --headed
 
 Tests can be filtered using pytest markers defined in `pytest.ini`:
 
-`foundations`, `spine_integration`, `access_record_html`, `access_record_structured`, `access_record_structured_extended`, `access_document`, `send_document_consultation_summary`, `send_document_online_consultation`, `structured_documents_migrate`, `medications`, `allergies`, `problems`, `immunisations`, `consultations`, `error_handling`, `warnings`
+`access_record_structured`, `access_record_structured_extended`, `medications`, `allergies`, `problems`, `immunisations`, `consultations`, `error_handling`, `warnings`
