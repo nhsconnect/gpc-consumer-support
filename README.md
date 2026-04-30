@@ -47,6 +47,8 @@ The `reference_cegedim__automated_tests_implementation/` folder contains a **wor
 
 Suppliers should use this as a guide to build their own test automation that executes the same BDD scenarios against their own consumer application. See the [reference implementation README](reference_cegedim__automated_tests_implementation/README.md) for setup and usage details.
 
+For agent-specific implementation context and guardrails, see [AGENTS.md](reference_cegedim__automated_tests_implementation/AGENTS.md).
+
 ## Test Data
 
 Three provider systems are configured with test patients:

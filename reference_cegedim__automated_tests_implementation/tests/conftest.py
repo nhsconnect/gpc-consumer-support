@@ -109,6 +109,31 @@ TPP_PATIENTS = {
         "address": "103 High Street, Belton, Doncaster DN9 1NR",
         "notes": "Do not amend, main AR:S test patient",
     },
+    "skelly_horace": {
+        "nhs_number": "9690937286", "name": "Mr Horace Skelly",
+        "dob": "1925-04-21", "gender": "Male",
+        "address": "3 BOWESFIELD CRESCENT, STOCKTON-ON-TEES, TS18 3BL",
+        "given_name": "Horace",
+        "family_name": "Skelly",
+        "postcode": "TS18 3BL",
+        "local_gender": "Female",
+        "local_gp_ods_code": "B82617",
+        "notes": "GEN-07 demographics comparison assurance patient",
+    },
+    "stale_pds_smith": {
+        "family_name": "Smith",
+        "notes": "GEN-06 dedicated stale-PDS search anchor; reserve for >24h no-refresh flow only and do not reuse in other tests",
+    },
+    "pds_trace_fail_9690938533": {
+        "nhs_number": "9690938533", "name": "PDS Trace Fail 9690938533",
+        "dob": "2000-09-09", "gender": "Unknown",
+        "notes": "GEN-09 PDS trace fail scenario (cannot confirm registered practice)",
+    },
+    "pds_trace_fail_9690938541": {
+        "nhs_number": "9690938541", "name": "PDS Trace Fail 9690938541",
+        "dob": "1960-03-28", "gender": "Unknown",
+        "notes": "GEN-09 PDS trace fail scenario (cannot confirm registered practice)",
+    },
     "hitchcott_derryl": {
         "nhs_number": "9465693839", "name": "Mr Derryl Hitchcott",
         "dob": "1977-02-06", "gender": "Male",

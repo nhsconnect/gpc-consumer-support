@@ -4,6 +4,8 @@ This folder is a **reference implementation** that demonstrates how a supplier c
 
 It is **not** intended to be run as-is by other suppliers and **will not work out of the box** — the `.env` file containing the login credentials for the test system is not committed to the repository. Instead, it serves as a worked example showing one way to wire up the Gherkin feature files with real step definitions, page objects, and test data against a specific consumer application (Cegedim Pharmacy Services).
 
+For durable coding-agent context and guardrails, see [AGENTS.md](AGENTS.md).
+
 ## How Suppliers Should Use This
 
 1. **Read the feature files** in `consumer_tests/` — these define the scenarios every consumer must pass.
@@ -56,6 +58,29 @@ GP_CONNECT_BASE_URL=https://pharmacyservices.cegedim.cloud/pharmacy/home
 GP_CONNECT_USERNAME=<your_username>
 GP_CONNECT_PASSWORD=<your_password>
 ```
+
+## Development Workflow — playwright-cli First
+
+> **For AI agents (Copilot, Claude, etc.)**: When building or modifying any page interactions, navigation flows, or step definitions, **always use `playwright-cli` to explore the UI first** before writing or editing Python code.
+>
+> Workflow:
+> 1. Open a session: `playwright-cli -s=<session-name> open "$BASE_URL"`
+> 2. Navigate and interact step-by-step to discover real selectors and page behaviour
+> 3. Use `playwright-cli -s=<session-name> show-source` or inspect the generated code after each action
+> 4. Translate the confirmed selectors and flow into Python page object methods
+>
+> Never guess selectors or navigation paths — always verify with playwright-cli first.
+
+## Required Delivery Workflow
+
+For all new or changed automated tests in this reference implementation, follow this sequence:
+
+1. Use `playwright-cli` to discover and verify the real UI flow before editing code.
+2. Update `docs/ui-feature-map.md` with the confirmed navigation path and selectors.
+3. Use requirements and data notes from `supporting-documentation/1_5_structured_context.csv` while implementing steps and assertions.
+4. Run the newly developed tests and a regression set of previously passing tests to confirm end-to-end behaviour and catch regressions.
+
+If an MP4 flow recording exists under `supporting-documentation/`, use it as an additional guide to cross-check sequence and UI state transitions.
 
 ## Running Tests
 

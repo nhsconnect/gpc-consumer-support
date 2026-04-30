@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "playwright-cli": true,
+        "command": true,
+        "ffprobe": true,
+        "mdls": true
+    }
+}

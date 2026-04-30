@@ -11,6 +11,65 @@ from playwright.sync_api import Page, expect
 class BasePage:
     """Base class for all page objects."""
 
+    UI_READY_OBSERVE_MS = 750
+    UI_READY_STABLE_MS = 500
+
+    UI_READY_CHECK = r"""
+        ({ observeMs, stableMs }) => {
+            const isVisible = element => {
+                if (!element || !element.isConnected) {
+                    return false;
+                }
+
+                const style = window.getComputedStyle(element);
+                if (
+                    style.display === 'none'
+                    || style.visibility === 'hidden'
+                    || style.opacity === '0'
+                ) {
+                    return false;
+                }
+
+                const rect = element.getBoundingClientRect();
+                return rect.width > 0 && rect.height > 0;
+            };
+
+            const spinnerSelectors = [
+                '.MuiCircularProgress-root[role="progressbar"]',
+                '[role="progressbar"]:not([aria-label="notification timer"])',
+            ];
+
+            const visibleSpinners = spinnerSelectors.flatMap(selector => {
+                return Array.from(document.querySelectorAll(selector)).filter(isVisible);
+            });
+
+            const stateKey = '__copilotUiReadyState';
+            const now = Date.now();
+            const state = window[stateKey] || {
+                startedAt: now,
+                noSpinnerSince: null,
+            };
+
+            if (visibleSpinners.length === 0) {
+                state.noSpinnerSince = state.noSpinnerSince ?? now;
+            } else {
+                state.noSpinnerSince = null;
+            }
+
+            window[stateKey] = state;
+
+            const observedLongEnough = now - state.startedAt >= observeMs;
+            const spinnerGoneLongEnough = state.noSpinnerSince !== null && now - state.noSpinnerSince >= stableMs;
+
+            if (observedLongEnough && spinnerGoneLongEnough) {
+                delete window[stateKey];
+                return true;
+            }
+
+            return false;
+        }
+    """
+
     JWT_STORAGE_LOOKUP = r"""
         () => {
             const jwtPattern = /^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/;
@@ -98,6 +157,8 @@ class BasePage:
 
     def click(self, selector: str, **kwargs) -> None:
         self.page.click(selector, **kwargs)
+        self.wait_for_load()
+
 
     def fill(self, selector: str, value: str) -> None:
         self.page.fill(selector, value)
@@ -127,8 +188,16 @@ class BasePage:
     def wait_for_url(self, pattern: str, **kwargs) -> None:
         self.page.wait_for_url(pattern, **kwargs)
 
-    def wait_for_load(self) -> None:
-        self.page.wait_for_load_state("networkidle")
+    def wait_for_load(self, timeout: int = 15_000) -> None:
+        self.page.wait_for_load_state("networkidle", timeout=timeout)
+        self.page.wait_for_function(
+            self.UI_READY_CHECK,
+            arg={
+                "observeMs": self.UI_READY_OBSERVE_MS,
+                "stableMs": self.UI_READY_STABLE_MS,
+            },
+            timeout=timeout,
+        )
 
     # ------------------------------------------------------------------
     # Assertions (Playwright expect wrappers)

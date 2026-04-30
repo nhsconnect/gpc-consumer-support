@@ -43,6 +43,8 @@ Feature: Access Record Structured - Full Record (Extended)
     Then the registered GP practice from the last PDS trace is used
     # SCAL: GPC-STR-TST-GEN-08 | Test data: 9690937286
 
+  # TEMPORARY: GEN-09 is skipped in automation because NHS 9690938533 and 9690938541 are
+  # currently not s-marked in PDS, so this sensitive-trace blocked-path cannot be exercised.
   @GPC-STR-TST-GEN-09 @general
   Scenario: PDS trace sensitive
     Given I have access to request data from GP Connect but I cannot confirm the registered practice because it is not on PDS or the patient has an s-flag
