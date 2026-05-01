@@ -99,7 +99,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-05
 
-  @GPC-STR-TST-GEN-15 @error_handling @allergies @skip_api_access_not_exposed @skip_cededim_did_not_implement_so_out_of_scope
+  @GPC-STR-TST-GEN-15 @error_handling @allergies @skip_api_access_not_exposed @skip_supplier_not_implemented_out_of_scope
   Scenario: GPC-STR-TST-GEN-15 - Error Handling - Invalid parameter allergies
     Given I have made a request for allergies to a GP Connect service with invalid Allergies Parameters
     When I receive an invalid parameter error response
@@ -126,7 +126,7 @@ Feature: Access Record Structured - Medications and Allergies
       Then I make the user aware as appropriate
       # SCAL: GPC-CORE13-07, GPC-CORE13-06 | Test data: 9658219705
 
-    @GPC-STR-TST-GEN-18 @warnings @allergies @skip_cededim_did_not_implement_so_out_of_scope
+    @GPC-STR-TST-GEN-18 @warnings @allergies @skip_supplier_not_implemented_out_of_scope
     Scenario: GPC-STR-TST-GEN-18 - Warnings - Message warnings Confidential allergy
       Given I have requested allergies are included
       When I receive a response including a confidential items warning for allergies
@@ -148,7 +148,7 @@ Feature: Access Record Structured - Medications and Allergies
       And the confidential data warning is shown to apply to medications data only
       # SCAL: GPC-CORE13-09 | Test data: 9658219705
 
-  @GPC-STR-TST-GEN-20 @general @skip_cededim_did_not_implement_so_out_of_scope
+  @GPC-STR-TST-GEN-20 @general @skip_supplier_not_implemented_out_of_scope
   Scenario: GPC-STR-TST-GEN-20 - Presenting patient data - Data Source
     Given I have received a valid message response
     When I present the data to the end user
@@ -273,7 +273,7 @@ Feature: Access Record Structured - Medications and Allergies
   # Allergy Tests
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-ALG-01 @allergies @skip_cededim_did_not_implement_so_out_of_scope
+  @GPC-STR-TST-ALG-01 @allergies @skip_supplier_not_implemented_out_of_scope
   Scenario: GPC-STR-TST-ALG-01 - Request current allergies
       Given the response includes resolved allergies
     When the user selects to access current allergies from GP Connect
@@ -281,7 +281,7 @@ Feature: Access Record Structured - Medications and Allergies
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-ALL01-(01-02) | Test data: 9658218873
 
-  @GPC-STR-TST-ALG-02 @allergies @skip_cededim_did_not_implement_so_out_of_scope
+  @GPC-STR-TST-ALG-02 @allergies @skip_supplier_not_implemented_out_of_scope
   Scenario: GPC-STR-TST-ALG-02 - Request current and resolved allergies
       Given the response includes allergies which are not recognised by my system
     When the user selects to access all allergies from GP Connect
@@ -294,7 +294,7 @@ Feature: Access Record Structured - Medications and Allergies
     Background: Successful allergy response received
       Given I have received a successful valid allergies message response
 
-    @GPC-STR-TST-ALG-03 @allergies @skip_cededim_did_not_implement_so_out_of_scope
+    @GPC-STR-TST-ALG-03 @allergies @skip_supplier_not_implemented_out_of_scope
     Scenario: GPC-STR-TST-ALG-03 - Handling resolved allergies
       Given the response includes an empty active allergies list resource indicating that the patient record has no content recorded
       When I display or use the allergies information
@@ -303,13 +303,13 @@ Feature: Access Record Structured - Medications and Allergies
       And ensures that the resolved allergies cannot be utilised by decision support where decision support is in use
       # SCAL: GPC-STR-ALL02-02 | Test data: 9658218873
 
-    @GPC-STR-TST-ALG-04 @allergies @skip_cededim_did_not_implement_so_out_of_scope
+    @GPC-STR-TST-ALG-04 @allergies @skip_supplier_not_implemented_out_of_scope
     Scenario: GPC-STR-TST-ALG-04 - Allergy data elements
       Given the response includes a single code item which indicates that the clinician has recorded that the patient has no known allergies
       Then I display or utilise all the key information to represent or process the allergy records commensurate with the original record meaning and my specific use case
       # SCAL: GPC-STR-ALL04-(01-09) | Test data: 9658218873
 
-    @GPC-STR-TST-ALG-05 @allergies @skip_cededim_did_not_implement_so_out_of_scope
+    @GPC-STR-TST-ALG-05 @allergies @skip_supplier_not_implemented_out_of_scope
     Scenario: GPC-STR-TST-ALG-05 - Unrecognised allergies
       Given the response includes allergies which are not recognised by my system
       When I display or use the allergy information
@@ -318,7 +318,7 @@ Feature: Access Record Structured - Medications and Allergies
       And I can handle any records which are sent as allergies but are not recognised as allergy codes by my system
       # SCAL: GPC-STR-TST-ALG-05
 
-    @GPC-STR-TST-ALG-07 @allergies @skip_cededim_did_not_implement_so_out_of_scope
+    @GPC-STR-TST-ALG-07 @allergies @skip_supplier_not_implemented_out_of_scope
     Scenario: GPC-STR-TST-ALG-07 - No data response
       Given the response includes an empty active allergies list resource indicating that the patient record has no content recorded
       When I display or use the allergies response
@@ -326,7 +326,7 @@ Feature: Access Record Structured - Medications and Allergies
       And I handle it appropriate to my use case and in such a way it is not confused with a clinical assertion of no known allergies
       # SCAL: GPC-STR-ALL06-01 | Test data: 9658218865
 
-    @GPC-STR-TST-ALG-08 @allergies @skip_cededim_did_not_implement_so_out_of_scope
+    @GPC-STR-TST-ALG-08 @allergies @skip_supplier_not_implemented_out_of_scope
     Scenario: GPC-STR-TST-ALG-08 - Clinically asserted no known allergies
       Given the response includes a single code item which indicates that the clinician has recorded that the patient has no known allergies
       When I display or use the allergies response

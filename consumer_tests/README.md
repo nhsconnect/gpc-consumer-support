@@ -7,7 +7,7 @@ Every consumer supplier must implement and pass these tests to gather the assura
 ## Feature Files
 
 | Feature file | Capability |
-|---|---|
+| --- | --- |
 | `access_record_structured.feature` | Access Record Structured — Medications & Allergies |
 | `access_record_structured_extended.feature` | Access Record Structured — Problems, Immunisations, Consultations |
 
@@ -16,4 +16,5 @@ Every consumer supplier must implement and pass these tests to gather the assura
 1. Use a BDD test framework in your language of choice (e.g. pytest-bdd, Cucumber, SpecFlow).
 2. Point your framework at this folder as the feature file source.
 3. Implement step definitions that drive your consumer application.
-4. See [`reference_cegedim__automated_tests_implementation/`](../reference_cegedim__automated_tests_implementation/) for a worked example using Python + pytest-bdd + Playwright.
+4. See the reference implementation folder for a worked example using Python + pytest-bdd + Playwright.
+   The current example in this repository is under `../reference_cegedim__automated_tests_implementation/`.
