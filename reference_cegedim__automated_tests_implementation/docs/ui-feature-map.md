@@ -7,7 +7,7 @@ definitions and page-object selectors for that capability area.
 ## Access Record: Structured
 
 **Feature files:** `access_record_structured.feature`, `access_record_structured_extended.feature`  
-**Page object:** `AccessRecordStructuredPage`
+**Page objects:** `HomePage`, `NmsEpisodePage`, `GpRecordPage`, `StructuredRecordPage` (facade: `AccessRecordStructuredPage`)
 
 ### Navigation path
 

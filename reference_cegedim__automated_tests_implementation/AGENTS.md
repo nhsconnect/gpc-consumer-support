@@ -36,6 +36,8 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 - Do not guess selectors; confirm behavior in the live UI first.
 - Prefer minimal edits and avoid reformatting unrelated code.
 - Keep scenario-to-step mapping clear and traceable.
+- Model page objects by real application screens, not by feature file. Use dedicated classes for pages such as home, demographics search, patient search results, and GP record views.
+- Keep `pages/access_record_structured_page.py` as a thin compatibility facade only. Place new UI interaction logic in screen-specific page object classes.
 - Create a top-level execution folder for each run under `test-results/` named `test-suite-execution-YYYYMMDD-HHMMSS`.
 - Store all artefacts for that run inside its execution folder (for example `report.html`, `results.json`, and `videos-manual/`).
 - Name scenario-level artefacts (for example videos) using the scenario test ID plus timestamp (for example `@GPC-STR-TST-GEN-09+YYYYMMDD-HHMMSS`) so evidence is easy to review.
@@ -67,7 +69,11 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 
 When updating flow, selectors, or assertions, update these together where relevant:
 
-- `pages/access_record_structured_page.py`
+- `pages/home_page.py`
+- `pages/nms_episode_page.py`
+- `pages/gp_record_page.py`
+- `pages/structured_record_page.py`
+- `pages/access_record_structured_page.py` (facade only)
 - `tests/step_defs/test_access_record_structured.py`
 - `tests/step_defs/test_access_record_structured_extended.py`
 - `docs/ui-feature-map.md`
