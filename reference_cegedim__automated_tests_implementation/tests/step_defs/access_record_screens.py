@@ -123,6 +123,18 @@ class AccessRecordScreens:
     def get_acute_medication_empty_message(self) -> str:
         return self.gp_record_page.get_acute_medication_empty_message()
 
+    def select_investigations_tab(self) -> None:
+        self.gp_record_page.select_investigations_tab()
+
+    def investigation_item_count(self) -> int:
+        return self.gp_record_page.investigation_item_count()
+
+    def get_first_investigation_item_text(self) -> str:
+        return self.gp_record_page.get_first_investigation_item_text()
+
+    def click_first_investigation_item(self) -> None:
+        self.gp_record_page.click_first_investigation_item()
+
     def _normalise_value(self, value: str) -> str:
         return self.gp_record_page.normalise_value(value)
 

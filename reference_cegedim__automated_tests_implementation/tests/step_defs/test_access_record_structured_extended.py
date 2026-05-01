@@ -447,13 +447,36 @@ def given_requests_investigations(access_record_structured_page, gp_connect_cont
 
 
 @given('I have made a valid investigations request')
-def given_valid_investigations_request(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
-    access_record_structured_page.toggle_clinical_area('investigations', True)
-    access_record_structured_page.submit_request()
-    assert access_record_structured_page.response_visible()
+def given_valid_investigations_request(access_record_structured_page, gp_connect_context, tpp_patients):
+    patient = tpp_patients['skelly_horace']
+
+    access_record_structured_page.open_patient_search()
+    access_record_structured_page.search_patient_by_demographics(
+        given_name=patient['given_name'],
+        family_name=patient['family_name'],
+        date_of_birth=patient['dob'],
+        postcode=patient['postcode'],
+        expected_result_text=patient['family_name'],
+    )
+    access_record_structured_page.open_patient_gp_record()
+    access_record_structured_page.select_investigations_tab()
+
+    investigation_count = access_record_structured_page.investigation_item_count()
+    assert investigation_count > 1, (
+        'Expected more than one investigation item for INV-06, '
+        f'but found {investigation_count}.'
+    )
+
+    top_investigation_text = access_record_structured_page.get_first_investigation_item_text()
+    assert top_investigation_text, (
+        'Expected to extract top investigation item text for INV-06 highlight evidence.'
+    )
+
+    access_record_structured_page.click_first_investigation_item()
+    access_record_structured_page.highlight_text_assertion(top_investigation_text)
+
+    gp_connect_context['investigations_ui_mode'] = True
+    gp_connect_context['investigation_item_count'] = investigation_count
     gp_connect_context['valid_investigations_request'] = True
 
 
@@ -1286,6 +1309,10 @@ def when_no_investigation_data(access_record_structured_page, gp_connect_context
 
 @when('I receive a successful response')
 def when_successful_response(access_record_structured_page, gp_connect_context):
+    if gp_connect_context.get('investigations_ui_mode'):
+        gp_connect_context['successful_response'] = True
+        return
+
     assert access_record_structured_page.response_visible()
     gp_connect_context['successful_response'] = True
 
@@ -1853,6 +1880,14 @@ def then_resolved_no_decision_support(gp_connect_context):
 
 @then('I display all key information commensurate with the original record')
 def then_display_all_key_info(access_record_structured_page, gp_connect_context):
+    if gp_connect_context.get('investigations_ui_mode'):
+        investigation_count = gp_connect_context.get('investigation_item_count', 0)
+        assert investigation_count > 1, (
+            'Expected more than one investigation item for INV-06 '
+            f'but found {investigation_count}.'
+        )
+        return
+
     assert access_record_structured_page.response_visible()
     assert access_record_structured_page.has_results_for('allergies'), \
         "Allergy information should be displayed"

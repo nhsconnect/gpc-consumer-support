@@ -50,6 +50,7 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 - Each time a new test is added or an existing test is changed, rerun the relevant previously passing tests (or a broader regression subset) before finishing work to catch regressions early.
 - Store video evidence for each executed test scenario under the current run folder at `test-results/test-suite-execution-*/videos-manual/` and keep these recordings available for review.
 - For assertions that validate visible UI text, use the page highlight helper so the asserted text is visibly emphasised in the recorded video evidence (double-click + temporary highlight).
+- For INV-06 UI validation, click the top investigation item and highlight a visible top-item text anchor rather than trying to match a full multi-line row payload.
 - Do not use broad exception swallowing (for example `try: ... except Exception: pass`) to make tests pass. If UI state can vary, assert explicit accepted alternatives and fail with a clear reason when none are present.
 
 ## Test Data Notes
@@ -63,6 +64,9 @@ pytest tests/step_defs/test_access_record_structured_extended.py
   - GEN-06 automation currently covers the blocked `>24h` stale-PDS branch with the reserved `Smith` patient.
   - GEN-09 is currently skipped in automation: NHS `9690938533` and `9690938541` are not presently s-marked in PDS, so the blocked sensitive-trace branch cannot be validated until suitable data is restored.
   - GEN-13 to GEN-16 are currently tagged `@skip_api_access_not_exposed` and skipped with reason `To be implemented once API access is exposed`.
+  - Investigations in extended structured are currently split:
+    - INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are tagged `@skip_api_access_not_exposed`.
+    - INV-06 is implemented through Patient GP Record UI (Investigations tab), not API response parsing.
   - GEN-17 (GP2GP transfer warning) uses NHS `9690938096` by demographics family-name search `Beston`, then `#ChoosePatient`, then `#view-gp-record` before asserting warning text.
   - PDS verification state branches to account for in future scenarios:
     - Never verified: UI shows `Verify patient via PDS` and message `The patient's details have not been PDS verified`.

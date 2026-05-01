@@ -13,6 +13,7 @@ class GpRecordPage(BasePage):
     REPEAT_MEDICATIONS_TAB = "Repeat Medications"
     PRESCRIBED_ELSEWHERE_MEDICATIONS_TAB = "Prescribed Elsewhere Medications"
     DISCONTINUED_MEDICATIONS_TAB = "Discontinued Medications"
+    INVESTIGATIONS_TAB = "Investigations"
     MEDICATION_RANGE_SELECT = "#select"
     MEDICATION_RANGE_DEFAULT = "Showing 15 months of medication data"
 
@@ -135,6 +136,100 @@ class GpRecordPage(BasePage):
             return f"{self.ACUTE_NO_DATA_LINE_1}\n{self.ACUTE_NO_DATA_LINE_2}"
 
         return ""
+
+    def select_investigations_tab(self) -> None:
+        self.select_medication_tab(self.INVESTIGATIONS_TAB)
+
+    def investigation_item_count(self) -> int:
+        rows = self.page.locator("tbody tr")
+        if rows.count() > 0:
+            return rows.count()
+
+        return len(self._investigation_button_candidates())
+
+    def get_first_investigation_item_text(self) -> str:
+        rows = self.page.locator("tbody tr")
+        if rows.count() > 0:
+            first_cell = rows.first.locator("td").first
+            if first_cell.count() > 0:
+                raw = first_cell.inner_text(timeout=5000)
+            else:
+                raw = rows.first.inner_text(timeout=5000)
+            return self._first_meaningful_line(raw)
+
+        candidates = self._investigation_button_candidates()
+        if not candidates:
+            return ""
+
+        raw = candidates[0].inner_text(timeout=5000)
+        return self._first_meaningful_line(raw)
+
+    def click_first_investigation_item(self) -> None:
+        rows = self.page.locator("tbody tr")
+        if rows.count() > 0:
+            rows.first.click(force=True)
+            return
+
+        candidates = self._investigation_button_candidates()
+        if candidates:
+            candidates[0].click(force=True)
+
+    def _investigation_button_candidates(self):
+        excluded_exact = {
+            "Acute Medications",
+            "Repeat Medications",
+            "Prescribed Elsewhere Medications",
+            "Discontinued Medications",
+            "Investigations",
+            "Blood Pressure",
+            "Pulse Rate",
+            "BMI",
+            "Height",
+            "Weight",
+            "Smoking",
+            "Alcohol",
+            "Filter",
+        }
+
+        buttons = self.page.get_by_role("button").all()
+        candidates = []
+        for button in buttons:
+            if not button.is_visible():
+                continue
+            text = button.inner_text(timeout=5000).strip()
+            if not text or text in excluded_exact:
+                continue
+            if text.startswith("Showing "):
+                continue
+            if len(text) < 8:
+                continue
+            candidates.append(button)
+
+        return candidates
+
+    def _first_meaningful_line(self, raw_text: str) -> str:
+        text = raw_text.replace("\u00a0", " ")
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
+
+        ignored_prefixes = (
+            "report date",
+            "result date",
+            "status",
+            "not yet filed",
+            "filed",
+        )
+
+        for line in lines:
+            lower = line.lower()
+            if any(lower.startswith(prefix) for prefix in ignored_prefixes):
+                continue
+            for marker in (" Not yet filed", " Filed", " Report date", " Result date", " Status"):
+                if marker in line:
+                    line = line.split(marker, 1)[0].strip()
+            if len(line) >= 3:
+                return line
+
+        return lines[0] if lines else ""
 
     def _wait_for_spinners_to_clear(self) -> None:
         self.page.wait_for_function(

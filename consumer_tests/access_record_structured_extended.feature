@@ -224,14 +224,14 @@ Feature: Access Record Structured - Full Record (Extended)
   # INVESTIGATION TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-INV-01 @investigations
+  @GPC-STR-TST-INV-01 @investigations @skip_api_access_not_exposed
   Scenario: All investigations
     Given the user wishes to view all investigations
     When they request investigations
     Then the request uses the includeInvestigations parameter with no part parameters
     # SCAL: GPC-STR-TST-INV-01 | Test data: 9690937294
 
-  @GPC-STR-TST-INV-02 @investigations
+  @GPC-STR-TST-INV-02 @investigations @skip_api_access_not_exposed
   Scenario: Investigations from a specified date
     Given the user wishes to view investigations from a specific date
     When they select with a from date
@@ -239,7 +239,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the start date is less than or equal to the current date
     # SCAL: GPC-STR-TST-INV-02 | Test data: 9690937294
 
-  @GPC-STR-TST-INV-03 @investigations
+  @GPC-STR-TST-INV-03 @investigations @skip_api_access_not_exposed
   Scenario: Investigations to a specified date
     Given the user wishes to view investigations up to a specific date
     When they select with a to date
@@ -247,7 +247,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the end date is less than or equal to the current date
     # SCAL: GPC-STR-TST-INV-03 | Test data: 9690937286
 
-  @GPC-STR-TST-INV-04 @investigations
+  @GPC-STR-TST-INV-04 @investigations @skip_api_access_not_exposed
   Scenario: Investigations in a date range
     Given the user wishes to view investigations for a specific period
     When they select with from and to dates
@@ -256,7 +256,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the start date is less than or equal to the end date
     # SCAL: GPC-STR-TST-INV-04 | Test data: 9690937286
 
-  @GPC-STR-TST-INV-05 @investigations
+  @GPC-STR-TST-INV-05 @investigations @skip_api_access_not_exposed
   Scenario: No investigations available
     Given the user or system requests investigations
     When I receive a response with no investigation data
@@ -270,14 +270,14 @@ Feature: Access Record Structured - Full Record (Extended)
     Then I display all key information commensurate with the original record
     # SCAL: GPC-STR-TST-INV-06 | Test data: 9690937286
 
-  @GPC-STR-TST-INV-07 @investigations
+  @GPC-STR-TST-INV-07 @investigations @skip_api_access_not_exposed
   Scenario: Invalid parameter investigations
     Given I have made a request for investigations with invalid parameters
     When I receive an invalid parameter error response
     Then I handle the error gracefully
     # SCAL: GPC-STR-TST-INV-07 | Test data: 9690937294
 
-  @GPC-STR-TST-INV-09 @investigations
+  @GPC-STR-TST-INV-09 @investigations @skip_api_access_not_exposed
   Scenario: Forwards compatibility investigations
     Given I have sent a valid request for investigations
     When the provider returns a warning that investigations is not supported

@@ -98,6 +98,22 @@ Home (pharmacy/home)
                   └─ highlight both asserted lines for evidence videos
 ```
 
+### INV-06 path (supported investigations elements via UI)
+
+```text
+Home (pharmacy/home)
+  └─ click NMS link
+    └─ click Start New NMS
+      └─ search patient by demographics (Skelly/Horace + DOB + postcode)
+        └─ click first Choose Patient (`#ChoosePatient`)
+          └─ click View GP Record (`#view-gp-record`)
+            └─ if demographics confirmation overlay appears, click CONFIRM DETAILS
+              └─ open Investigations tab
+                └─ assert investigations list has more than one item
+                  └─ click top investigation item
+                    └─ highlight top-item asserted text for evidence videos
+```
+
 ### Selectors
 
 | Element | Selector | Notes |
@@ -121,6 +137,8 @@ Home (pharmacy/home)
 | Repeat Medications tab | role button with name `Repeat Medications` | Used by MED-02 valid medications assertion |
 | Medication range filter | role button with name `Showing 15 months of medication data` (fallback `#select`) | Expected visible on medication tab content |
 | Repeat medication items | role button with name containing `Most Recent Issue Date` | Repeat medication cards summary controls |
+| Investigations tab | role button with name `Investigations` | Used by INV-06 supported-investigation UI validation |
+| Investigation list rows | `tbody tr` (fallback visible button candidates in investigations content) | Assert item count > 1 for INV-06 |
 | Acute empty message line 1 | text `No Issued Acute Medication data is recorded for this patient.` | MED-07 exact assertion line 1 |
 | Acute empty message line 2 | text `There may be some unissued medication data available in the 'Not Issued' tab` | MED-07 exact assertion line 2 |
 | NHS number input | `#nhsNumber` (fallbacks: `#nhs-number`, `input[name='nhsNumber']`) | Used by GEN-09 PDS trace route |
@@ -164,4 +182,7 @@ Home (pharmacy/home)
 - MED-02 and MED-07 currently run through the UI GP Record medication tabs and store a `medications_ui_mode` context flag in step definitions to bypass API-only response checks.
 - MED-02 assertions should dynamically extract top repeat-item medication text for highlighting (no hardcoded medicine names).
 - MED-07 assertions should exactly match both acute no-data guidance lines and highlight both lines for evidence videos.
+- INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are currently tagged `@skip_api_access_not_exposed`.
+- INV-06 is implemented as UI mode on the Investigations tab and stores an `investigations_ui_mode` context flag to avoid API-only response checks.
+- INV-06 assertions should click the top investigation item and highlight a visible top-item text anchor (short title/headline) for evidence videos.
 - Videos of UI flows are saved under `test-results/videos-manual/`.
