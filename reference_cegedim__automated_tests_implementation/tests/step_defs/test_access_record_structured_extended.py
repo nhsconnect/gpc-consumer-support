@@ -3,6 +3,19 @@ from pytest_bdd import scenarios, given, when, then, parsers
 
 scenarios('access_record_structured_extended.feature')
 
+
+def _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients):
+    """Open patient context through demographics search (default happy path)."""
+    patient = tpp_patients['skelly_horace']
+    access_record_structured_page.open_patient_search()
+    access_record_structured_page.search_patient_by_demographics(
+        given_name=patient['given_name'],
+        family_name=patient['family_name'],
+        date_of_birth=patient['dob'],
+        postcode=patient['postcode'],
+        expected_result_text=patient['family_name'],
+    )
+
 # ---------------------------------------------------------------------------
 # General - Given steps
 # ---------------------------------------------------------------------------
@@ -506,58 +519,46 @@ def given_sent_valid_investigations(access_record_structured_page, gp_connect_co
 
 
 @given('the user wishes to view all referrals')
-def given_view_all_referrals(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_all_referrals(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('referrals', True)
     gp_connect_context['view_all_referrals'] = True
 
 
 @given('the user wishes to view referrals from a specific date')
-def given_view_referrals_from_date(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_referrals_from_date(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('referrals', True)
     access_record_structured_page.set_search_period(start='2020-01-01')
     gp_connect_context['referral_from_date'] = '2020-01-01'
 
 
 @given('the user wishes to view referrals up to a specific date')
-def given_view_referrals_to_date(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_referrals_to_date(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('referrals', True)
     access_record_structured_page.set_search_period(end='2024-12-31')
     gp_connect_context['referral_to_date'] = '2024-12-31'
 
 
 @given('the user wishes to view referrals for a specific period')
-def given_view_referrals_period(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_referrals_period(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('referrals', True)
     access_record_structured_page.set_search_period(start='2020-01-01', end='2024-12-31')
     gp_connect_context['referral_period'] = True
 
 
 @given('the user or system requests referrals')
-def given_requests_referrals(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_requests_referrals(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('referrals', True)
     gp_connect_context['referrals_requested'] = True
 
 
 @given('I have made a valid referrals request')
-def given_valid_referrals_request(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_valid_referrals_request(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('referrals', True)
     access_record_structured_page.submit_request()
     assert access_record_structured_page.response_visible()
@@ -565,20 +566,16 @@ def given_valid_referrals_request(access_record_structured_page, gp_connect_cont
 
 
 @given('I have made a request for referrals with invalid parameters')
-def given_invalid_referrals_params(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_invalid_referrals_params(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('referrals', True)
     access_record_structured_page.submit_request()
     gp_connect_context['invalid_referrals_params'] = True
 
 
 @given('I have sent a valid request for referrals')
-def given_sent_valid_referrals(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_sent_valid_referrals(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('referrals', True)
     access_record_structured_page.submit_request()
     gp_connect_context['valid_referrals_sent'] = True
@@ -590,38 +587,30 @@ def given_sent_valid_referrals(access_record_structured_page, gp_connect_context
 
 
 @given('the user wishes to view all diary entries')
-def given_view_all_diary_entries(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_all_diary_entries(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('diary_entries', True)
     gp_connect_context['view_all_diary_entries'] = True
 
 
 @given('the user wishes to view diary entries up to a specific date')
-def given_view_diary_entries_to_date(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_diary_entries_to_date(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('diary_entries', True)
     access_record_structured_page.set_search_period(end='2024-12-31')
     gp_connect_context['diary_to_date'] = '2024-12-31'
 
 
 @given('the user or system requests diary entries')
-def given_requests_diary_entries(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_requests_diary_entries(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('diary_entries', True)
     gp_connect_context['diary_entries_requested'] = True
 
 
 @given('I have made a valid diary entries request')
-def given_valid_diary_entries_request(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_valid_diary_entries_request(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('diary_entries', True)
     access_record_structured_page.submit_request()
     assert access_record_structured_page.response_visible()
@@ -629,20 +618,16 @@ def given_valid_diary_entries_request(access_record_structured_page, gp_connect_
 
 
 @given('I have made a request for diary entries with invalid parameters')
-def given_invalid_diary_entries_params(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_invalid_diary_entries_params(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('diary_entries', True)
     access_record_structured_page.submit_request()
     gp_connect_context['invalid_diary_entries_params'] = True
 
 
 @given('I have sent a valid request for diary entries')
-def given_sent_valid_diary_entries(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_sent_valid_diary_entries(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('diary_entries', True)
     access_record_structured_page.submit_request()
     gp_connect_context['valid_diary_entries_sent'] = True
@@ -654,58 +639,46 @@ def given_sent_valid_diary_entries(access_record_structured_page, gp_connect_con
 
 
 @given('the user wishes to view all problems')
-def given_view_all_problems(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_all_problems(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('problems', True)
     gp_connect_context['view_all_problems'] = True
 
 
 @given('the user wishes to filter problems by status and significance')
-def given_filter_problems(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_filter_problems(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('problems', True)
     access_record_structured_page.set_problem_filters(status='active', significance='major')
     gp_connect_context['problem_filters_set'] = True
 
 
 @given('the user wishes to request problems with multiple filter values')
-def given_multiple_problem_filters(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_multiple_problem_filters(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('problems', True)
     access_record_structured_page.set_problem_filters(status='active', significance='major')
     gp_connect_context['multiple_problem_filters'] = True
 
 
 @given('the user or system requests problems')
-def given_requests_problems(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_requests_problems(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('problems', True)
     gp_connect_context['problems_requested'] = True
 
 
 @given('I have made a request for problems with invalid parameters')
-def given_invalid_problems_params(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_invalid_problems_params(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('problems', True)
     access_record_structured_page.submit_request()
     gp_connect_context['invalid_problems_params'] = True
 
 
 @given('I have sent a valid request for problems')
-def given_sent_valid_problems(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_sent_valid_problems(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('problems', True)
     access_record_structured_page.submit_request()
     gp_connect_context['valid_problems_sent'] = True
@@ -723,29 +696,23 @@ def given_response_with_problems(access_record_structured_page, gp_connect_conte
 
 
 @given('the user wishes to view immunisations')
-def given_view_immunisations(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_immunisations(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('immunisations', True)
     gp_connect_context['view_immunisations'] = True
 
 
 @given('the user wishes to filter immunisations by notGiven and status')
-def given_filter_immunisations(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_filter_immunisations(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('immunisations', True)
     access_record_structured_page.set_immunisation_filters(not_given='true', status='completed')
     gp_connect_context['immunisation_filters_set'] = True
 
 
 @given('I have made a valid immunisations request')
-def given_valid_immunisations_request(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_valid_immunisations_request(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('immunisations', True)
     access_record_structured_page.submit_request()
     assert access_record_structured_page.response_visible()
@@ -761,29 +728,23 @@ def given_response_immunisations_not_given(access_record_structured_page, gp_con
 
 
 @given('the user or system requests immunisations')
-def given_requests_immunisations(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_requests_immunisations(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('immunisations', True)
     gp_connect_context['immunisations_requested'] = True
 
 
 @given('I have made a request for immunisations with invalid parameters')
-def given_invalid_immunisations_params(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_invalid_immunisations_params(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('immunisations', True)
     access_record_structured_page.submit_request()
     gp_connect_context['invalid_immunisations_params'] = True
 
 
 @given('I have sent a valid request for immunisations')
-def given_sent_valid_immunisations(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_sent_valid_immunisations(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('immunisations', True)
     access_record_structured_page.submit_request()
     gp_connect_context['valid_immunisations_sent'] = True
@@ -795,49 +756,39 @@ def given_sent_valid_immunisations(access_record_structured_page, gp_connect_con
 
 
 @given('the user wishes to view all uncategorised data')
-def given_view_all_uncategorised(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_all_uncategorised(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('uncategorised', True)
     gp_connect_context['view_all_uncategorised'] = True
 
 
 @given('the user wishes to view uncategorised data from a specific date')
-def given_view_uncategorised_from_date(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_uncategorised_from_date(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('uncategorised', True)
     access_record_structured_page.set_search_period(start='2020-01-01')
     gp_connect_context['uncategorised_from_date'] = '2020-01-01'
 
 
 @given('the user wishes to view uncategorised data up to a specific date')
-def given_view_uncategorised_to_date(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_uncategorised_to_date(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('uncategorised', True)
     access_record_structured_page.set_search_period(end='2024-12-31')
     gp_connect_context['uncategorised_to_date'] = '2024-12-31'
 
 
 @given('the user wishes to view uncategorised data for a specific period')
-def given_view_uncategorised_period(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_view_uncategorised_period(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('uncategorised', True)
     access_record_structured_page.set_search_period(start='2020-01-01', end='2024-12-31')
     gp_connect_context['uncategorised_period'] = True
 
 
 @given('the user or system requests uncategorised data')
-def given_requests_uncategorised(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_requests_uncategorised(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('uncategorised', True)
     gp_connect_context['uncategorised_requested'] = True
 
@@ -857,10 +808,8 @@ def given_blood_pressure_uncategorised(access_record_structured_page, gp_connect
 
 
 @given('I have made a valid uncategorised data request')
-def given_valid_uncategorised_request(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_valid_uncategorised_request(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('uncategorised', True)
     access_record_structured_page.submit_request()
     assert access_record_structured_page.response_visible()
@@ -868,20 +817,16 @@ def given_valid_uncategorised_request(access_record_structured_page, gp_connect_
 
 
 @given('I have made a request for uncategorised data with invalid parameters')
-def given_invalid_uncategorised_params(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_invalid_uncategorised_params(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('uncategorised', True)
     access_record_structured_page.submit_request()
     gp_connect_context['invalid_uncategorised_params'] = True
 
 
 @given('I have sent a valid request for uncategorised data')
-def given_sent_valid_uncategorised(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_sent_valid_uncategorised(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('uncategorised', True)
     access_record_structured_page.submit_request()
     gp_connect_context['valid_uncategorised_sent'] = True
@@ -972,10 +917,8 @@ def given_invalid_consultations_params(access_record_structured_page, gp_connect
 
 
 @given('I have sent a valid request for consultations')
-def given_sent_valid_consultations(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_sent_valid_consultations(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('consultations', True)
     access_record_structured_page.submit_request()
     gp_connect_context['valid_consultations_sent'] = True
@@ -1048,26 +991,20 @@ def given_allergies_linked_problems(access_record_structured_page, gp_connect_co
 
 
 @given('the user wishes to run a predefined search')
-def given_predefined_search(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_predefined_search(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     gp_connect_context['predefined_search'] = True
 
 
 @given('the user wishes to run a predefined search with additional clinical areas')
-def given_predefined_search_additional(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_predefined_search_additional(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     gp_connect_context['predefined_search_additional'] = True
 
 
 @given('the user wishes to request multiple clinical areas including consultations')
-def given_multiple_areas_with_consultations(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_multiple_areas_with_consultations(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('consultations', True)
     access_record_structured_page.toggle_clinical_area('medications', True)
     access_record_structured_page.toggle_clinical_area('allergies', True)
@@ -1075,10 +1012,8 @@ def given_multiple_areas_with_consultations(access_record_structured_page, gp_co
 
 
 @given('the user wishes to request multiple clinical areas including problems')
-def given_multiple_areas_with_problems(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_multiple_areas_with_problems(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('problems', True)
     access_record_structured_page.toggle_clinical_area('medications', True)
     access_record_structured_page.toggle_clinical_area('allergies', True)
@@ -1086,10 +1021,8 @@ def given_multiple_areas_with_problems(access_record_structured_page, gp_connect
 
 
 @given('the user wishes to request multiple clinical areas without problems or consultations')
-def given_multiple_areas_without_problems_consultations(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
+def given_multiple_areas_without_problems_consultations(access_record_structured_page, gp_connect_context, tpp_patients):
+    _open_happy_path_patient_via_demographics(access_record_structured_page, tpp_patients)
     access_record_structured_page.toggle_clinical_area('medications', True)
     access_record_structured_page.toggle_clinical_area('allergies', True)
     access_record_structured_page.toggle_clinical_area('investigations', True)
