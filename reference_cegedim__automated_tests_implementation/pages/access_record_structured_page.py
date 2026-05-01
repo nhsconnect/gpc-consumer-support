@@ -144,6 +144,7 @@ class AccessRecordStructuredPage(BasePage):
         *,
         family_name: str,
         expected_result_text: str = "",
+        select_result: bool = True,
     ) -> None:
         if self.page.locator(self.FAMILY_NAME_INPUT).count() > 0:
             self.fill(self.FAMILY_NAME_INPUT, family_name)
@@ -159,7 +160,8 @@ class AccessRecordStructuredPage(BasePage):
 
         self.page.locator("#submit").click(force=True)
         self.wait_for_load()
-        self.select_top_patient_result(expected_result_text=expected_result_text)
+        if select_result:
+            self.select_top_patient_result(expected_result_text=expected_result_text)
 
     def open_nhs_number_search(self) -> None:
         self.open_patient_search()
@@ -245,9 +247,18 @@ class AccessRecordStructuredPage(BasePage):
 
         view_gp_record.click(force=True)
         self.wait_for_load()
-        self.page.get_by_role("heading", name="Local Patient Data").wait_for(
-            state="visible", timeout=20000
-        )
+        local_heading = self.page.get_by_role("heading", name="Local Patient Data")
+        gp_heading = self.page.get_by_role("heading", name="GP Access Patient Data")
+        practice_name_label = self.page.get_by_text("Practice Name", exact=True)
+
+        if local_heading.count() > 0 and local_heading.first.is_visible():
+            return
+        if gp_heading.count() > 0 and gp_heading.first.is_visible():
+            return
+        if practice_name_label.count() > 0 and practice_name_label.first.is_visible():
+            return
+
+        practice_name_label.wait_for(state="visible", timeout=20000)
 
     def _get_patient_gp_record_comparison(self) -> dict[str, dict[str, str]]:
         return self.page.evaluate(
@@ -323,6 +334,27 @@ class AccessRecordStructuredPage(BasePage):
     def mismatch_icon_visible(self) -> bool:
         return self.page.locator("[data-testid='ErrorOutlineIcon']").count() > 0
 
+    def get_gp_access_practice_name(self) -> str:
+        """Return the GP Access-side Practice Name from the comparison view."""
+        comparison = self._get_patient_gp_record_comparison()
+
+        for label in ("Practice Name", "GP Practice Name", "Name"):
+            value = comparison.get(label, {}).get("gp", "").strip()
+            if value:
+                return value
+
+        page_text = self.page.locator("body").inner_text(timeout=5000)
+        lines = [line.strip() for line in page_text.splitlines() if line.strip()]
+        for index, line in enumerate(lines):
+            if line == "Practice Name" and index + 1 < len(lines):
+                return lines[index + 1]
+
+        available = ", ".join(sorted(comparison.keys()))
+        raise AssertionError(
+            "Could not extract Practice Name from GP record view. "
+            f"Available labels: {available}"
+        )
+
     def can_view_gp_record(self) -> bool:
         view_button = self.page.locator("#view-gp-record")
         return view_button.count() > 0 and view_button.first.is_visible()
@@ -335,9 +367,172 @@ class AccessRecordStructuredPage(BasePage):
             and not view_button.first.is_enabled()
         )
 
+    def get_deceased_patient_notice(self) -> str:
+        notice = self.page.get_by_text("Patient deceased", exact=False)
+        if notice.count() > 0 and notice.first.is_visible():
+            return notice.first.inner_text().strip()
+
+        page_text = self.page.locator("body").inner_text(timeout=5000)
+        for line in (line.strip() for line in page_text.splitlines() if line.strip()):
+            if "patient deceased" in line.lower():
+                return line
+
+        return ""
+
     def refresh_patient_data_link_visible(self) -> bool:
         refresh_link = self.page.get_by_role("link", name="Refresh patient data via PDS")
         return refresh_link.count() > 0 and refresh_link.first.is_visible()
+
+    def click_refresh_patient_data_via_pds(self) -> bool:
+        refresh_link = self.page.get_by_role("link", name="Refresh patient data via PDS")
+        if refresh_link.count() > 0 and refresh_link.first.is_visible():
+            refresh_link.first.click(force=True)
+            self.wait_for_load()
+            return True
+
+        verify_link = self.page.get_by_role("link", name="Verify patient via PDS")
+        if verify_link.count() > 0 and verify_link.first.is_visible():
+            verify_link.first.click(force=True)
+            self.wait_for_load()
+            return True
+
+        verify_button = self.page.get_by_role("button", name="Verify patient via PDS")
+        if verify_button.count() > 0 and verify_button.first.is_visible():
+            verify_button.first.click(force=True)
+            self.wait_for_load()
+            return True
+
+        generic_pds_link = self.page.locator("a:has-text('PDS')")
+        if generic_pds_link.count() > 0 and generic_pds_link.first.is_visible():
+            generic_pds_link.first.click(force=True)
+            self.wait_for_load()
+            return True
+
+        generic_pds_button = self.page.locator("button:has-text('PDS')")
+        if generic_pds_button.count() > 0 and generic_pds_button.first.is_visible():
+            generic_pds_button.first.click(force=True)
+            self.wait_for_load()
+            return True
+
+        return False
+
+    def get_gp_details_gp_access_values(self) -> dict[str, str]:
+        """Return GP Details values (Name, Telephone, Address) for GEN-08 checks.
+
+        Primary path reads the dedicated "GP Details" section. If unavailable,
+        falls back to the GP Access column in the Local vs GP comparison grid.
+        """
+        section_values = self.page.evaluate(
+            r"""() => {
+                const wanted = ['Name', 'Telephone', 'Address'];
+                const out = {};
+                const headings = Array.from(document.querySelectorAll('h1,h2,h3,h4,h5,h6'));
+                const gpHeading = headings.find(h => (h.textContent || '').trim() === 'GP Details');
+                if (!gpHeading) return out;
+
+                let root = gpHeading.parentElement;
+                while (root && !wanted.some(k => (root.textContent || '').includes(k))) {
+                    root = root.parentElement;
+                }
+                if (!root) return out;
+
+                const allText = Array.from(root.querySelectorAll('div,span,p,td,th,label'))
+                    .map(el => (el.textContent || '').trim())
+                    .filter(Boolean);
+
+                for (const field of wanted) {
+                    const idx = allText.indexOf(field);
+                    if (idx >= 0) {
+                        for (let i = idx + 1; i < allText.length; i += 1) {
+                            const candidate = allText[i];
+                            if (!wanted.includes(candidate)) {
+                                out[field] = candidate;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                return out;
+            }"""
+        )
+
+        if all(section_values.get(k, "").strip() for k in ("Name", "Telephone", "Address")):
+            return {
+                "Name": section_values["Name"].strip(),
+                "Telephone": section_values["Telephone"].strip(),
+                "Address": section_values["Address"].strip(),
+            }
+
+        page_text = self.page.locator("body").inner_text(timeout=5000)
+        text_values = self._extract_gp_details_from_text(page_text)
+        if all(text_values.get(k, "").strip() for k in ("Name", "Telephone", "Address")):
+            return text_values
+
+        comparison = self._get_patient_gp_record_comparison()
+        field_aliases = {
+            "Name": ["Name", "GP Name"],
+            "Telephone": ["Telephone", "Phone", "Telephone Number"],
+            "Address": ["Address", "GP Address"],
+        }
+
+        gp_details: dict[str, str] = {}
+        missing_fields: list[str] = []
+
+        for field, aliases in field_aliases.items():
+            value = ""
+            for alias in aliases:
+                if alias in comparison:
+                    value = comparison.get(alias, {}).get("gp", "").strip()
+                    if value:
+                        break
+            if value:
+                gp_details[field] = value
+            else:
+                missing_fields.append(field)
+
+        if missing_fields:
+            available = ", ".join(sorted(comparison.keys()))
+            raise AssertionError(
+                "Could not extract GP Details fields for GEN-08. "
+                f"Missing: {', '.join(missing_fields)}. Available labels: {available}"
+            )
+
+        return gp_details
+
+    def _extract_gp_details_from_text(self, page_text: str) -> dict[str, str]:
+        lines = [ln.strip() for ln in page_text.splitlines() if ln.strip()]
+        wanted = ("name", "telephone", "address")
+        values: dict[str, str] = {}
+
+        start_idx = 0
+        for i, line in enumerate(lines):
+            if "gp details" in line.lower():
+                start_idx = i
+                break
+
+        scoped_lines = lines[start_idx:start_idx + 80] if lines else []
+
+        for field in wanted:
+            label_idx = -1
+            for i, line in enumerate(scoped_lines):
+                if line.lower() == field:
+                    label_idx = i
+                    break
+            if label_idx < 0:
+                continue
+
+            for i in range(label_idx + 1, min(label_idx + 10, len(scoped_lines))):
+                candidate = scoped_lines[i]
+                lower = candidate.lower()
+                if lower in wanted:
+                    continue
+                if "gp details" in lower:
+                    continue
+                values[field.title()] = candidate
+                break
+
+        return values
 
     def is_blocked_after_pds_trace(self) -> bool:
         """Return True when the PDS trace route cannot progress to GP record access.
@@ -547,3 +742,19 @@ class AccessRecordStructuredPage(BasePage):
         if self.is_visible(self.ERROR_DISPLAY):
             return self.get_text(self.ERROR_DISPLAY).strip()
         return self.get_error_message()
+
+    def no_patients_found_visible(self) -> bool:
+        marker = self.page.get_by_text("No Patients Found", exact=False)
+        return marker.count() > 0 and marker.first.is_visible()
+
+    def get_no_patients_found_text(self) -> str:
+        marker = self.page.get_by_text("No Patients Found", exact=False)
+        if marker.count() > 0 and marker.first.is_visible():
+            return marker.first.inner_text().strip()
+
+        page_text = self.page.locator("body").inner_text(timeout=5000)
+        for line in (line.strip() for line in page_text.splitlines() if line.strip()):
+            if line.lower() == "no patients found":
+                return line
+
+        return ""

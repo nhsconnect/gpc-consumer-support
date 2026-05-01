@@ -209,6 +209,141 @@ TPP_PRIMARY_PATIENT = TPP_PATIENTS["job_louise"]
 
 
 # ---------------------------------------------------------------------------
+# GP Connect API v1.5 Demonstrator (orange.testlab.nhs.uk)
+# ---------------------------------------------------------------------------
+
+GP_CONNECT_V15_ORGANISATION = {
+    "ods_code": "B82617",
+    "provider_asid": "918999198738",
+    "organization_name": "Coxwold Surgery",
+    "notes": "The ODS code and ASID of the GP practice represented by the GP Connect demonstrator v1.5",
+}
+
+GP_CONNECT_V15_PATIENTS = {
+    "9690937278": {
+        "id": 1, "nhs_number": "9690937278", "dob": "11-Dec-1938", "title": "Mr",
+        "given_name": "Lucien", "family_name": "Samual", "gender": "Male", "notes": "",
+    },
+    "9690937286": {
+        "id": 2, "nhs_number": "9690937286", "dob": "21-Apr-1925", "title": "Mr",
+        "given_name": "Horace", "family_name": "Skelly", "gender": "Male", "notes": "",
+    },
+    "9690937294": {
+        "id": 3, "nhs_number": "9690937294", "dob": "17-Mar-1936", "title": "Mr",
+        "given_name": "Samuel", "family_name": "Heslby", "gender": "Male", "notes": "",
+    },
+    "9690937308": {
+        "id": 4, "nhs_number": "9690937308", "dob": "04-Jul-1925", "title": "Mr",
+        "given_name": "West", "family_name": "Crank", "gender": "Male", "notes": "",
+    },
+    "9690937375": {
+        "id": 5, "nhs_number": "9690937375", "dob": "10-Mar-1928", "title": "Mrs",
+        "given_name": "Rosa", "family_name": "Lobb", "gender": "Female", "notes": "",
+    },
+    "9690937383": {
+        "id": 6, "nhs_number": "9690937383", "dob": "14-Jun-1953", "title": "Ms",
+        "given_name": "Angela", "family_name": "Doulby", "gender": "Female", "notes": "",
+    },
+    "9690937391": {
+        "id": 7, "nhs_number": "9690937391", "dob": "30-Jun-1953", "title": "Mrs",
+        "given_name": "Mina", "family_name": "Bailey", "gender": "Female", "notes": "",
+    },
+    "9690937405": {
+        "id": 8, "nhs_number": "9690937405", "dob": "20-Oct-1929", "title": "Mrs",
+        "given_name": "Winnie", "family_name": "Pring", "gender": "Female", "notes": "",
+    },
+    "9690938533": {
+        "id": 9, "nhs_number": "9690938533", "dob": "09-Sep-2000", "title": "Mrs",
+        "given_name": "Anita", "family_name": "Clay", "gender": "Female", "notes": "Patient has S flag",
+    },
+    "9690938541": {
+        "id": 10, "nhs_number": "9690938541", "dob": "28-Mar-1960", "title": "Ms",
+        "given_name": "Tania", "family_name": "Reeves", "gender": "Female", "notes": "Patient has S flag",
+    },
+    "9690938622": {
+        "id": 11, "nhs_number": "9690938622", "dob": "28-Nov-1978", "title": "Mrs",
+        "given_name": "Alexi", "family_name": "Horn", "gender": "Female", "notes": "",
+    },
+    "9690938614": {
+        "id": 12, "nhs_number": "9690938614", "dob": "17-Dec-1965", "title": "Miss",
+        "given_name": "Elsa", "family_name": "Leary", "gender": "Female", "notes": "",
+    },
+    "9690938096": {
+        "id": 13, "nhs_number": "9690938096", "dob": "16-Mar-2001", "title": "Ms",
+        "given_name": "Cecile", "family_name": "Beston", "gender": "Female", "notes": "",
+    },
+    "9690938576": {
+        "id": 15, "nhs_number": "9690938576", "dob": "16-Sep-1972", "title": "Mrs",
+        "given_name": "Dora", "family_name": "McCain", "gender": "Female", "notes": "Patient has S flag",
+    },
+    "9690938118": {
+        "id": 16, "nhs_number": "9690938118", "dob": "24-Nov-1983", "title": "Mrs",
+        "given_name": "Sibyl", "family_name": "Craine", "gender": "Female", "notes": "",
+    },
+    "9690938126": {
+        "id": 17, "nhs_number": "9690938126", "dob": "09-Jun-1984", "title": "Mrs",
+        "given_name": "Doris", "family_name": "Bourke", "gender": "Female", "notes": "",
+    },
+    "9690938681": {
+        "id": 18, "nhs_number": "9690938681", "dob": "03-Feb-1968", "title": "Mr",
+        "given_name": "James", "family_name": "Rooney", "gender": "Male", "notes": "Patient deceased",
+    },
+    "9690938134": {
+        "id": 20, "nhs_number": "9690938134", "dob": "06-Jul-1983", "title": "Ms",
+        "given_name": "Lori", "family_name": "Gildea", "gender": "Female", "notes": "",
+    },
+    "9690938142": {
+        "id": 21, "nhs_number": "9690938142", "dob": "13-Apr-1999", "title": "Miss",
+        "given_name": "Eve", "family_name": "Buck", "gender": "Female", "notes": "Patient inactive",
+    },
+    "9690937316": {
+        "id": 22, "nhs_number": "9690937316", "dob": "17-Sep-1950", "title": "Mr",
+        "given_name": "Dean", "family_name": "Pye", "gender": "Male", "notes": "Access Record Structured - meds only",
+    },
+    "9690937324": {
+        "id": 23, "nhs_number": "9690937324", "dob": "26-Nov-1927", "title": "Mr",
+        "given_name": "Morris", "family_name": "Oakes", "gender": "Male", "notes": "Access Record Structured - meds only",
+    },
+    "9690937332": {
+        "id": 24, "nhs_number": "9690937332", "dob": "12-Oct-1947", "title": "Mr",
+        "given_name": "Samuel", "family_name": "Beyer", "gender": "Male", "notes": "Access Record Structured - allergies only",
+    },
+    "9690938207": {
+        "id": 28, "nhs_number": "9690938207", "dob": "14-Jun-1972", "title": "Ms",
+        "given_name": "Jenna", "family_name": "Gillon", "gender": "Female", "notes": "Access Record Structured - Rich Immunizations only",
+    },
+    "9690938215": {
+        "id": 29, "nhs_number": "9690938215", "dob": "15-Dec-1964", "title": "Ms",
+        "given_name": "Gina", "family_name": "WOOKEY", "gender": "Female", "notes": "Access Record Structured - Rich Uncategorised only",
+    },
+    "9690937367": {
+        "id": 30, "nhs_number": "9690937367", "dob": "28-Aug-1946", "title": "Mr",
+        "given_name": "lloyd", "family_name": "LEWIN", "gender": "Male", "notes": "Access Record Structured - Rich Investigations only",
+    },
+    "9690938223": {
+        "id": 31, "nhs_number": "9690938223", "dob": "05-Jan-1978", "title": "Mrs",
+        "given_name": "Susan", "family_name": "Grace", "gender": "Female", "notes": "Access Record Structured - Rich Consultations only",
+    },
+    "9690937340": {
+        "id": 32, "nhs_number": "9690937340", "dob": "08-Jun-1947", "title": "Mr",
+        "given_name": "Ray", "family_name": "MULLEN", "gender": "Male", "notes": "Access Record Structured - Rich Problems only",
+    },
+    "9690938088": {
+        "id": 33, "nhs_number": "9690938088", "dob": "31-Jul-1955", "title": "Mr",
+        "given_name": "Ivor", "family_name": "CAVE", "gender": "Male", "notes": "Access Record Structured - EMIS Docs consolidated",
+    },
+    "9690937693": {
+        "id": 34, "nhs_number": "9690937693", "dob": "18-Dec-2014", "title": "Ms",
+        "given_name": "Elaine", "family_name": "Day", "gender": "Female", "notes": "Access Record Structured - Rich Referrals only",
+    },
+    "9690938770": {
+        "id": 35, "nhs_number": "9690938770", "dob": "30-Oct-1945", "title": "Mr",
+        "given_name": "Josh", "family_name": "HYLAND", "gender": "Male", "notes": "Access Record Structured - Rich Diary Entries",
+    },
+}
+
+
+# ---------------------------------------------------------------------------
 # Medicus Test Patients
 # ---------------------------------------------------------------------------
 
@@ -260,6 +395,10 @@ MEDICUS_PATIENTS = {
 
 # Invalid / special NHS numbers for error testing
 INVALID_NHS_NUMBER = "9999999999"
+INVALID_NHS_PATIENT = {
+    "nhs_number": INVALID_NHS_NUMBER,
+    "name": "unknown",
+}
 
 # Primary Medicus test patient
 MEDICUS_PRIMARY_PATIENT = MEDICUS_PATIENTS["baggs_james"]
@@ -306,6 +445,37 @@ def tpp_primary_patient():
 
 
 @pytest.fixture(scope="session")
+def gp_connect_v15_patients():
+    """Return all GP Connect API v1.5 demonstrator patient rows from orange.testlab."""
+    return GP_CONNECT_V15_PATIENTS
+
+
+@pytest.fixture(scope="session")
+def gp_connect_v15_organisation():
+    """Return GP Connect API v1.5 demonstrator organisation row from orange.testlab."""
+    return GP_CONNECT_V15_ORGANISATION
+
+
+@pytest.fixture(scope="session")
+def gp_connect_v15_patient_by_nhs_number(gp_connect_v15_patients):
+    """Return a lookup helper for GP Connect API v1.5 patient rows by NHS number."""
+
+    def _lookup(nhs_number):
+        patient = gp_connect_v15_patients.get(str(nhs_number))
+        if not patient:
+            raise KeyError(f"No GP Connect API v1.5 patient data found for NHS number: {nhs_number}")
+        return patient
+
+    return _lookup
+
+
+@pytest.fixture(scope="session")
 def medicus_primary_patient():
     """Return the primary Medicus test patient (Baggs, James)."""
     return MEDICUS_PRIMARY_PATIENT
+
+
+@pytest.fixture(scope="session")
+def invalid_nhs_patient():
+    """Return the invalid NHS-number patient anchor used for GEN-11 searches."""
+    return INVALID_NHS_PATIENT

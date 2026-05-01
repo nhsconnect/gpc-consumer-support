@@ -128,21 +128,21 @@ Feature: Access Record Structured - Medications and Allergies
 
     @GPC-STR-TST-GEN-18 @warnings @allergies
     Scenario: GPC-STR-TST-GEN-18 - Warnings - Message warnings Confidential allergy
-      And I have requested allergies are included
+      Given I have requested allergies are included
       When I receive a response including a confidential items warning for allergies
       Then I make the user aware and apply controls as appropriate
       # SCAL: GPC-CORE13-ALL02 | Test data: 9658219705
 
     @GPC-STR-TST-GEN-19 @warnings @medications
     Scenario: GPC-STR-TST-GEN-19 - Warnings - Message warnings Confidential medication
-      And I have requested medications are included
+      Given I have requested medications are included
       When I receive a response including a confidential items warning for medications
       Then I make the user aware and apply controls as appropriate
       # SCAL: GPC-CORE13-MED02 | Test data: 9658218873
 
     @GPC-STR-TST-GEN-25 @warnings
     Scenario: GPC-STR-TST-GEN-25 - Warnings - Multiple message warnings
-      And I have included a request for medications data
+      Given I have included a request for medications data
       When I receive a response including a data in transit warning and a confidential data items warning for medications
       Then I make the user aware as appropriate and that the data in transit warning is shown as applicable to all data
       And the confidential data warning is shown to apply to medications data only
@@ -206,7 +206,7 @@ Feature: Access Record Structured - Medications and Allergies
 
     @GPC-STR-TST-MED-01 @medications
     Scenario: GPC-STR-TST-MED-01 - Request all medications
-      And I want to retrieve a full medication history
+      Given I want to retrieve a full medication history
       When I make the medication request to GP Connect
       Then the request conforms to the GP Connect specification
       And includes the patient's NHS Number
@@ -218,7 +218,7 @@ Feature: Access Record Structured - Medications and Allergies
 
     @GPC-STR-TST-MED-03 @medications @date_filters
     Scenario: GPC-STR-TST-MED-03 - Request medication by date
-      And I want to retrieve medication details but I do not require a full medication history
+      Given I want to retrieve medication details but I do not require a full medication history
       When I make the medication request to GP Connect
       Then the request conforms to the GP Connect specification
       And includes the patient's NHS Number
@@ -232,14 +232,14 @@ Feature: Access Record Structured - Medications and Allergies
 
     @GPC-STR-TST-MED-04 @medications
     Scenario: GPC-STR-TST-MED-04 - Request medication by user selected date future date rejected
-      And I am able to specify the date from which I want medications
+      Given I am able to specify the date from which I want medications
       When I attempt to request medications by a future date
       Then I am prevented from submitting the request
       # SCAL: GPC-STR-MED04-02 | Test data: 9658218873
 
     @GPC-STR-TST-MED-05 @medications
     Scenario: GPC-STR-TST-MED-05 - Requesting medication issues
-      And my use case does or does not require medication issues to be included
+      Given my use case does or does not require medication issues to be included
       When I make the medication request to GP Connect
       Then the request conforms to the GP Connect specification
       And includes the patient's NHS Number
@@ -250,7 +250,7 @@ Feature: Access Record Structured - Medications and Allergies
 
     @GPC-STR-TST-MED-08 @medications
     Scenario: GPC-STR-TST-MED-08 - Request all medications v1.2.7
-      And I want to retrieve a full medication history
+      Given I want to retrieve a full medication history
       When I make the medication request to GP Connect
       Then the request conforms to the GP Connect specification
       And includes the patient's NHS Number
@@ -261,7 +261,7 @@ Feature: Access Record Structured - Medications and Allergies
 
     @GPC-STR-TST-MED-09 @medications
     Scenario: GPC-STR-TST-MED-09 - Requesting medication issues v1.2.7
-      And my use case does or does not require medication issues to be included
+      Given my use case does or does not require medication issues to be included
       When I make the medication request to GP Connect
       Then the request conforms to the GP Connect specification
       And includes the patient's NHS Number
@@ -275,7 +275,7 @@ Feature: Access Record Structured - Medications and Allergies
 
   @GPC-STR-TST-ALG-01 @allergies
   Scenario: GPC-STR-TST-ALG-01 - Request current allergies
-    Given the user wishes to view or import all current allergies or the system is set to only view or import all current allergies
+      Given the response includes resolved allergies
     When the user selects to access current allergies from GP Connect
     Then the resulting request is populated with valid syntax using the includeAllergies parameter with part parameter includeResolvedAllergies set to false
     And the resulting response is processed successfully by the Consumer
@@ -283,7 +283,7 @@ Feature: Access Record Structured - Medications and Allergies
 
   @GPC-STR-TST-ALG-02 @allergies
   Scenario: GPC-STR-TST-ALG-02 - Request current and resolved allergies
-    Given the user wishes to view or import all allergies including resolved allergies or the system is set to do so
+      Given the response includes allergies which are not recognised by my system
     When the user selects to access all allergies from GP Connect
     Then the resulting request is populated with valid syntax using the includeAllergies parameter with part parameter includeResolvedAllergies set to true
     And the resulting response is processed successfully by the Consumer
@@ -296,7 +296,7 @@ Feature: Access Record Structured - Medications and Allergies
 
     @GPC-STR-TST-ALG-03 @allergies
     Scenario: GPC-STR-TST-ALG-03 - Handling resolved allergies
-      And the response includes resolved allergies
+      Given the response includes an empty active allergies list resource indicating that the patient record has no content recorded
       When I display or use the allergies information
       Then my system identifies the resolved allergies and handles them in a clinically safe manner such that they remain distinct from current allergies
       And where the resolved allergies are presented in the UI they are clearly and prominently labelled as ended, resolved or equivalent
@@ -305,13 +305,13 @@ Feature: Access Record Structured - Medications and Allergies
 
     @GPC-STR-TST-ALG-04 @allergies
     Scenario: GPC-STR-TST-ALG-04 - Allergy data elements
-      When I display or use the allergy information
+      Given the response includes a single code item which indicates that the clinician has recorded that the patient has no known allergies
       Then I display or utilise all the key information to represent or process the allergy records commensurate with the original record meaning and my specific use case
       # SCAL: GPC-STR-ALL04-(01-09) | Test data: 9658218873
 
     @GPC-STR-TST-ALG-05 @allergies
     Scenario: GPC-STR-TST-ALG-05 - Unrecognised allergies
-      And the response includes allergies which are not recognised by my system
+      Given the response includes allergies which are not recognised by my system
       When I display or use the allergy information
       Then I display or utilise any SNOMED code or alternative code system coding as applicable to my use case
       And I display or utilise the allergy name as provided
@@ -320,7 +320,7 @@ Feature: Access Record Structured - Medications and Allergies
 
     @GPC-STR-TST-ALG-07 @allergies
     Scenario: GPC-STR-TST-ALG-07 - No data response
-      And the response includes an empty active allergies list resource indicating that the patient record has no content recorded
+      Given the response includes an empty active allergies list resource indicating that the patient record has no content recorded
       When I display or use the allergies response
       Then I recognise this as a record with no active allergies recorded
       And I handle it appropriate to my use case and in such a way it is not confused with a clinical assertion of no known allergies
@@ -328,7 +328,7 @@ Feature: Access Record Structured - Medications and Allergies
 
     @GPC-STR-TST-ALG-08 @allergies
     Scenario: GPC-STR-TST-ALG-08 - Clinically asserted no known allergies
-      And the response includes a single code item which indicates that the clinician has recorded that the patient has no known allergies
+      Given the response includes a single code item which indicates that the clinician has recorded that the patient has no known allergies
       When I display or use the allergies response
       Then I recognise this as a clinical assertion of no known allergies
       And I handle it appropriate to my use case and in such a way it is not confused with an empty list response

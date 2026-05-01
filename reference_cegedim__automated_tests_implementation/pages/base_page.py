@@ -212,6 +212,57 @@ class BasePage:
     def expect_url_contains(self, fragment: str) -> None:
         expect(self.page).to_have_url(f"**{fragment}**")
 
+    def highlight_text_assertion(self, text: str, duration_ms: int = 1500) -> None:
+        """Visually emphasise asserted text in the UI so it is obvious in video evidence."""
+        locator = self.page.get_by_text(text, exact=False).first
+        locator.wait_for(state="visible", timeout=15000)
+        locator.scroll_into_view_if_needed()
+
+        locator.evaluate(
+            """(node) => {
+                const element = node instanceof HTMLElement ? node : node.parentElement;
+                if (!element) {
+                    return;
+                }
+
+                element.setAttribute('data-copilot-assert-highlight', 'true');
+                element.dataset.copilotOriginalOutline = element.style.outline || '';
+                element.dataset.copilotOriginalOutlineOffset = element.style.outlineOffset || '';
+                element.dataset.copilotOriginalBackground = element.style.backgroundColor || '';
+                element.dataset.copilotOriginalBorderRadius = element.style.borderRadius || '';
+                element.dataset.copilotOriginalTransition = element.style.transition || '';
+
+                element.style.transition = 'outline 120ms ease, background-color 120ms ease';
+                element.style.outline = '4px solid #ffbf47';
+                element.style.outlineOffset = '3px';
+                element.style.backgroundColor = 'rgba(255, 191, 71, 0.35)';
+                element.style.borderRadius = '6px';
+            }"""
+        )
+        locator.dblclick(force=True)
+        self.page.wait_for_timeout(duration_ms)
+        locator.evaluate(
+            """(node) => {
+                const element = node instanceof HTMLElement ? node : node.parentElement;
+                if (!element) {
+                    return;
+                }
+
+                element.style.outline = element.dataset.copilotOriginalOutline || '';
+                element.style.outlineOffset = element.dataset.copilotOriginalOutlineOffset || '';
+                element.style.backgroundColor = element.dataset.copilotOriginalBackground || '';
+                element.style.borderRadius = element.dataset.copilotOriginalBorderRadius || '';
+                element.style.transition = element.dataset.copilotOriginalTransition || '';
+
+                delete element.dataset.copilotOriginalOutline;
+                delete element.dataset.copilotOriginalOutlineOffset;
+                delete element.dataset.copilotOriginalBackground;
+                delete element.dataset.copilotOriginalBorderRadius;
+                delete element.dataset.copilotOriginalTransition;
+                element.removeAttribute('data-copilot-assert-highlight');
+            }"""
+        )
+
     # ------------------------------------------------------------------
     # Common UI patterns
     # ------------------------------------------------------------------

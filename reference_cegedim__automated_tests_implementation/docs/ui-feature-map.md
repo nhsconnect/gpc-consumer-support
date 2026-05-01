@@ -51,6 +51,20 @@ Home (pharmacy/home)
         └─ click the first patient result button (`#ChoosePatient`)
           └─ verify View GP Record (`#view-gp-record`) is disabled
             └─ if `Refresh patient data via PDS` is displayed, treat it as the recovery path once the stale-PDS state needs clearing
+
+### GEN-17 GP2GP transfer warning path
+
+```text
+Home (pharmacy/home)
+  └─ click NMS link
+    └─ click Start New NMS
+      └─ search patient by demographics using family name `Beston` (NHS `9690938096`)
+        └─ click the first patient result button (`#ChoosePatient`)
+          └─ click View GP Record (`#view-gp-record`)
+            └─ assert warning text is visible:
+              └─ `Information not available`
+              └─ `Patient record transfer from previous GP practice not yet complete; information recorded before`
+```
 ```
 
 ### Selectors
@@ -105,4 +119,6 @@ Home (pharmacy/home)
 - The current automated GEN-06 path covers the blocked `>24 hours old` branch using the reserved `Smith` patient; the `<24 hours sent` branch is not exercised by this dedicated stale-PDS flow.
 - GEN-09 PDS trace fail scenarios currently use: NHS `9690938533` + DOB `09/09/2020`, and NHS `9690938541` + DOB `28/03/1960`.
 - GEN-09 is currently skipped in automation because the supplied NHS numbers are not presently s-marked in PDS, so the blocked sensitive-trace path cannot be exercised with current data.
+- GEN-13 through GEN-16 are currently tagged `@skip_api_access_not_exposed` and intentionally skipped until API access is available.
+- GEN-17 warning assertions should call the text-highlight helper so evidence videos clearly show the asserted warning content.
 - Videos of UI flows are saved under `test-results/videos-manual/`.

@@ -1,17 +1,7 @@
 """Step definitions for Access Record Structured Extended feature."""
-import pytest
 from pytest_bdd import scenarios, given, when, then, parsers
 
 scenarios('access_record_structured_extended.feature')
-
-# Temporary data-state skip: supplied GEN-09 NHS numbers are currently not s-marked in PDS.
-if 'test_pds_trace_sensitive' in globals():
-    test_pds_trace_sensitive = pytest.mark.skip(
-        reason=(
-            'GEN-09 temporarily skipped: NHS 9690938533 and 9690938541 are currently '
-            'not s-marked in PDS, so the blocked sensitive-trace path cannot be validated.'
-        )
-    )(test_pds_trace_sensitive)
 
 # ---------------------------------------------------------------------------
 # General - Given steps
@@ -38,8 +28,17 @@ def given_access_with_trace_time(access_record_structured_page, gp_connect_conte
 
 
 @given('I have made a successful request to GP Connect')
-def given_successful_request(access_record_structured_page, gp_connect_context, tpp_patients):
+def given_successful_request(
+    access_record_structured_page,
+    gp_connect_context,
+    tpp_patients,
+    gp_connect_v15_patient_by_nhs_number,
+):
     patient = tpp_patients['skelly_horace']
+    v15_patient = gp_connect_v15_patient_by_nhs_number(patient['nhs_number'])
+
+    # Keep search inputs from local fixture, but anchor the scenario to canonical v1.5 data.
+    gp_connect_context['v15_demographics_patient'] = v15_patient
     access_record_structured_page.open_patient_search()
     access_record_structured_page.search_patient_by_demographics(
         given_name=patient['given_name'],
@@ -53,20 +52,46 @@ def given_successful_request(access_record_structured_page, gp_connect_context, 
 
 
 @given('I have access to request data from GP Connect and the patient trace was within the last 24 hours')
-def given_access_trace_within_24h(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
+def given_access_trace_within_24h(
+    access_record_structured_page,
+    gp_connect_context,
+    gp_connect_v15_patient_by_nhs_number,
+):
+    patient = gp_connect_v15_patient_by_nhs_number('9690938096')
+
+    access_record_structured_page.open_patient_search()
+    access_record_structured_page.search_patient_by_family_name_only(
+        family_name=patient['family_name'],
+        expected_result_text=patient['family_name'],
+    )
+
+    gp_details_before_refresh = access_record_structured_page.get_gp_details_gp_access_values()
+    pds_action_clicked = access_record_structured_page.click_refresh_patient_data_via_pds()
+    gp_details_after_refresh = (
+        access_record_structured_page.get_gp_details_gp_access_values()
+        if pds_action_clicked
+        else gp_details_before_refresh
+    )
+
+    gp_connect_context['gen08_patient'] = patient
+    gp_connect_context['gen08_gp_details_before_refresh'] = gp_details_before_refresh
+    gp_connect_context['gen08_gp_details_after_refresh'] = gp_details_after_refresh
+    gp_connect_context['gen08_pds_action_clicked'] = pds_action_clicked
     gp_connect_context['trace_within_24h'] = True
 
 
 @given('I have access to request data from GP Connect but I cannot confirm the registered practice because it is not on PDS or the patient has an s-flag')
-def given_cannot_confirm_practice(access_record_structured_page, gp_connect_context, tpp_patients):
+def given_cannot_confirm_practice(
+    access_record_structured_page,
+    gp_connect_context,
+    gp_connect_v15_patient_by_nhs_number,
+):
     # GEN-09 follows the PDS trace flow from NMS episode using NHS number search.
-    patient = tpp_patients['pds_trace_fail_9690938533']
+    patient = gp_connect_v15_patient_by_nhs_number('9690938533')
     access_record_structured_page.open_nhs_number_search()
     access_record_structured_page.search_patient_by_pds_trace(
         nhs_number=patient['nhs_number'],
-        date_of_birth=patient['dob'],
+        date_of_birth='2000-09-09',
     )
 
     gp_connect_context['cannot_confirm_practice'] = True
@@ -75,19 +100,43 @@ def given_cannot_confirm_practice(access_record_structured_page, gp_connect_cont
 
 
 @given('I access a patient which is recorded as deceased on PDS or on the local system')
-def given_access_deceased_patient(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
+def given_access_deceased_patient(
+    access_record_structured_page,
+    gp_connect_context,
+    gp_connect_v15_patient_by_nhs_number,
+):
+    patient = gp_connect_v15_patient_by_nhs_number('9690938681')
+
+    access_record_structured_page.open_patient_search()
+    access_record_structured_page.search_patient_by_family_name_only(
+        family_name=patient['family_name'],
+        expected_result_text=patient['family_name'],
+    )
+
     gp_connect_context['patient_deceased'] = True
+    gp_connect_context['deceased_patient'] = patient
+    gp_connect_context['deceased_notice'] = access_record_structured_page.get_deceased_patient_notice()
+    gp_connect_context['deceased_view_gp_record_disabled'] = (
+        access_record_structured_page.is_view_gp_record_disabled()
+    )
 
 
 @given('I have made a request to a GP Connect service')
 def given_made_request(access_record_structured_page, gp_connect_context):
     access_record_structured_page.navigate('access-record-structured')
     access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
-    access_record_structured_page.toggle_clinical_area('medications', True)
-    access_record_structured_page.submit_request()
+
+    nhs_input = access_record_structured_page.page.locator(
+        access_record_structured_page.NHS_NUMBER_INPUT
+    )
+    if nhs_input.count() > 0 and nhs_input.first.is_visible():
+        access_record_structured_page.search_patient('9730147140')
+        access_record_structured_page.toggle_clinical_area('medications', True)
+        access_record_structured_page.submit_request()
+    else:
+        # In NMS-first flows there is no legacy NHS-number input; reaching patient search is enough.
+        access_record_structured_page.open_patient_search()
+
     gp_connect_context['request_made'] = True
 
 
@@ -136,6 +185,24 @@ def given_sent_valid_message(access_record_structured_page, gp_connect_context):
     access_record_structured_page.wait_for_load()
     access_record_structured_page.search_patient('9730147140')
     gp_connect_context['valid_message_sent'] = True
+
+
+@given('I search for a patient by demographics using family name Beston')
+def given_search_by_demographics_beston(
+    access_record_structured_page,
+    gp_connect_context,
+    gp_connect_v15_patient_by_nhs_number,
+):
+    patient = gp_connect_v15_patient_by_nhs_number('9690938096')
+
+    access_record_structured_page.open_patient_search()
+    access_record_structured_page.search_patient_by_family_name_only(
+        family_name=patient['family_name'],
+        expected_result_text=patient['family_name'],
+        select_result=False,
+    )
+
+    gp_connect_context['gen17_patient'] = patient
 
 
 @given('I have sent a valid message and requested allergies')
@@ -970,6 +1037,10 @@ def when_attempt_access(access_record_structured_page, gp_connect_context):
         gp_connect_context['access_attempted'] = True
         return
 
+    if gp_connect_context.get('trace_within_24h'):
+        gp_connect_context['access_attempted'] = True
+        return
+
     access_record_structured_page.search_patient('9730147140')
     access_record_structured_page.toggle_clinical_area('medications', True)
     access_record_structured_page.submit_request()
@@ -999,15 +1070,25 @@ def when_attempt_gp_connect(access_record_structured_page, gp_connect_context):
 
 @when('I am at a point where I would normally be able to access GP Connect')
 def when_would_normally_access(access_record_structured_page, gp_connect_context):
+    if gp_connect_context.get('patient_deceased'):
+        gp_connect_context['at_access_point'] = True
+        return
+
     access_record_structured_page.navigate('access-record-structured')
     access_record_structured_page.wait_for_load()
     gp_connect_context['at_access_point'] = True
 
 
 @when('I receive a patient not found error response')
-def when_patient_not_found(access_record_structured_page, gp_connect_context):
-    error = access_record_structured_page.get_displayed_error()
-    gp_connect_context['error_response'] = error
+def when_patient_not_found(access_record_structured_page, gp_connect_context, invalid_nhs_patient):
+    access_record_structured_page.open_patient_search()
+    access_record_structured_page.search_patient_by_family_name_only(
+        family_name=invalid_nhs_patient['name'],
+        select_result=False,
+    )
+
+    no_results_text = access_record_structured_page.get_no_patients_found_text()
+    gp_connect_context['error_response'] = no_results_text
     gp_connect_context['error_type'] = 'patient_not_found'
 
 
@@ -1044,6 +1125,15 @@ def when_data_in_transit(access_record_structured_page, gp_connect_context):
     access_record_structured_page.submit_request()
     assert access_record_structured_page.transit_warning_visible()
     gp_connect_context['transit_warning'] = True
+
+
+@when('I select the top result and click View GP Record')
+def when_select_top_result_and_click_view_gp_record(access_record_structured_page, gp_connect_context):
+    access_record_structured_page.select_top_patient_result(
+        expected_result_text=gp_connect_context['gen17_patient']['family_name']
+    )
+    access_record_structured_page.click_view_gp_record()
+    gp_connect_context['gen17_opened_gp_record'] = True
 
 
 @when('I receive a confidential items warning for allergies')
@@ -1430,8 +1520,22 @@ def then_sent_if_recent_trace(access_record_structured_page, gp_connect_context)
 
 
 @then('I verify the patient resource details for family name, given name, gender, date of birth and GP Practice Code match')
-def then_verify_demographics(access_record_structured_page, gp_connect_context, tpp_patients):
+def then_verify_demographics(
+    access_record_structured_page,
+    gp_connect_context,
+    tpp_patients,
+    gp_connect_v15_patient_by_nhs_number,
+):
     patient = tpp_patients['skelly_horace']
+    v15_patient = gp_connect_v15_patient_by_nhs_number(patient['nhs_number'])
+
+    assert v15_patient['given_name'] == patient['given_name'], (
+        'Expected local GEN-07 fixture given name to stay aligned with GP Connect API v1.5 demonstrator data.'
+    )
+    assert v15_patient['family_name'] == patient['family_name'], (
+        'Expected local GEN-07 fixture family name to stay aligned with GP Connect API v1.5 demonstrator data.'
+    )
+
     assert access_record_structured_page.local_patient_data_matches(patient), (
         "Expected Local Patient Data column to match known GEN-07 patient demographics "
         "from conftest (Skelly, Horace)."
@@ -1451,7 +1555,32 @@ def then_alert_mismatch(access_record_structured_page, gp_connect_context):
 @then('the registered GP practice from the last PDS trace is used')
 def then_use_pds_practice(access_record_structured_page, gp_connect_context):
     assert gp_connect_context.get('trace_within_24h'), "Trace should be within 24 hours"
-    assert access_record_structured_page.response_visible()
+    before_refresh = gp_connect_context.get('gen08_gp_details_before_refresh')
+    after_refresh = gp_connect_context.get('gen08_gp_details_after_refresh')
+
+    assert before_refresh, "Expected GP Details to be captured before PDS refresh"
+    assert after_refresh, "Expected GP Details to be captured after PDS refresh"
+
+    for field in ('Name', 'Telephone', 'Address'):
+        assert before_refresh.get(field), f"Expected non-empty GP Details field before refresh: {field}"
+        assert after_refresh.get(field), f"Expected non-empty GP Details field after refresh: {field}"
+
+    assert after_refresh == before_refresh, (
+        'Expected GP Details (Name, Telephone, Address) to remain consistent after '
+        'refreshing patient data via PDS for GEN-08.'
+    )
+
+    access_record_structured_page.click_view_gp_record()
+    practice_name = access_record_structured_page.get_gp_access_practice_name()
+    access_record_structured_page.highlight_text_assertion('Practice Name')
+    access_record_structured_page.highlight_text_assertion(practice_name)
+
+    assert access_record_structured_page._normalise_value(practice_name) == access_record_structured_page._normalise_value(
+        before_refresh['Name']
+    ), (
+        'Expected Practice Name shown after clicking View GP Record to match the GP Details '
+        'Name captured before the PDS trace action for GEN-08.'
+    )
 
 
 @then('the request is blocked and handled gracefully')
@@ -1467,12 +1596,34 @@ def then_blocked_gracefully(access_record_structured_page, gp_connect_context):
 @then('the system prevents access and handles the prevention gracefully')
 def then_prevents_access_gracefully(access_record_structured_page, gp_connect_context):
     assert gp_connect_context.get('patient_deceased'), "Patient should be recorded as deceased"
-    error = access_record_structured_page.get_displayed_error()
-    assert error, "A graceful error message should be displayed"
+
+    access_record_structured_page.highlight_text_assertion('Patient deceased')
+    access_record_structured_page.highlight_text_assertion('Their GP record will not be accessible')
+
+    notice = gp_connect_context.get('deceased_notice') or access_record_structured_page.get_deceased_patient_notice()
+    assert notice, 'Expected a visible deceased-patient notice for GEN-10.'
+    assert 'patient deceased' in notice.lower(), (
+        'Expected the deceased-patient notice to explicitly flag the patient as deceased.'
+    )
+
+    page_text = access_record_structured_page.page.locator('body').inner_text(timeout=5000)
+    assert 'their gp record will not be accessible' in page_text.lower(), (
+        'Expected the UI to explain that the GP record cannot be accessed for a deceased patient.'
+    )
+
+    assert gp_connect_context.get('deceased_view_gp_record_disabled') or access_record_structured_page.is_view_gp_record_disabled(), (
+        'Expected VIEW GP RECORD to be disabled for a deceased patient in GEN-10.'
+    )
 
 
 @then('I handle the error gracefully and make diagnostics available')
 def then_handle_error_gracefully(access_record_structured_page, gp_connect_context):
+    if gp_connect_context.get('error_type') == 'patient_not_found':
+        access_record_structured_page.highlight_text_assertion('No Patients Found')
+        assert access_record_structured_page.no_patients_found_visible(), (
+            "Expected 'No Patients Found' to be displayed for GEN-11."
+        )
+
     error = gp_connect_context.get('error_response', '')
     assert error, "Error response should have been captured"
 
@@ -1488,6 +1639,30 @@ def then_user_aware_transit(access_record_structured_page, gp_connect_context):
     assert access_record_structured_page.warning_panel_visible()
     assert access_record_structured_page.transit_warning_visible(), \
         "Data in transit warning should be visible"
+
+
+@then('I make the user aware of the GP2GP transfer warning message')
+def then_user_aware_gp2gp_transfer_warning(access_record_structured_page, gp_connect_context):
+    assert gp_connect_context.get('gen17_opened_gp_record'), (
+        'Expected GEN-17 flow to open the GP record before warning assertions.'
+    )
+
+    heading = 'Information not available'
+    warning_prefix = (
+        'Patient record transfer from previous GP practice not yet complete; '
+        'information recorded before'
+    )
+
+    access_record_structured_page.highlight_text_assertion(heading)
+    access_record_structured_page.highlight_text_assertion(warning_prefix)
+
+    page_text = access_record_structured_page.page.locator('body').inner_text(timeout=5000)
+    assert heading.lower() in page_text.lower(), (
+        'Expected GP2GP warning heading "Information not available" to be visible for GEN-17.'
+    )
+    assert warning_prefix.lower() in page_text.lower(), (
+        'Expected GEN-17 GP2GP warning text to include the transfer-in-progress prefix.'
+    )
 
 
 @then('I make the user aware of the confidential items warning')

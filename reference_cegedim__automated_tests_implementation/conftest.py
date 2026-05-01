@@ -80,6 +80,29 @@ def pytest_configure(config) -> None:
         config.option.json_report_file = str(execution_dir / "results.json")
 
 
+def pytest_bdd_apply_tag(tag, function):
+    """Map selected Gherkin tags to pytest skip markers with explicit reasons."""
+    skip_reasons = {
+        "skip_audit_logs_unavailable": (
+            "GEN-05 temporarily skipped: audit logs are not accessible in this environment, "
+            "so creation/conformance assertions cannot be validated."
+        ),
+        "skip_sensitive_pds_data_unavailable": (
+            "GEN-09 temporarily skipped: NHS 9690938533 and 9690938541 are currently "
+            "not s-marked in PDS, so the blocked sensitive-trace path cannot be validated."
+        ),
+        "skip_api_access_not_exposed": "To be implemented once API access is exposed",
+    }
+
+    reason = skip_reasons.get(tag)
+    if reason:
+        pytest.mark.skip(reason=reason)(function)
+        return True
+
+    # Fall back to pytest-bdd's default tag handling.
+    return None
+
+
 # HTML Report Customization
 def pytest_html_report_title(report) -> None:
     report.title = "GP Connect Consumer Test Automation Report"

@@ -12,7 +12,7 @@ Feature: Access Record Structured - Full Record (Extended)
   # GENERAL TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-GEN-05 @general
+  @GPC-STR-TST-GEN-05 @general @skip_audit_logs_unavailable
   Scenario: Access Control and Audit
     Given I am at a point in the system where I have access to attempt a call to a GP Connect service
     When I make that attempt to access GP Connect
@@ -45,7 +45,7 @@ Feature: Access Record Structured - Full Record (Extended)
 
   # TEMPORARY: GEN-09 is skipped in automation because NHS 9690938533 and 9690938541 are
   # currently not s-marked in PDS, so this sensitive-trace blocked-path cannot be exercised.
-  @GPC-STR-TST-GEN-09 @general
+  @GPC-STR-TST-GEN-09 @general @skip_sensitive_pds_data_unavailable
   Scenario: PDS trace sensitive
     Given I have access to request data from GP Connect but I cannot confirm the registered practice because it is not on PDS or the patient has an s-flag
     When I attempt to access GP Connect
@@ -59,42 +59,42 @@ Feature: Access Record Structured - Full Record (Extended)
     Then the system prevents access and handles the prevention gracefully
     # SCAL: GPC-STR-TST-GEN-10 | Test data: 9690938681
 
-  @GPC-STR-TST-GEN-11 @general
+  @GPC-STR-TST-GEN-11 @general @skip_api_access_not_exposed
   Scenario: Patient Not Found
     Given I have made a request to a GP Connect service
     When I receive a patient not found error response
     Then I handle the error gracefully and make diagnostics available
     # SCAL: GPC-STR-TST-GEN-11 | Test data: 9999999999
 
-  @GPC-STR-TST-GEN-12 @general
+  @GPC-STR-TST-GEN-12 @general @skip_api_access_not_exposed
   Scenario: Patient Dissent to Share
     Given I have made a request to a GP Connect service
     When I receive a patient dissent to share error response
     Then I handle the error gracefully and make diagnostics available
     # SCAL: GPC-STR-TST-GEN-12 | Test data: 9690938576
 
-  @GPC-STR-TST-GEN-13 @general
+  @GPC-STR-TST-GEN-13 @general @skip_api_access_not_exposed
   Scenario: Invalid resource
     Given I have made a request using an invalid resource
     When I receive an invalid resource error response
     Then I handle the error gracefully and make diagnostics available
     # SCAL: GPC-STR-TST-GEN-13 | Test data: 9690937286
 
-  @GPC-STR-TST-GEN-14 @general
+  @GPC-STR-TST-GEN-14 @general @skip_api_access_not_exposed
   Scenario: Invalid NHS Number
     Given I have made a request using an invalid NHS Number
     When I receive an invalid NHS number error response
     Then I handle the error gracefully and make diagnostics available
     # SCAL: GPC-STR-TST-GEN-14 | Test data: N/A
 
-  @GPC-STR-TST-GEN-15 @general
+  @GPC-STR-TST-GEN-15 @general @skip_api_access_not_exposed
   Scenario: Invalid parameter allergies
     Given I have made a request for allergies with invalid parameters
     When I receive an invalid parameter error response
     Then I handle the error gracefully
     # SCAL: GPC-STR-TST-GEN-15 | Test data: 9690937286
 
-  @GPC-STR-TST-GEN-16 @general
+  @GPC-STR-TST-GEN-16 @general @skip_api_access_not_exposed
   Scenario: Invalid parameter medications
     Given I have made a request for medications with invalid parameters
     When I receive an invalid parameter error response
@@ -103,9 +103,9 @@ Feature: Access Record Structured - Full Record (Extended)
 
   @GPC-STR-TST-GEN-17 @general
   Scenario: GP2GP transfer warning
-    Given I have sent a valid message
-    When I receive a response including a data in transit warning
-    Then I make the user aware of the data in transit warning
+    Given I search for a patient by demographics using family name Beston
+    When I select the top result and click View GP Record
+    Then I make the user aware of the GP2GP transfer warning message
     # SCAL: GPC-STR-TST-GEN-17 | Test data: 9690938096
 
   @GPC-STR-TST-GEN-18 @general

@@ -41,6 +41,7 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 - Name scenario-level artefacts (for example videos) using the scenario test ID plus timestamp (for example `@GPC-STR-TST-GEN-09+YYYYMMDD-HHMMSS`) so evidence is easy to review.
 - Each time a new test is added or an existing test is changed, rerun the relevant previously passing tests (or a broader regression subset) before finishing work to catch regressions early.
 - Store video evidence for each executed test scenario under the current run folder at `test-results/test-suite-execution-*/videos-manual/` and keep these recordings available for review.
+- For assertions that validate visible UI text, use the page highlight helper so the asserted text is visibly emphasised in the recorded video evidence (double-click + temporary highlight).
 
 ## Test Data Notes
 
@@ -52,6 +53,8 @@ pytest tests/step_defs/test_access_record_structured_extended.py
   - GEN-06 stale-PDS flow: family-name search `Smith` only. Keep this patient reserved for GEN-06 and do not refresh PDS in other tests.
   - GEN-06 automation currently covers the blocked `>24h` stale-PDS branch with the reserved `Smith` patient.
   - GEN-09 is currently skipped in automation: NHS `9690938533` and `9690938541` are not presently s-marked in PDS, so the blocked sensitive-trace branch cannot be validated until suitable data is restored.
+  - GEN-13 to GEN-16 are currently tagged `@skip_api_access_not_exposed` and skipped with reason `To be implemented once API access is exposed`.
+  - GEN-17 (GP2GP transfer warning) uses NHS `9690938096` by demographics family-name search `Beston`, then `#ChoosePatient`, then `#view-gp-record` before asserting warning text.
   - PDS verification state branches to account for in future scenarios:
     - Never verified: UI shows `Verify patient via PDS` and message `The patient's details have not been PDS verified`.
     - Previously verified but stale: UI shows `Refresh patient data via PDS`.
@@ -78,3 +81,38 @@ When updating flow, selectors, or assertions, update these together where releva
 
 - If feature scope expands beyond the two access record structured files, update this file first.
 - Record any new durable assumptions here so context survives session resets.
+
+## Shared GEN ID Mapping (Structured vs Extended)
+
+The same GEN IDs appear in both Access Record Structured feature files because they represent shared
+assurance requirements reused across two capability packs. Use this map when tracing overlap.
+
+1. `@GPC-STR-TST-GEN-06`
+  Structured file: tags `@general @pds`; scenario title includes "Access Control and Audit - PDS trace timeliness".
+  Extended file: tags `@general`; scenario title "PDS trace timeliness".
+  Difference: same requirement intent (PDS trace age gate), different tag granularity and shorter title in extended file.
+2. `@GPC-STR-TST-GEN-07`
+  Structured file: tags `@patient_demographics`; scenario title includes "Patient Demographics - primary".
+  Extended file: tags `@general`; scenario title "Patient demographics primary".
+  Difference: same demographics assurance intent, different category tags.
+3. `@GPC-STR-TST-GEN-08`
+  Structured file: tags `@patient_demographics @pds`; scenario title includes "PDS trace registered practice".
+  Extended file: tags `@general`; scenario title "PDS trace registered practice".
+  Difference: same registered-practice rule, richer tagging in structured file.
+4. `@GPC-STR-TST-GEN-09`
+  Structured file: tags `@patient_demographics @pds`; scenario title includes "PDS trace sensitive patient".
+  Extended file: tags `@general`; scenario title "PDS trace sensitive".
+  Difference: same sensitive/not-on-PDS blocking intent, tags simplified in extended file.
+
+Interpretation note:
+
+- Treat the GEN ID as the shared requirement identifier.
+- Treat each feature file as a different capability-pack context where that requirement is re-stated.
+
+Implementation guidance for later phases:
+
+- Heavy reuse is expected when implementing overlapping GEN scenarios in `access_record_structured.feature` after `access_record_structured_extended.feature`.
+- Prioritise reuse of page-object helpers and shared assertion utilities (for example: navigation, patient search, PDS gating, blocked/success state checks).
+- Keep scenario-specific step files thin; avoid duplicating low-level UI interaction logic in each step definition module.
+- Expect differences mainly in tag classification, scenario wording, and capability-specific request setup (for example meds/allergies-focused toggles in non-extended flows).
+- When implementing a duplicated GEN ID in the second file, map it to existing helpers first, then add only minimal wrapper logic needed for the file-specific context.
