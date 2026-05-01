@@ -31,7 +31,7 @@ reference_cegedim__automated_tests_implementation/
 │   ├── nms_episode_page.py
 │   ├── gp_record_page.py
 │   ├── structured_record_page.py
-│   └── access_record_structured_page.py   # Compatibility facade
+│   └── ...
 └── tests/
     ├── conftest.py               # Test patient data (EMIS, TPP, Medicus)
     └── step_defs/                # Step definitions wiring Gherkin → Playwright
@@ -79,7 +79,7 @@ GP_CONNECT_PASSWORD=<your_password>
 
 - Implement page objects per real application screen, not per feature file.
 - Keep low-level interactions in screen-specific modules under `pages/`.
-- Keep feature-oriented facades (for example `access_record_structured_page.py`) thin and delegation-only to preserve step-definition compatibility.
+- Keep scenario-level composition in test-layer helpers (for example `tests/step_defs/access_record_screens.py`) instead of adding feature-named page objects in `pages/`.
 
 ## Required Delivery Workflow
 

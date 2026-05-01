@@ -1,19 +1,17 @@
-"""Facade page object for Access Record Structured capability.
+"""Workflow adapter built from screen-based page objects for step definitions.
 
-This class keeps the existing step-definition API stable while delegating
-interactions to page objects aligned to real application screens.
+This is intentionally located in the test layer (not pages/) so the page
+object model remains screen-oriented.
 """
-from pages.base_page import BasePage
 from pages.gp_record_page import GpRecordPage
 from pages.home_page import HomePage
 from pages.nms_episode_page import NmsEpisodePage
 from pages.structured_record_page import StructuredRecordPage
 
 
-class AccessRecordStructuredPage(BasePage):
-    """Compatibility facade over screen-specific page objects."""
+class AccessRecordScreens:
+    """Step-definition helper that composes screen-specific page objects."""
 
-    # Keep selector constants stable for existing step definitions.
     NHS_NUMBER_INPUT = StructuredRecordPage.NHS_NUMBER_INPUT
     SEARCH_BTN = StructuredRecordPage.SEARCH_BTN
 
@@ -24,12 +22,33 @@ class AccessRecordStructuredPage(BasePage):
     ADD_NEW_PATIENT_BTN = NmsEpisodePage.ADD_NEW_PATIENT_BTN
     NHS_NUMBER_SEARCH_BUTTON = NmsEpisodePage.NHS_NUMBER_SEARCH_BUTTON
 
-    def __init__(self, page, base_url: str = ""):
-        super().__init__(page, base_url)
-        self.home_page = HomePage(page, base_url)
-        self.nms_episode_page = NmsEpisodePage(page, base_url)
-        self.gp_record_page = GpRecordPage(page, base_url)
-        self.structured_record_page = StructuredRecordPage(page, base_url)
+    def __init__(
+        self,
+        home_page: HomePage,
+        nms_episode_page: NmsEpisodePage,
+        gp_record_page: GpRecordPage,
+        structured_record_page: StructuredRecordPage,
+    ):
+        self.home_page = home_page
+        self.nms_episode_page = nms_episode_page
+        self.gp_record_page = gp_record_page
+        self.structured_record_page = structured_record_page
+
+        # Preserve access used by existing steps.
+        self.page = structured_record_page.page
+
+    def navigate(self, path: str = "") -> None:
+        self.structured_record_page.navigate(path)
+
+    def wait_for_load(self, timeout: int = 15_000) -> None:
+        self.structured_record_page.wait_for_load(timeout=timeout)
+
+    def highlight_text_assertion(self, text: str, duration_ms: int = 1500) -> None:
+        self.structured_record_page.highlight_text_assertion(text, duration_ms=duration_ms)
+
+    @property
+    def current_url(self) -> str:
+        return self.gp_record_page.current_url
 
     # ------------------------------------------------------------------
     # Patient search
@@ -50,7 +69,7 @@ class AccessRecordStructuredPage(BasePage):
         postcode: str = "",
         expected_result_text: str = "",
     ) -> None:
-        _ = expected_result_text  # Reserved for future result-list filtering.
+        _ = expected_result_text
         self.nms_episode_page.search_by_demographics(
             given_name=given_name,
             family_name=family_name,
@@ -67,7 +86,7 @@ class AccessRecordStructuredPage(BasePage):
         expected_result_text: str = "",
         select_result: bool = True,
     ) -> None:
-        _ = expected_result_text  # Reserved for future result-list filtering.
+        _ = expected_result_text
         self.nms_episode_page.search_by_family_name_only(family_name=family_name)
         if select_result:
             self.select_top_patient_result()
