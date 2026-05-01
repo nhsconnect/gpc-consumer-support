@@ -18,7 +18,7 @@ For durable coding-agent context and guardrails, see [AGENTS.md](AGENTS.md).
 
 ## Structure
 
-```
+```text
 reference_cegedim__automated_tests_implementation/
 ├── .env                          # Environment credentials (gitignored)
 ├── conftest.py                   # Playwright auth fixtures, session setup
@@ -57,7 +57,7 @@ playwright install chromium
 
 Create a `.env` file in this directory with:
 
-```
+```text
 GP_CONNECT_BASE_URL=https://pharmacyservices.cegedim.cloud/pharmacy/home
 GP_CONNECT_USERNAME=<your_username>
 GP_CONNECT_PASSWORD=<your_password>
@@ -68,6 +68,7 @@ GP_CONNECT_PASSWORD=<your_password>
 > **For AI agents (Copilot, Claude, etc.)**: When building or modifying any page interactions, navigation flows, or step definitions, **always use `playwright-cli` to explore the UI first** before writing or editing Python code.
 >
 > Workflow:
+>
 > 1. Open a session: `playwright-cli -s=<session-name> open "$BASE_URL"`
 > 2. Navigate and interact step-by-step to discover real selectors and page behaviour
 > 3. Use `playwright-cli -s=<session-name> show-source` or inspect the generated code after each action
@@ -91,6 +92,14 @@ For all new or changed automated tests in this reference implementation, follow 
 4. Run the newly developed tests and a regression set of previously passing tests to confirm end-to-end behaviour and catch regressions.
 
 If an MP4 flow recording exists under `supporting-documentation/`, use it as an additional guide to cross-check sequence and UI state transitions.
+
+## Medication Learnings (Current State)
+
+- MED-02 and MED-07 are implemented as UI-driven validations through the Patient GP Record medication tabs.
+- MED-01, MED-03, MED-04, and MED-05 are currently tagged `@skip_api_access_not_exposed` in `consumer_tests/access_record_structured_extended.feature` because the required API path is not exposed in this environment.
+- For MED-02 (Repeat Medications), assert that more than one medication item is present and highlight asserted text from the top item using dynamically extracted medication text (do not hardcode medicine names).
+- For MED-07 (Acute Medications empty state), assert the exact two guidance lines and highlight both asserted lines for video evidence.
+- For any visible UI text assertion, always call the highlight helper on the exact asserted text so evidence videos show what was validated.
 
 ## Running Tests
 

@@ -9,7 +9,7 @@ definitions and page-object selectors for that capability area.
 **Feature files:** `access_record_structured.feature`, `access_record_structured_extended.feature`  
 **Page objects:** `HomePage`, `NmsEpisodePage`, `GpRecordPage`, `StructuredRecordPage` (facade: `AccessRecordStructuredPage`)
 
-### Navigation path
+### Common navigation path
 
 ```text
 Home (pharmacy/home)
@@ -51,6 +51,7 @@ Home (pharmacy/home)
         └─ click the first patient result button (`#ChoosePatient`)
           └─ verify View GP Record (`#view-gp-record`) is disabled
             └─ if `Refresh patient data via PDS` is displayed, treat it as the recovery path once the stale-PDS state needs clearing
+```
 
 ### GEN-17 GP2GP transfer warning path
 
@@ -65,6 +66,36 @@ Home (pharmacy/home)
               └─ `Information not available`
               └─ `Patient record transfer from previous GP practice not yet complete; information recorded before`
 ```
+
+### MED-02 path (valid medications response via UI)
+
+```text
+Home (pharmacy/home)
+  └─ click NMS link
+    └─ click Start New NMS
+      └─ search patient by demographics (Skelly/Horace + DOB + postcode)
+        └─ click first Choose Patient (`#ChoosePatient`)
+          └─ click View GP Record (`#view-gp-record`)
+            └─ if demographics confirmation overlay appears, click CONFIRM DETAILS
+              └─ open Repeat Medications tab
+                └─ assert medication range control is visible
+                  └─ assert Repeat item count > 1
+                    └─ extract top item medication text dynamically and highlight asserted text
+```
+
+### MED-07 path (empty acute medications via UI)
+
+```text
+Home (pharmacy/home)
+  └─ click NMS link
+    └─ click Start New NMS
+      └─ search patient by demographics (Skelly/Horace + DOB + postcode)
+        └─ click first Choose Patient (`#ChoosePatient`)
+          └─ click View GP Record (`#view-gp-record`)
+            └─ if demographics confirmation overlay appears, click CONFIRM DETAILS
+              └─ open Acute Medications tab
+                └─ assert exact two-line no-data guidance message
+                  └─ highlight both asserted lines for evidence videos
 ```
 
 ### Selectors
@@ -84,6 +115,14 @@ Home (pharmacy/home)
 | Verify patient via PDS link | role link with name `Verify patient via PDS` | Displayed for patients that have never been PDS verified |
 | Not PDS verified message | text `The patient's details have not been PDS verified` | Companion state text for the never-verified branch |
 | Refresh patient data via PDS link | role link with name `Refresh patient data via PDS` | Optional recovery path when the patient trace is older than 24 hours and View GP Record is disabled |
+| Confirm details button | role button with name `CONFIRM DETAILS` | Displayed on Patient GP Record demographics confirmation overlay |
+| Medications heading | role heading with name `Medications` | Use as GP record anchor after confirmation overlay |
+| Acute Medications tab | role button with name `Acute Medications` | Used by MED-07 empty guidance assertion |
+| Repeat Medications tab | role button with name `Repeat Medications` | Used by MED-02 valid medications assertion |
+| Medication range filter | role button with name `Showing 15 months of medication data` (fallback `#select`) | Expected visible on medication tab content |
+| Repeat medication items | role button with name containing `Most Recent Issue Date` | Repeat medication cards summary controls |
+| Acute empty message line 1 | text `No Issued Acute Medication data is recorded for this patient.` | MED-07 exact assertion line 1 |
+| Acute empty message line 2 | text `There may be some unissued medication data available in the 'Not Issued' tab` | MED-07 exact assertion line 2 |
 | NHS number input | `#nhsNumber` (fallbacks: `#nhs-number`, `input[name='nhsNumber']`) | Used by GEN-09 PDS trace route |
 | Submit / retrieve button | <!-- fill in --> | |
 | Medications toggle | <!-- fill in --> | |
@@ -121,4 +160,8 @@ Home (pharmacy/home)
 - GEN-09 is currently skipped in automation because the supplied NHS numbers are not presently s-marked in PDS, so the blocked sensitive-trace path cannot be exercised with current data.
 - GEN-13 through GEN-16 are currently tagged `@skip_api_access_not_exposed` and intentionally skipped until API access is available.
 - GEN-17 warning assertions should call the text-highlight helper so evidence videos clearly show the asserted warning content.
+- MED-01, MED-03, MED-04 and MED-05 are currently tagged `@skip_api_access_not_exposed` and intentionally skipped pending API access in this environment.
+- MED-02 and MED-07 currently run through the UI GP Record medication tabs and store a `medications_ui_mode` context flag in step definitions to bypass API-only response checks.
+- MED-02 assertions should dynamically extract top repeat-item medication text for highlighting (no hardcoded medicine names).
+- MED-07 assertions should exactly match both acute no-data guidance lines and highlight both lines for evidence videos.
 - Videos of UI flows are saved under `test-results/videos-manual/`.
