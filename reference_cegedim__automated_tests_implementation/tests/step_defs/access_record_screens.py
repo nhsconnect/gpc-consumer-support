@@ -105,6 +105,24 @@ class AccessRecordScreens:
     def click_view_gp_record(self) -> None:
         self.gp_record_page.click_view_gp_record()
 
+    def open_patient_gp_record(self) -> None:
+        self.gp_record_page.open_patient_gp_record()
+
+    def select_medication_tab(self, tab_name: str) -> None:
+        self.gp_record_page.select_medication_tab(tab_name)
+
+    def medication_range_filter_visible(self) -> bool:
+        return self.gp_record_page.medication_range_filter_visible()
+
+    def repeat_medication_item_count(self) -> int:
+        return self.gp_record_page.repeat_medication_item_count()
+
+    def get_first_repeat_medication_name(self) -> str:
+        return self.gp_record_page.get_first_repeat_medication_name()
+
+    def get_acute_medication_empty_message(self) -> str:
+        return self.gp_record_page.get_acute_medication_empty_message()
+
     def _normalise_value(self, value: str) -> str:
         return self.gp_record_page.normalise_value(value)
 

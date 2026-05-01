@@ -1,5 +1,6 @@
 """Page object for patient search interactions on the NMS episode screen."""
 from pages.base_page import BasePage
+from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
 
 
 class NmsEpisodePage(BasePage):
@@ -112,7 +113,20 @@ class NmsEpisodePage(BasePage):
         choose_patient = self.page.locator("#ChoosePatient").first
         choose_patient.wait_for(state="visible", timeout=20000)
         choose_patient.click(force=True)
-        self.wait_for_load()
+
+        try:
+            self.wait_for_load(timeout=10000)
+            return
+        except PlaywrightTimeoutError:
+            # Some NMS transitions keep background loaders alive; anchor on the
+            # patient-details controls that indicate navigation succeeded.
+            view_gp_record = self.page.locator("#view-gp-record")
+            if view_gp_record.count() > 0:
+                view_gp_record.first.wait_for(state="visible", timeout=20000)
+                return
+
+            session_heading = self.page.get_by_role("heading", name="Session 1 - Engagement")
+            session_heading.first.wait_for(state="visible", timeout=20000)
 
     def no_patients_found_visible(self) -> bool:
         marker = self.page.get_by_text("No Patients Found", exact=False)

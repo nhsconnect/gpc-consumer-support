@@ -32,6 +32,12 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 
 ## Execution Guardrails
 
+### Mandatory Visual Evidence Rule
+
+- For any assertion against visible UI text, always call the highlight helper on the exact asserted text so evidence videos clearly show what was validated.
+- Apply this to both positive content assertions and empty-state/error-message assertions.
+- Do not finish implementation until highlighted assertion evidence is present in the executed scenario video.
+
 - Verify UI flow and selectors with `playwright-cli` before editing page objects or step definitions.
 - Do not guess selectors; confirm behavior in the live UI first.
 - Prefer minimal edits and avoid reformatting unrelated code.

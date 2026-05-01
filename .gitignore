@@ -17,6 +17,8 @@ test-results/
 .DS_Store
 
 # Playwright local artifacts
+.playwright-cli/
+.playwright/
 reference_cegedim__automated_tests_implementation/.playwright-cli/
 reference_cegedim__automated_tests_implementation/.playwright/
 

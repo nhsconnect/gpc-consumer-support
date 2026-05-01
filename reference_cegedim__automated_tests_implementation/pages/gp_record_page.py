@@ -5,6 +5,22 @@ from pages.base_page import BasePage
 class GpRecordPage(BasePage):
     """Encapsulates View GP Record and related patient-details states."""
 
+    PATIENT_GP_RECORD_TITLE = "Patient GP Record"
+    CONFIRM_DETAILS_BUTTON = "CONFIRM DETAILS"
+
+    MEDICATIONS_HEADING = "Medications"
+    ACUTE_MEDICATIONS_TAB = "Acute Medications"
+    REPEAT_MEDICATIONS_TAB = "Repeat Medications"
+    PRESCRIBED_ELSEWHERE_MEDICATIONS_TAB = "Prescribed Elsewhere Medications"
+    DISCONTINUED_MEDICATIONS_TAB = "Discontinued Medications"
+    MEDICATION_RANGE_SELECT = "#select"
+    MEDICATION_RANGE_DEFAULT = "Showing 15 months of medication data"
+
+    ACUTE_NO_DATA_LINE_1 = "No Issued Acute Medication data is recorded for this patient."
+    ACUTE_NO_DATA_LINE_2 = (
+        "There may be some unissued medication data available in the 'Not Issued' tab"
+    )
+
     def click_view_gp_record(self) -> None:
         view_gp_record = self.page.locator("#view-gp-record")
         view_gp_record.wait_for(state="visible", timeout=20000)
@@ -31,6 +47,120 @@ class GpRecordPage(BasePage):
             return
 
         practice_name_label.wait_for(state="visible", timeout=20000)
+
+    def confirm_details_if_prompted(self) -> bool:
+        """Confirm demographics when the Patient GP Record overlay requests it."""
+        confirm_button = self.page.get_by_role("button", name=self.CONFIRM_DETAILS_BUTTON)
+        if confirm_button.count() > 0 and confirm_button.first.is_visible():
+            confirm_button.first.click(force=True)
+            self.wait_for_load()
+
+        medications_heading = self.page.get_by_role("heading", name=self.MEDICATIONS_HEADING)
+        if medications_heading.count() > 0 and medications_heading.first.is_visible():
+            return True
+
+        return False
+
+    def open_patient_gp_record(self) -> None:
+        self.click_view_gp_record()
+        self.confirm_details_if_prompted()
+
+    def select_medication_tab(self, tab_name: str) -> None:
+        tab = self.page.get_by_role("button", name=tab_name)
+        tab.first.wait_for(state="visible", timeout=20000)
+        tab.first.click(force=True)
+        self.wait_for_load()
+        self._wait_for_spinners_to_clear()
+
+    def medication_range_filter_visible(self) -> bool:
+        range_button = self.page.get_by_role("button", name=self.MEDICATION_RANGE_DEFAULT)
+        if range_button.count() > 0 and range_button.first.is_visible():
+            return True
+
+        fallback = self.page.locator(self.MEDICATION_RANGE_SELECT)
+        return fallback.count() > 0 and fallback.first.is_visible()
+
+    def repeat_medication_item_count(self) -> int:
+        # Repeat cards include "Most Recent Issue Date" in the clickable item summary.
+        return self.page.get_by_role("button", name="Most Recent Issue Date", exact=False).count()
+
+    def get_first_repeat_medication_name(self) -> str:
+        """Return the medication name from the first item in Repeat Medications."""
+        items = self.page.get_by_role("button", name="Most Recent Issue Date", exact=False)
+        if items.count() == 0:
+            return ""
+
+        raw_text = items.first.inner_text(timeout=5000)
+        lines = [line.strip() for line in raw_text.splitlines() if line.strip()]
+
+        non_name_tokens = {
+            "repeat",
+            "repeat dispensing",
+            "most recent issue date",
+            "date added to the system",
+            "issue",
+            "authorised issue(s)",
+            "dosage instructions",
+            "patient notes",
+            "additional notes",
+            "as directed",
+        }
+
+        for line in lines:
+            lower = line.lower()
+            if lower in non_name_tokens:
+                continue
+            if lower.startswith("most recent issue date"):
+                continue
+            if lower.startswith("date added to the system"):
+                continue
+            if lower.replace(" ", "").isdigit():
+                continue
+
+            # Medication lines contain letters and are not metadata labels.
+            if any(char.isalpha() for char in line):
+                return line
+
+        return ""
+
+    def get_acute_medication_empty_message(self) -> str:
+        line_1 = self.page.get_by_text(self.ACUTE_NO_DATA_LINE_1, exact=False)
+        line_2 = self.page.get_by_text(self.ACUTE_NO_DATA_LINE_2, exact=False)
+
+        if line_1.count() > 0 and line_2.count() > 0:
+            return f"{line_1.first.inner_text().strip()}\n{line_2.first.inner_text().strip()}"
+
+        body_text = self.page.locator("body").inner_text(timeout=5000)
+        if self.ACUTE_NO_DATA_LINE_1 in body_text and self.ACUTE_NO_DATA_LINE_2 in body_text:
+            return f"{self.ACUTE_NO_DATA_LINE_1}\n{self.ACUTE_NO_DATA_LINE_2}"
+
+        return ""
+
+    def _wait_for_spinners_to_clear(self) -> None:
+        self.page.wait_for_function(
+            r"""() => {
+                const isVisible = (element) => {
+                    if (!element || !element.isConnected) return false;
+                    const style = window.getComputedStyle(element);
+                    if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
+                        return false;
+                    }
+                    const rect = element.getBoundingClientRect();
+                    return rect.width > 0 && rect.height > 0;
+                };
+
+                const selectors = [
+                    '.MuiCircularProgress-root[role="progressbar"]',
+                    '[role="progressbar"]:not([aria-label="notification timer"])',
+                ];
+
+                return selectors
+                    .flatMap((selector) => Array.from(document.querySelectorAll(selector)))
+                    .filter(isVisible)
+                    .length === 0;
+            }""",
+            timeout=15000,
+        )
 
     def get_gp_access_practice_name(self) -> str:
         comparison = self._get_patient_gp_record_comparison()

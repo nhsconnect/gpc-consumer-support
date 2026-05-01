@@ -244,15 +244,40 @@ def given_enabled_full_med_history(access_record_structured_page, gp_connect_con
 
 
 @given('I have received a successful valid medications response')
-def given_received_valid_meds(access_record_structured_page, gp_connect_context):
-    access_record_structured_page.navigate('access-record-structured')
-    access_record_structured_page.wait_for_load()
-    access_record_structured_page.search_patient('9730147140')
-    access_record_structured_page.toggle_clinical_area('medications', True)
-    access_record_structured_page.set_prescription_issues(True)
-    access_record_structured_page.submit_request()
-    assert access_record_structured_page.response_visible()
-    gp_connect_context['medications_response'] = access_record_structured_page.get_medication_results()
+def given_received_valid_meds(access_record_structured_page, gp_connect_context, tpp_patients):
+    patient = tpp_patients['skelly_horace']
+
+    access_record_structured_page.open_patient_search()
+    access_record_structured_page.search_patient_by_demographics(
+        given_name=patient['given_name'],
+        family_name=patient['family_name'],
+        date_of_birth=patient['dob'],
+        postcode=patient['postcode'],
+        expected_result_text=patient['family_name'],
+    )
+    access_record_structured_page.open_patient_gp_record()
+
+    access_record_structured_page.select_medication_tab('Repeat Medications')
+    assert access_record_structured_page.medication_range_filter_visible(), (
+        "Expected medication range dropdown ('Showing 15 months of medication data') to be visible "
+        "on the Repeat Medications tab."
+    )
+
+    repeat_count = access_record_structured_page.repeat_medication_item_count()
+    assert repeat_count > 1, (
+        "Expected more than one medication item in Repeat Medications for MED-02, "
+        f"but found {repeat_count}."
+    )
+
+    top_repeat_name = access_record_structured_page.get_first_repeat_medication_name()
+    assert top_repeat_name, (
+        "Expected to extract a medication name from the first Repeat Medications item "
+        "for MED-02 highlight evidence."
+    )
+    access_record_structured_page.highlight_text_assertion(top_repeat_name)
+
+    gp_connect_context['medications_ui_mode'] = True
+    gp_connect_context['medications_repeat_count'] = repeat_count
 
 
 @given('I am enabled to access GP Connect data and want to retrieve medication details for a period')
@@ -285,10 +310,32 @@ def given_enabled_med_issues(access_record_structured_page, gp_connect_context):
 
 
 @given('I have received a successful medications response with an empty list')
-def given_empty_meds_list(access_record_structured_page, gp_connect_context):
-    reason = access_record_structured_page.get_empty_list_reason()
-    assert reason, "Expected an empty list reason in the response"
-    gp_connect_context['empty_list_reason'] = reason
+def given_empty_meds_list(access_record_structured_page, gp_connect_context, tpp_patients):
+    patient = tpp_patients['skelly_horace']
+
+    access_record_structured_page.open_patient_search()
+    access_record_structured_page.search_patient_by_demographics(
+        given_name=patient['given_name'],
+        family_name=patient['family_name'],
+        date_of_birth=patient['dob'],
+        postcode=patient['postcode'],
+        expected_result_text=patient['family_name'],
+    )
+    access_record_structured_page.open_patient_gp_record()
+
+    access_record_structured_page.select_medication_tab('Acute Medications')
+    empty_text = access_record_structured_page.get_acute_medication_empty_message()
+    assert empty_text, "Expected Acute Medications to show the no-data guidance message for MED-07"
+
+    access_record_structured_page.highlight_text_assertion(
+        'No Issued Acute Medication data is recorded for this patient.'
+    )
+    access_record_structured_page.highlight_text_assertion(
+        "There may be some unissued medication data available in the 'Not Issued' tab"
+    )
+
+    gp_connect_context['medications_ui_mode'] = True
+    gp_connect_context['empty_list_reason'] = empty_text
 
 
 # ---------------------------------------------------------------------------
@@ -1151,6 +1198,10 @@ def when_present_data(access_record_structured_page, gp_connect_context):
 
 @when('I display or use the information')
 def when_display_info(access_record_structured_page, gp_connect_context):
+    if gp_connect_context.get('medications_ui_mode'):
+        gp_connect_context['information_displayed'] = True
+        return
+
     assert access_record_structured_page.response_visible()
     gp_connect_context['information_displayed'] = True
 
@@ -1164,6 +1215,10 @@ def when_make_medication_request(access_record_structured_page, gp_connect_conte
 
 @when('I display the information')
 def when_display_information(access_record_structured_page, gp_connect_context):
+    if gp_connect_context.get('medications_ui_mode'):
+        gp_connect_context['information_displayed'] = True
+        return
+
     assert access_record_structured_page.response_visible()
     gp_connect_context['information_displayed'] = True
 
@@ -1719,6 +1774,14 @@ def then_no_search_from_date(gp_connect_context):
 
 @then('I display all key information commensurate with the original record meaning')
 def then_display_key_info(access_record_structured_page, gp_connect_context):
+    if gp_connect_context.get('medications_ui_mode'):
+        repeat_count = gp_connect_context.get('medications_repeat_count', 0)
+        assert repeat_count > 1, (
+            "Expected more than one Repeat Medications item for MED-02 "
+            f"but found {repeat_count}."
+        )
+        return
+
     assert access_record_structured_page.response_visible()
     results = access_record_structured_page.get_medication_results()
     assert results, "Key medication information should be displayed"
@@ -1746,7 +1809,17 @@ def then_prescription_issues_appropriate(gp_connect_context):
 
 @then('I display the empty reason')
 def then_display_empty_reason(gp_connect_context):
-    assert gp_connect_context.get('empty_list_reason'), "Empty list reason should be available for display"
+    expected = (
+        "No Issued Acute Medication data is recorded for this patient.\n"
+        "There may be some unissued medication data available in the 'Not Issued' tab"
+    )
+    actual = gp_connect_context.get('empty_list_reason', '').strip()
+
+    assert actual, "Empty list reason should be available for display"
+    assert expected == actual, (
+        "Expected MED-07 Acute Medications no-data guidance text to match exactly.\n"
+        f"Expected:\n{expected}\n\nActual:\n{actual}"
+    )
 
 
 @then('the request uses the includeAllergies parameter with includeResolvedAllergies set to false')

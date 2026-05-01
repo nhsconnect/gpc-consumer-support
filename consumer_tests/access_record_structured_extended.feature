@@ -126,7 +126,7 @@ Feature: Access Record Structured - Full Record (Extended)
   # MEDICATION TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-MED-01 @medications
+  @GPC-STR-TST-MED-01 @medications @skip_api_access_not_exposed
   Scenario: Request all medications
     Given I am enabled to access GP Connect data for a given patient and I want to retrieve a full medication history
     When I make the medication request
@@ -143,7 +143,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Then I display all key information commensurate with the original record meaning
     # SCAL: GPC-STR-TST-MED-02 | Test data: 9690937286
 
-  @GPC-STR-TST-MED-03 @medications
+  @GPC-STR-TST-MED-03 @medications @skip_api_access_not_exposed
   Scenario: Request medication by date
     Given I am enabled to access GP Connect data and want to retrieve medication details for a period
     When I make the medication request
@@ -151,13 +151,13 @@ Feature: Access Record Structured - Full Record (Extended)
     And the medicationSearchFromDate is less than or equal to the current date
     # SCAL: GPC-STR-TST-MED-03 | Test data: 9690937286
 
-  @GPC-STR-TST-MED-04 @medications
+  @GPC-STR-TST-MED-04 @medications @skip_api_access_not_exposed
   Scenario: Request medication by future date rejected
     Given I am enabled to access GP Connect data and try to request medications by a future date
     Then I am prevented from submitting the request
     # SCAL: GPC-STR-TST-MED-04 | Test data: 9690937286
 
-  @GPC-STR-TST-MED-05 @medications
+  @GPC-STR-TST-MED-05 @medications @skip_api_access_not_exposed
   Scenario: Requesting medication issues
     Given I am enabled to access GP Connect data and my use case does or does not require medication issues
     When I make the medication request
