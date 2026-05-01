@@ -42,6 +42,7 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 - Each time a new test is added or an existing test is changed, rerun the relevant previously passing tests (or a broader regression subset) before finishing work to catch regressions early.
 - Store video evidence for each executed test scenario under the current run folder at `test-results/test-suite-execution-*/videos-manual/` and keep these recordings available for review.
 - For assertions that validate visible UI text, use the page highlight helper so the asserted text is visibly emphasised in the recorded video evidence (double-click + temporary highlight).
+- Do not use broad exception swallowing (for example `try: ... except Exception: pass`) to make tests pass. If UI state can vary, assert explicit accepted alternatives and fail with a clear reason when none are present.
 
 ## Test Data Notes
 

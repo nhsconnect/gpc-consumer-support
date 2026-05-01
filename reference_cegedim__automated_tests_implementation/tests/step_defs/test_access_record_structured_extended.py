@@ -1505,6 +1505,21 @@ def then_audit_conforms(gp_connect_context):
 @then('the request is blocked if the trace was performed more than 24 hours ago')
 def then_blocked_if_old_trace(access_record_structured_page, gp_connect_context):
     assert gp_connect_context.get('trace_time_set'), "Trace time should have been set"
+
+    pds_actions = ('Refresh patient data via PDS', 'Verify patient via PDS')
+    visible_pds_action = None
+    for action in pds_actions:
+        locator = access_record_structured_page.page.get_by_text(action, exact=False).first
+        if locator.count() > 0 and locator.is_visible():
+            visible_pds_action = action
+            break
+
+    assert visible_pds_action, (
+        "Expected one of the PDS actions to be visible for stale-trace GEN-06: "
+        "'Refresh patient data via PDS' or 'Verify patient via PDS'."
+    )
+    access_record_structured_page.highlight_text_assertion(visible_pds_action)
+
     assert access_record_structured_page.is_view_gp_record_disabled(), (
         "Expected View GP Record to remain disabled when the selected patient's PDS trace "
         "is more than 24 hours old."
