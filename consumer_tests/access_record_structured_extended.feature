@@ -108,14 +108,14 @@ Feature: Access Record Structured - Full Record (Extended)
     Then I make the user aware of the GP2GP transfer warning message
     # SCAL: GPC-STR-TST-GEN-17 | Test data: 9690938096
 
-  @GPC-STR-TST-GEN-18 @general
+  @GPC-STR-TST-GEN-18 @general @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Confidential allergy warning
     Given I have sent a valid message and requested allergies
     When I receive a confidential items warning for allergies
     Then I make the user aware of the confidential items warning
     # SCAL: GPC-STR-TST-GEN-18 | Test data: 9690938118
 
-  @GPC-STR-TST-GEN-20 @general
+  @GPC-STR-TST-GEN-20 @general @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Data Source
     Given I have received a valid message response
     When I present the data to the end user
@@ -198,7 +198,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And my system ensures resolved allergies cannot be used by decision support
     # SCAL: GPC-STR-TST-ALG-03 | Test data: 9690937308
 
-  @GPC-STR-TST-ALG-04 @allergies
+  @GPC-STR-TST-ALG-04 @allergies @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Allergy data elements
     Given I have received a response with allergies
     When I display or use the allergy information
@@ -288,14 +288,14 @@ Feature: Access Record Structured - Full Record (Extended)
   # REFERRAL TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-REF-01 @referrals
+  @GPC-STR-TST-REF-01 @referrals @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: All referrals
     Given the user wishes to view all referrals
     When they request referrals
     Then the request uses the includeReferrals parameter with no part parameters
     # SCAL: GPC-STR-TST-REF-01 | Test data: 9690937294
 
-  @GPC-STR-TST-REF-02 @referrals
+  @GPC-STR-TST-REF-02 @referrals @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Referrals from a specified date
     Given the user wishes to view referrals from a specific date
     When they select with a from date
@@ -303,7 +303,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the start date is less than or equal to the current date
     # SCAL: GPC-STR-TST-REF-02 | Test data: 9690937286
 
-  @GPC-STR-TST-REF-03 @referrals
+  @GPC-STR-TST-REF-03 @referrals @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Referrals to a specified date
     Given the user wishes to view referrals up to a specific date
     When they select with a to date
@@ -311,7 +311,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the end date is less than or equal to the current date
     # SCAL: GPC-STR-TST-REF-03 | Test data: 9690937286
 
-  @GPC-STR-TST-REF-04 @referrals
+  @GPC-STR-TST-REF-04 @referrals @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Referrals in a date range
     Given the user wishes to view referrals for a specific period
     When they select with from and to dates
@@ -320,21 +320,21 @@ Feature: Access Record Structured - Full Record (Extended)
     And the start date is less than or equal to the end date
     # SCAL: GPC-STR-TST-REF-04 | Test data: 9690937286
 
-  @GPC-STR-TST-REF-05 @referrals
+  @GPC-STR-TST-REF-05 @referrals @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: No referrals available
     Given the user or system requests referrals
     When I receive a response with no referral data
     Then the response is processed confirming the reason for no data
     # SCAL: GPC-STR-TST-REF-05 | Test data: 9690937308
 
-  @GPC-STR-TST-REF-06 @referrals
+  @GPC-STR-TST-REF-06 @referrals @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Supported referrals elements
     Given I have made a valid referrals request
     When I receive a successful response
     Then I display all key information commensurate with the original record
     # SCAL: GPC-STR-TST-REF-06 | Test data: 9690937294
 
-  @GPC-STR-TST-REF-07 @referrals
+  @GPC-STR-TST-REF-07 @referrals @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Invalid parameter referrals
     Given I have made a request for referrals with invalid parameters
     When I receive an invalid parameter error response
@@ -352,14 +352,14 @@ Feature: Access Record Structured - Full Record (Extended)
   # DIARY ENTRY TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-DIA-01 @diary_entries
+  @GPC-STR-TST-DIA-01 @diary_entries @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: All diary entries
     Given the user wishes to view all diary entries
     When they request diary entries
     Then the request uses the includeDiaryEntries parameter with no part parameters
     # SCAL: GPC-STR-TST-DIA-01 | Test data: 9690937294
 
-  @GPC-STR-TST-DIA-02 @diary_entries
+  @GPC-STR-TST-DIA-02 @diary_entries @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Diary entries to a specified date
     Given the user wishes to view diary entries up to a specific date
     When they select with a to date
@@ -367,21 +367,21 @@ Feature: Access Record Structured - Full Record (Extended)
     And the search date is greater than or equal to the current date
     # SCAL: GPC-STR-TST-DIA-02 | Test data: 9690937286
 
-  @GPC-STR-TST-DIA-03 @diary_entries
+  @GPC-STR-TST-DIA-03 @diary_entries @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: No diary entries available
     Given the user or system requests diary entries
     When I receive a response with no diary entry data
     Then the response is processed confirming the reason for no data
     # SCAL: GPC-STR-TST-DIA-03 | Test data: 9690937308
 
-  @GPC-STR-TST-DIA-04 @diary_entries
+  @GPC-STR-TST-DIA-04 @diary_entries @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Supported diary entry elements
     Given I have made a valid diary entries request
     When I receive a successful response
     Then I display all key information commensurate with the original record
     # SCAL: GPC-STR-TST-DIA-04 | Test data: 9690937286
 
-  @GPC-STR-TST-DIA-05 @diary_entries
+  @GPC-STR-TST-DIA-05 @diary_entries @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Invalid parameter diary entries
     Given I have made a request for diary entries with invalid parameters
     When I receive an invalid parameter error response
@@ -399,35 +399,35 @@ Feature: Access Record Structured - Full Record (Extended)
   # PROBLEM TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-PRB-01 @problems
+  @GPC-STR-TST-PRB-01 @problems @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Request all problems
     Given the user wishes to view all problems
     When they request problems
     Then the request uses the includeProblems parameter only
     # SCAL: GPC-STR-TST-PRB-01 | Test data: 9690937286
 
-  @GPC-STR-TST-PRB-02 @problems
+  @GPC-STR-TST-PRB-02 @problems @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Request with part parameters
     Given the user wishes to filter problems by status and significance
     When they request problems with part parameters
     Then the request uses the includeProblems parameter with filterStatus and filterSignificance
     # SCAL: GPC-STR-TST-PRB-02 | Test data: 9690937286
 
-  @GPC-STR-TST-PRB-03 @problems
+  @GPC-STR-TST-PRB-03 @problems @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Request with multiple parameters
     Given the user wishes to request problems with multiple filter values
     When they request problems with active and minor status and inactive and major significance
     Then the request uses the includeProblems parameter with the combined filter values
     # SCAL: GPC-STR-TST-PRB-03 | Test data: 9690937286
 
-  @GPC-STR-TST-PRB-04 @problems
+  @GPC-STR-TST-PRB-04 @problems @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: No problems available
     Given the user or system requests problems
     When I receive a response with no problem data
     Then the response is processed confirming the reason for no data
     # SCAL: GPC-STR-TST-PRB-04 | Test data: 9690937308
 
-  @GPC-STR-TST-PRB-05 @problems
+  @GPC-STR-TST-PRB-05 @problems @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Invalid parameter problems
     Given I have made a request for problems with invalid parameters
     When I receive an invalid parameter error response
@@ -457,7 +457,7 @@ Feature: Access Record Structured - Full Record (Extended)
       Then I handle the warning gracefully
       # SCAL: GPC-STR-TST-PRB-08 | Test data: 9658218873
 
-  @GPC-STR-TST-PRB-09 @problems
+  @GPC-STR-TST-PRB-09 @problems @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Problem header data elements
     Given I have received a response with problems
     When I display or use the problem information
@@ -468,21 +468,21 @@ Feature: Access Record Structured - Full Record (Extended)
   # IMMUNISATION TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-IMM-01 @immunisations
+  @GPC-STR-TST-IMM-01 @immunisations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Request immunisations
     Given the user wishes to view immunisations
     When they request immunisations
     Then the request uses the includeImmunisations parameter
     # SCAL: GPC-STR-TST-IMM-01 | Test data: 9690938207
 
-  @GPC-STR-TST-IMM-02 @immunisations
+  @GPC-STR-TST-IMM-02 @immunisations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Request immunisations with part parameters
     Given the user wishes to filter immunisations by notGiven and status
     When they request immunisations with part parameters
     Then the request uses the includeImmunisations parameter with notGiven and status
     # SCAL: GPC-STR-TST-IMM-02 | Test data: 9690938207
 
-  @GPC-STR-TST-IMM-03 @immunisations
+  @GPC-STR-TST-IMM-03 @immunisations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Supported immunisation data elements
     Given I have made a valid immunisations request
     When I receive a successful response
@@ -496,14 +496,14 @@ Feature: Access Record Structured - Full Record (Extended)
     Then my system distinguishes between immunisations given and immunisations not given
     # SCAL: GPC-STR-TST-IMM-04 | Test data: 9690938207
 
-  @GPC-STR-TST-IMM-05 @immunisations
+  @GPC-STR-TST-IMM-05 @immunisations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: No immunisations available
     Given the user or system requests immunisations
     When I receive a response with no immunisation data
     Then the response is processed confirming the reason for no data
     # SCAL: GPC-STR-TST-IMM-05 | Test data: 9658218903
 
-  @GPC-STR-TST-IMM-06 @immunisations
+  @GPC-STR-TST-IMM-06 @immunisations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Invalid parameter immunisations
     Given I have made a request for immunisations with invalid parameters
     When I receive an invalid parameter error response
@@ -613,14 +613,14 @@ Feature: Access Record Structured - Full Record (Extended)
   # CONSULTATION TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-ENC-01 @consultations
+  @GPC-STR-TST-ENC-01 @consultations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Request all consultations
     Given the user wishes to view all consultations
     When they request consultations
     Then the request uses the includeConsultations parameter
     # SCAL: GPC-STR-TST-ENC-01 | Test data: 9690937286
 
-  @GPC-STR-TST-ENC-02 @consultations
+  @GPC-STR-TST-ENC-02 @consultations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Consultations from a specified date
     Given the user wishes to view consultations from a specific date
     When they select with a from date
@@ -628,7 +628,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the start date is less than or equal to the current date
     # SCAL: GPC-STR-TST-ENC-02 | Test data: 9690937286
 
-  @GPC-STR-TST-ENC-03 @consultations
+  @GPC-STR-TST-ENC-03 @consultations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Consultations up to a specified date
     Given the user wishes to view consultations up to a specific date
     When they select with a to date
@@ -636,7 +636,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the end date is less than or equal to the current date
     # SCAL: GPC-STR-TST-ENC-03 | Test data: 9690937286
 
-  @GPC-STR-TST-ENC-04 @consultations
+  @GPC-STR-TST-ENC-04 @consultations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Consultations for a date range
     Given the user wishes to view consultations for a specific period
     When they select with from and to dates
@@ -645,28 +645,28 @@ Feature: Access Record Structured - Full Record (Extended)
     And the start date is less than or equal to the end date
     # SCAL: GPC-STR-TST-ENC-04 | Test data: 9690937286
 
-  @GPC-STR-TST-ENC-05 @consultations
+  @GPC-STR-TST-ENC-05 @consultations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Consultations by most recent
     Given the user wishes to view the most recent consultations
     When they request consultations with a count
     Then the request uses the includeNumberOfMostRecent parameter
     # SCAL: GPC-STR-TST-ENC-05 | Test data: 9690937286
 
-  @GPC-STR-TST-ENC-06 @consultations
+  @GPC-STR-TST-ENC-06 @consultations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: No consultations available
     Given the user or system requests consultations
     When I receive a response with no consultation data
     Then the response is processed confirming the reason for no data
     # SCAL: GPC-STR-TST-ENC-06 | Test data: 9690937308
 
-  @GPC-STR-TST-ENC-07 @consultations
+  @GPC-STR-TST-ENC-07 @consultations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Supported consultations elements
     Given I have made a valid consultations request
     When I receive a successful response
     Then I display all key information commensurate with the original record
     # SCAL: GPC-STR-TST-ENC-07 | Test data: 9690937286
 
-  @GPC-STR-TST-ENC-08 @consultations
+  @GPC-STR-TST-ENC-08 @consultations @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Invalid parameter consultations
     Given I have made a request for consultations with invalid parameters
     When I receive an invalid parameter error response

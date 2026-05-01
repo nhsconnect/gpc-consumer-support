@@ -92,6 +92,9 @@ def pytest_bdd_apply_tag(tag, function):
             "not s-marked in PDS, so the blocked sensitive-trace path cannot be validated."
         ),
         "skip_api_access_not_exposed": "To be implemented once API access is exposed",
+        "skip_cededim_did_not_implement_so_out_of_scope": (
+            "Cededim did not implement this scenario and it is out of scope."
+        ),
     }
 
     reason = skip_reasons.get(tag)

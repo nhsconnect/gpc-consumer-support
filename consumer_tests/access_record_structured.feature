@@ -21,7 +21,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I always include the resource identifiers received from GP Connect messages when exporting the data
     # SCAL: GPC-STR-GEN-02
 
-  @GPC-STR-TST-GEN-05 @general @audit
+  @GPC-STR-TST-GEN-05 @general @audit @skip_audit_logs_unavailable
   Scenario: GPC-STR-TST-GEN-05 - Access Control and Audit
     Given I am at a point in the system where I have access to attempt a call to a GP Connect service
     When I make that attempt to access GP Connect
@@ -52,7 +52,7 @@ Feature: Access Record Structured - Medications and Allergies
     Then the registered GP practice from the last PDS trace is used to identify the practice to submit the request to
     # SCAL: GPC-CORE03-01, GPC-CORE03-02 | Test data: 9658218873
 
-  @GPC-STR-TST-GEN-09 @patient_demographics @pds
+  @GPC-STR-TST-GEN-09 @patient_demographics @pds @skip_sensitive_pds_data_unavailable
   Scenario: GPC-STR-TST-GEN-09 - Patient Demographics - PDS trace sensitive patient
     Given I have access to request data from GP Connect but I cannot confirm the registered practice either because it is not on PDS or the patient has an s-flag
     When I attempt to access GP Connect
@@ -67,7 +67,7 @@ Feature: Access Record Structured - Medications and Allergies
     And handles the prevention gracefully so the user is aware that GP Connect is not available for this patient
     # SCAL: GPC-CORE07-01 | Test data: 9658220290
 
-  @GPC-STR-TST-GEN-11 @error_handling
+  @GPC-STR-TST-GEN-11 @error_handling @skip_api_access_not_exposed
   Scenario: GPC-STR-TST-GEN-11 - Error Handling - Patient Not Found
     Given I have made a request to a GP Connect service
     When I receive a patient not found error response
@@ -75,7 +75,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-02 | Test data: 9999999999
 
-  @GPC-STR-TST-GEN-12 @error_handling
+  @GPC-STR-TST-GEN-12 @error_handling @skip_api_access_not_exposed
   Scenario: GPC-STR-TST-GEN-12 - Error Handling - Patient Dissent to Share
     Given I have made a request to a GP Connect service
     When I receive a patient dissent to share error response
@@ -83,7 +83,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-03 | Test data: 9658220169
 
-  @GPC-STR-TST-GEN-13 @error_handling
+  @GPC-STR-TST-GEN-13 @error_handling @skip_api_access_not_exposed
   Scenario: GPC-STR-TST-GEN-13 - Error Handling - Invalid resource
     Given I have made a request to a GP Connect service using an Invalid Resource
     When I receive an invalid resource error response
@@ -91,7 +91,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-04 | Test data: 9658218873
 
-  @GPC-STR-TST-GEN-14 @error_handling
+  @GPC-STR-TST-GEN-14 @error_handling @skip_api_access_not_exposed
   Scenario: GPC-STR-TST-GEN-14 - Error Handling - Invalid NHS Number
     Given I have made a request to a GP Connect service using an Invalid NHS Number
     When I receive an invalid NHS number error response
@@ -99,7 +99,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-05
 
-  @GPC-STR-TST-GEN-15 @error_handling @allergies
+  @GPC-STR-TST-GEN-15 @error_handling @allergies @skip_api_access_not_exposed
   Scenario: GPC-STR-TST-GEN-15 - Error Handling - Invalid parameter allergies
     Given I have made a request for allergies to a GP Connect service with invalid Allergies Parameters
     When I receive an invalid parameter error response
@@ -107,7 +107,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-ALL01 | Test data: 9658218873
 
-  @GPC-STR-TST-GEN-16 @error_handling @medications
+  @GPC-STR-TST-GEN-16 @error_handling @medications @skip_api_access_not_exposed
   Scenario: GPC-STR-TST-GEN-16 - Error Handling - Invalid parameter medications
     Given I have made a request for medications to a GP Connect service with invalid Medications Parameters
     When I receive an invalid parameter error response
@@ -126,7 +126,7 @@ Feature: Access Record Structured - Medications and Allergies
       Then I make the user aware as appropriate
       # SCAL: GPC-CORE13-07, GPC-CORE13-06 | Test data: 9658219705
 
-    @GPC-STR-TST-GEN-18 @warnings @allergies
+    @GPC-STR-TST-GEN-18 @warnings @allergies @skip_cededim_did_not_implement_so_out_of_scope
     Scenario: GPC-STR-TST-GEN-18 - Warnings - Message warnings Confidential allergy
       Given I have requested allergies are included
       When I receive a response including a confidential items warning for allergies
@@ -148,7 +148,7 @@ Feature: Access Record Structured - Medications and Allergies
       And the confidential data warning is shown to apply to medications data only
       # SCAL: GPC-CORE13-09 | Test data: 9658219705
 
-  @GPC-STR-TST-GEN-20 @general
+  @GPC-STR-TST-GEN-20 @general @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: GPC-STR-TST-GEN-20 - Presenting patient data - Data Source
     Given I have received a valid message response
     When I present the data to the end user
@@ -303,7 +303,7 @@ Feature: Access Record Structured - Medications and Allergies
       And ensures that the resolved allergies cannot be utilised by decision support where decision support is in use
       # SCAL: GPC-STR-ALL02-02 | Test data: 9658218873
 
-    @GPC-STR-TST-ALG-04 @allergies
+    @GPC-STR-TST-ALG-04 @allergies @skip_cededim_did_not_implement_so_out_of_scope
     Scenario: GPC-STR-TST-ALG-04 - Allergy data elements
       Given the response includes a single code item which indicates that the clinician has recorded that the patient has no known allergies
       Then I display or utilise all the key information to represent or process the allergy records commensurate with the original record meaning and my specific use case
