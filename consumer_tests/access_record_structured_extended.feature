@@ -175,21 +175,21 @@ Feature: Access Record Structured - Full Record (Extended)
   # ALLERGY TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-ALG-01 @allergies
+  @GPC-STR-TST-ALG-01 @allergies @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Request current allergies
     Given the user wishes to view current allergies
     When they select to access current allergies
     Then the request uses the includeAllergies parameter with includeResolvedAllergies set to false
     # SCAL: GPC-STR-TST-ALG-01 | Test data: 9690937308
 
-  @GPC-STR-TST-ALG-02 @allergies
+  @GPC-STR-TST-ALG-02 @allergies @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Request current and resolved allergies
     Given the user wishes to view all allergies including resolved
     When they select to access all allergies
     Then the request uses the includeAllergies parameter with includeResolvedAllergies set to true
     # SCAL: GPC-STR-TST-ALG-02 | Test data: 9690937308
 
-  @GPC-STR-TST-ALG-03 @allergies
+  @GPC-STR-TST-ALG-03 @allergies @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Handling resolved allergies
     Given I have received a response including resolved allergies
     When I display or use the allergy information
@@ -205,7 +205,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Then I display all key information commensurate with the original record
     # SCAL: GPC-STR-TST-ALG-04 | Test data: 9690937308
 
-  @GPC-STR-TST-ALG-07 @allergies
+  @GPC-STR-TST-ALG-07 @allergies @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: No data response
     Given I have received a response with an empty active allergies list
     When I display or use the response
@@ -213,7 +213,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And I do not confuse no active allergies recorded with no known allergies
     # SCAL: GPC-STR-TST-ALG-07 | Test data: 9690937308
 
-  @GPC-STR-TST-ALG-08 @allergies
+  @GPC-STR-TST-ALG-08 @allergies @skip_cededim_did_not_implement_so_out_of_scope
   Scenario: Clinically asserted no known allergies
     Given I have received a response with a single code item indicating no known allergies
     When I display or use the response
