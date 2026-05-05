@@ -27,3 +27,6 @@ reference_cegedim__automated_tests_implementation/.claude/
 
 # Runtime logs
 *.log
+
+# VS Code settings
+.vscode/
