@@ -36,6 +36,7 @@ reference_cegedim__automated_tests_implementation/
     ├── conftest.py               # Test patient data (EMIS, TPP, Medicus)
     └── step_defs/                # Step definitions wiring Gherkin → Playwright
         ├── conftest.py
+        ├── access_record_screens.py  # Screen composition helpers
         ├── test_access_record_structured.py
         └── test_access_record_structured_extended.py
 ```
@@ -58,9 +59,9 @@ playwright install chromium
 Create a `.env` file in this directory with:
 
 ```text
-GP_CONNECT_BASE_URL=https://pharmacyservices.cegedim.cloud/pharmacy/home
-GP_CONNECT_USERNAME=<your_username>
-GP_CONNECT_PASSWORD=<your_password>
+BASE_URL=<url_of_application_under_test>
+USERNAME=<your_username>
+PASSWORD=<your_password>
 ```
 
 ## Development Workflow — playwright-cli First
@@ -100,7 +101,6 @@ If an MP4 flow recording exists under `supporting-documentation/`, use it as an 
 - For MED-02 (Repeat Medications), assert that more than one medication item is present and highlight asserted text from the top item using dynamically extracted medication text (do not hardcode medicine names).
 - For MED-07 (Acute Medications empty state), assert the exact two guidance lines and highlight both asserted lines for video evidence.
 - For any visible UI text assertion, always call the highlight helper on the exact asserted text so evidence videos show what was validated.
-
 - Investigation coverage in `consumer_tests/access_record_structured_extended.feature` is currently split by implementation mode: INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are tagged `@skip_api_access_not_exposed`; INV-06 is implemented as a UI-driven validation on the Patient GP Record `Investigations` tab.
 - For INV-06, follow the same UI evidence model used for MED-02: assert more than one investigation item is visible, click the top investigation item, and highlight asserted top-item text for video evidence.
 
@@ -116,7 +116,7 @@ pytest
 pytest -m access_record_structured
 
 # Run a single feature file
-pytest tests/step_defs/test_access_record_structured.py
+pytest ../consumer_tests/access_record_structured.feature
 
 # Run with headed browser
 pytest --headed
