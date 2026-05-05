@@ -1,6 +1,6 @@
 # AGENTS.md — Cegedim Reference Implementation Context
 
-This file acts as a guide to coding agents for how to build step definitions for the feature files stored at the top level consumer_tests directory, it also stores durable context for coding agents working in this folder.
+This file guides coding agents on building step definitions for the feature files in the top-level `consumer_tests` directory and stores durable context for agents working in this folder.
 
 ## Scope
 
@@ -34,21 +34,15 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 
 ### Mandatory Visual Evidence Rule
 
-- For any assertion against visible UI text, always call the highlight helper on the exact asserted text so evidence videos clearly show what was validated.
-- Apply this to both positive content assertions and empty-state/error-message assertions.
+- Verify UI flow and selectors with `playwright-cli` before editing page objects or step definitions. Do not guess selectors.
+- For every assertion against visible UI text, highlight the exact asserted text (including positive assertions and empty-state/error assertions) so recorded evidence shows what was validated.
 - Do not finish implementation until highlighted assertion evidence is present in the executed scenario video.
-- Verify UI flow and selectors with `playwright-cli` before editing page objects or step definitions.
-- Do not guess selectors; confirm behavior in the live UI first.
-- Prefer minimal edits and avoid reformatting unrelated code.
 - Keep scenario-to-step mapping clear and traceable.
-- Model page objects by real application screens, not by feature file. Use dedicated classes for pages such as home, demographics search, patient search results, and GP record views.
-- Keep UI interaction logic in screen-specific page object classes. Step-definition composition helpers belong in `tests/step_defs/`, not `pages/`.
-- Create a top-level execution folder for each run under `test-results/` named `test-suite-execution-YYYYMMDD-HHMMSS`.
-- Store all artefacts for that run inside its execution folder (for example `report.html`, `results.json`, and `videos-manual/`).
-- Name scenario-level artefacts (for example videos) using the scenario test ID plus timestamp (for example `@GPC-STR-TST-GEN-09+YYYYMMDD-HHMMSS`) so evidence is easy to review.
-- Each time a new test is added or an existing test is changed, rerun the relevant previously passing tests (or a broader regression subset) before finishing work to catch regressions early.
-- Store video evidence for each executed test scenario under the current run folder at `test-results/test-suite-execution-*/videos-manual/` and keep these recordings available for review.
-- For assertions that validate visible UI text, use the page highlight helper so the asserted text is visibly emphasised in the recorded video evidence (double-click + temporary highlight).
+- Prefer minimal edits and avoid reformatting unrelated code.
+- Model page objects by real application screens, not by feature file. Keep UI interaction logic in screen-specific page object classes; keep scenario composition helpers in `tests/step_defs/`, not `pages/`.
+- For each test run, create `test-results/test-suite-execution-YYYYMMDD-HHMMSS` and store all artefacts for that run inside it (for example `report.html`, `results.json`, `videos-manual/`).
+- Name scenario-level artefacts using `@<TEST-ID>+YYYYMMDD-HHMMSS` so evidence is easy to review.
+- Rerun relevant previously passing tests (or a broader regression subset) after any new or changed test before finishing work.
 - For INV-06 UI validation, click the top investigation item and highlight a visible top-item text anchor rather than trying to match a full multi-line row payload.
 - Do not use broad exception swallowing (for example `try: ... except Exception: pass`) to make tests pass. If UI state can vary, assert explicit accepted alternatives and fail with a clear reason when none are present.
 
@@ -59,8 +53,7 @@ pytest tests/step_defs/test_access_record_structured_extended.py
   - TPP: 9692136744
   - Medicus: 9693646525
 - Dedicated scenario-specific anchors:
-  - GEN-06 stale-PDS flow: family-name search `Smith` only. Keep this patient reserved for GEN-06 and do not refresh PDS in other tests.
-  - GEN-06 automation currently covers the blocked `>24h` stale-PDS branch with the reserved `Smith` patient.
+  - GEN-06 stale-PDS flow: family-name search `Smith` only. Keep this patient reserved for GEN-06, do not refresh PDS in other tests, and use it for the blocked `>24h` branch.
   - GEN-09 is currently skipped in automation: NHS `9690938533` and `9690938541` are not presently s-marked in PDS, so the blocked sensitive-trace branch cannot be validated until suitable data is restored.
   - GEN-13 to GEN-16 are currently tagged `@skip_api_access_not_exposed` and skipped with reason `To be implemented once API access is exposed`.
   - Investigations in extended structured are currently split:
@@ -73,6 +66,12 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 - Source references:
   - `tests/conftest.py`
   - `supporting-documentation/1_5_structured_context.csv`
+
+### Evidence-First Context (Agent Accuracy)
+
+- To improve agent accuracy, keep `supporting-documentation/` rich and current with implementation-facing evidence.
+- Prefer the original onboarding evidence set submitted for NHS Solutions Assurance (where available), including requirement notes, sample requests/responses, flow recordings, and scenario mappings.
+- When evidence and current UI behavior differ, treat the live UI as source of truth for selectors/flow and record the discrepancy in `docs/ui-feature-map.md`.
 
 ## Files to Keep in Sync
 

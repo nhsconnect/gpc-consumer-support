@@ -89,8 +89,9 @@ For all new or changed automated tests in this reference implementation, follow 
 
 1. Use `playwright-cli` to discover and verify the real UI flow before editing code.
 2. Update `docs/ui-feature-map.md` with the confirmed navigation path and selectors.
-3. Use requirements and data notes from `supporting-documentation/1_5_structured_context.csv` while implementing steps and assertions.
-4. Run the newly developed tests and a regression set of previously passing tests to confirm end-to-end behaviour and catch regressions.
+3. Use requirements and data notes from `supporting-documentation/` (including `1_5_structured_context.csv`) while implementing steps and assertions.
+4. Where available, include and use the original onboarding evidence submitted for NHS Solutions Assurance (for example request/response samples, mapping notes, and flow recordings) in `supporting-documentation/` to improve implementation accuracy.
+5. Run the newly developed tests and a regression set of previously passing tests to confirm end-to-end behaviour and catch regressions.
 
 If an MP4 flow recording exists under `supporting-documentation/`, use it as an additional guide to cross-check sequence and UI state transitions.
 
