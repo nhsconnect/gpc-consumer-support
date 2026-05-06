@@ -134,6 +134,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the request includes the includeMedication parameter
     And the request includes includePrescriptionIssues set to true
     And the request does not include a medicationSearchFromDate
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-MED-01 | Test data: 9690937286
 
   @GPC-STR-TST-MED-02 @medications
@@ -145,10 +146,15 @@ Feature: Access Record Structured - Full Record (Extended)
 
   @GPC-STR-TST-MED-03 @medications @skip_api_access_not_exposed
   Scenario: Request medication by date
-    Given I am enabled to access GP Connect data and want to retrieve medication details for a period
+    Given I am enabled to access GP Connect data for a given patient and I want to retrieve medication details but I do not require a full medication history
     When I make the medication request
-    Then the request conforms to the specification with a medicationSearchFromDate in the defined format
+    Then the request conforms to the specification and includes the NHS Number
+    And the request includes the includeMedication parameter
+    And the request sets includePrescriptionIssues to true or false
+    And the request includes the medicationSearchFromDate parameter
+    And the medicationSearchFromDate is in the defined format
     And the medicationSearchFromDate is less than or equal to the current date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-MED-03 | Test data: 9690937286
 
   @GPC-STR-TST-MED-04 @medications @skip_api_access_not_exposed
@@ -161,7 +167,10 @@ Feature: Access Record Structured - Full Record (Extended)
   Scenario: Requesting medication issues
     Given I am enabled to access GP Connect data and my use case does or does not require medication issues
     When I make the medication request
-    Then the request sets includePrescriptionIssues to the appropriate value
+    Then the request conforms to the specification and includes the NHS Number
+    And the request includes the includeMedication parameter
+    And the request sets includePrescriptionIssues to the appropriate value
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-MED-05 | Test data: 9690937286
 
   @GPC-STR-TST-MED-07 @medications
@@ -180,6 +189,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to view current allergies
     When they select to access current allergies
     Then the request uses the includeAllergies parameter with includeResolvedAllergies set to false
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-ALG-01 | Test data: 9690937308
 
   @GPC-STR-TST-ALG-02 @allergies @skip_supplier_not_implemented_out_of_scope
@@ -187,6 +197,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to view all allergies including resolved
     When they select to access all allergies
     Then the request uses the includeAllergies parameter with includeResolvedAllergies set to true
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-ALG-02 | Test data: 9690937308
 
   @GPC-STR-TST-ALG-03 @allergies @skip_supplier_not_implemented_out_of_scope
@@ -229,6 +240,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to view all investigations
     When they request investigations
     Then the request uses the includeInvestigations parameter with no part parameters
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-INV-01 | Test data: 9690937294
 
   @GPC-STR-TST-INV-02 @investigations @skip_api_access_not_exposed
@@ -237,6 +249,7 @@ Feature: Access Record Structured - Full Record (Extended)
     When they select with a from date
     Then the request uses investigationSearchPeriod.start only
     And the start date is less than or equal to the current date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-INV-02 | Test data: 9690937294
 
   @GPC-STR-TST-INV-03 @investigations @skip_api_access_not_exposed
@@ -245,6 +258,7 @@ Feature: Access Record Structured - Full Record (Extended)
     When they select with a to date
     Then the request uses investigationSearchPeriod.end only
     And the end date is less than or equal to the current date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-INV-03 | Test data: 9690937286
 
   @GPC-STR-TST-INV-04 @investigations @skip_api_access_not_exposed
@@ -254,6 +268,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Then the request uses both investigationSearchPeriod.start and investigationSearchPeriod.end part parameters
     And the end date is less than or equal to the current date
     And the start date is less than or equal to the end date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-INV-04 | Test data: 9690937286
 
   @GPC-STR-TST-INV-05 @investigations @skip_api_access_not_exposed
@@ -293,6 +308,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to view all referrals
     When they request referrals
     Then the request uses the includeReferrals parameter with no part parameters
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-REF-01 | Test data: 9690937294
 
   @GPC-STR-TST-REF-02 @referrals @skip_supplier_not_implemented_out_of_scope
@@ -301,6 +317,7 @@ Feature: Access Record Structured - Full Record (Extended)
     When they select with a from date
     Then the request uses referralSearchPeriod.start only
     And the start date is less than or equal to the current date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-REF-02 | Test data: 9690937286
 
   @GPC-STR-TST-REF-03 @referrals @skip_supplier_not_implemented_out_of_scope
@@ -309,6 +326,7 @@ Feature: Access Record Structured - Full Record (Extended)
     When they select with a to date
     Then the request uses referralSearchPeriod.end only
     And the end date is less than or equal to the current date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-REF-03 | Test data: 9690937286
 
   @GPC-STR-TST-REF-04 @referrals @skip_supplier_not_implemented_out_of_scope
@@ -318,6 +336,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Then the request uses both referralSearchPeriod.start and referralSearchPeriod.end part parameters
     And the end date is less than or equal to the current date
     And the start date is less than or equal to the end date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-REF-04 | Test data: 9690937286
 
   @GPC-STR-TST-REF-05 @referrals @skip_supplier_not_implemented_out_of_scope
@@ -357,6 +376,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to view all diary entries
     When they request diary entries
     Then the request uses the includeDiaryEntries parameter with no part parameters
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-DIA-01 | Test data: 9690937294
 
   @GPC-STR-TST-DIA-02 @diary_entries @skip_supplier_not_implemented_out_of_scope
@@ -365,6 +385,7 @@ Feature: Access Record Structured - Full Record (Extended)
     When they select with a to date
     Then the request uses the diaryEntriesSearchDate parameter
     And the search date is greater than or equal to the current date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-DIA-02 | Test data: 9690937286
 
   @GPC-STR-TST-DIA-03 @diary_entries @skip_supplier_not_implemented_out_of_scope
@@ -404,6 +425,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to view all problems
     When they request problems
     Then the request uses the includeProblems parameter only
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-PRB-01 | Test data: 9690937286
 
   @GPC-STR-TST-PRB-02 @problems @skip_supplier_not_implemented_out_of_scope
@@ -411,6 +433,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to filter problems by status and significance
     When they request problems with part parameters
     Then the request uses the includeProblems parameter with filterStatus and filterSignificance
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-PRB-02 | Test data: 9690937286
 
   @GPC-STR-TST-PRB-03 @problems @skip_supplier_not_implemented_out_of_scope
@@ -418,6 +441,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to request problems with multiple filter values
     When they request problems with active and minor status and inactive and major significance
     Then the request uses the includeProblems parameter with the combined filter values
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-PRB-03 | Test data: 9690937286
 
   @GPC-STR-TST-PRB-04 @problems @skip_supplier_not_implemented_out_of_scope
@@ -473,6 +497,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to view immunisations
     When they request immunisations
     Then the request uses the includeImmunisations parameter
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-IMM-01 | Test data: 9690938207
 
   @GPC-STR-TST-IMM-02 @immunisations @skip_supplier_not_implemented_out_of_scope
@@ -480,6 +505,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to filter immunisations by notGiven and status
     When they request immunisations with part parameters
     Then the request uses the includeImmunisations parameter with notGiven and status
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-IMM-02 | Test data: 9690938207
 
   @GPC-STR-TST-IMM-03 @immunisations @skip_supplier_not_implemented_out_of_scope
@@ -533,6 +559,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to view all uncategorised data
     When they request uncategorised data
     Then the request uses the includeUncategorisedData parameter
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-UNC-01 | Test data: 9690937286, 9690937294
 
   @GPC-STR-TST-UNC-02 @uncategorised_data
@@ -541,6 +568,7 @@ Feature: Access Record Structured - Full Record (Extended)
     When they select with a from date
     Then the request uses uncategorisedDataSearchPeriod.start only
     And the start date is less than or equal to the current date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-UNC-02 | Test data: 9690937286
 
   @GPC-STR-TST-UNC-03 @uncategorised_data
@@ -549,6 +577,7 @@ Feature: Access Record Structured - Full Record (Extended)
     When they select with a to date
     Then the request uses uncategorisedDataSearchPeriod.end only
     And the end date is less than or equal to the current date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-UNC-03 | Test data: 9690937286
 
   @GPC-STR-TST-UNC-04 @uncategorised_data
@@ -558,6 +587,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Then the request uses both uncategorisedDataSearchPeriod.start and uncategorisedDataSearchPeriod.end
     And the end date is less than or equal to the current date
     And the start date is less than or equal to the end date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-UNC-04 | Test data: 9690937286
 
   @GPC-STR-TST-UNC-05 @uncategorised_data
@@ -618,6 +648,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to view all consultations
     When they request consultations
     Then the request uses the includeConsultations parameter
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-ENC-01 | Test data: 9690937286
 
   @GPC-STR-TST-ENC-02 @consultations @skip_supplier_not_implemented_out_of_scope
@@ -626,6 +657,7 @@ Feature: Access Record Structured - Full Record (Extended)
     When they select with a from date
     Then the request uses consultationSearchPeriod.start only
     And the start date is less than or equal to the current date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-ENC-02 | Test data: 9690937286
 
   @GPC-STR-TST-ENC-03 @consultations @skip_supplier_not_implemented_out_of_scope
@@ -634,6 +666,7 @@ Feature: Access Record Structured - Full Record (Extended)
     When they select with a to date
     Then the request uses consultationSearchPeriod.end only
     And the end date is less than or equal to the current date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-ENC-03 | Test data: 9690937286
 
   @GPC-STR-TST-ENC-04 @consultations @skip_supplier_not_implemented_out_of_scope
@@ -643,6 +676,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Then the request uses both consultationSearchPeriod.start and consultationSearchPeriod.end
     And the end date is less than or equal to the current date
     And the start date is less than or equal to the end date
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-ENC-04 | Test data: 9690937286
 
   @GPC-STR-TST-ENC-05 @consultations @skip_supplier_not_implemented_out_of_scope
@@ -650,6 +684,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to view the most recent consultations
     When they request consultations with a count
     Then the request uses the includeNumberOfMostRecent parameter
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-ENC-05 | Test data: 9690937286
 
   @GPC-STR-TST-ENC-06 @consultations @skip_supplier_not_implemented_out_of_scope
@@ -765,6 +800,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to run a predefined search
     When they request the last 3 consultations and all problems and all allergies including resolved for the last 365 days
     Then the request conforms to the specification with the combined parameters
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-SRC01-01 | Test data: 9690937286
 
   @GPC-STR-TST-SRC01-02 @search_queries
@@ -772,6 +808,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to run a predefined search with additional clinical areas
     When they request the last 3 consultations, all problems, all allergies including resolved for the last 365 days, plus immunisations and uncategorised data
     Then the request conforms to the specification with the combined parameters
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-SRC01-02 | Test data: 9690937286
 
   @GPC-STR-TST-SRC02-01 @search_queries
@@ -779,6 +816,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to request multiple clinical areas including consultations
     When I construct the request
     Then the request must not include referralSearchPeriod, investigationSearchPeriod, diaryEntriesSearchDate, uncategorisedDataSearchPeriod, or consultationSearchPeriod part parameters when consultations are included
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-SRC02-01 | Test data: 9690937286
 
   @GPC-STR-TST-SRC02-02 @search_queries
@@ -786,6 +824,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to request multiple clinical areas including problems
     When I construct the request
     Then the request conforms to the specification with the combined parameters for problems and other clinical areas
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-SRC02-02 | Test data: 9690937286
 
   @GPC-STR-TST-SRC02-03 @search_queries
@@ -793,4 +832,5 @@ Feature: Access Record Structured - Full Record (Extended)
     Given the user wishes to request multiple clinical areas without problems or consultations
     When I construct the request
     Then the request conforms to the specification with the combined parameters for the selected clinical areas
+    And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-SRC02-03 | Test data: 9690937286
