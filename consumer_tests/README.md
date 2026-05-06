@@ -16,5 +16,5 @@ Every consumer supplier must implement and pass these tests to gather the assura
 1. Use a BDD test framework in your language of choice (e.g. pytest-bdd, Cucumber, SpecFlow).
 2. Point your framework at this folder as the feature file source.
 3. Implement step definitions that drive your consumer application.
-4. See the reference implementation for a worked example aligned to the Tech Radar using Python + pytest-bdd + Playwright: `../reference_cegedim__automated_tests_implementation/`.
+4. See the reference implementation for a worked example aligned to the Tech Radar using Python + pytest-bdd + Playwright: `../reference_implementation_of_feature_tests/`.
 5. The reference implementation includes `AGENTS.md`, which can help if you want to use Copilot to build out step definitions.

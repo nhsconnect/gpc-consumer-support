@@ -19,11 +19,11 @@ test-results/
 # Playwright local artifacts
 .playwright-cli/
 .playwright/
-reference_cegedim__automated_tests_implementation/.playwright-cli/
-reference_cegedim__automated_tests_implementation/.playwright/
+reference_implementation_of_feature_tests/.playwright-cli/
+reference_implementation_of_feature_tests/.playwright/
 
 # Agent-local metadata
-reference_cegedim__automated_tests_implementation/.claude/
+reference_implementation_of_feature_tests/.claude/
 
 # Runtime logs
 *.log

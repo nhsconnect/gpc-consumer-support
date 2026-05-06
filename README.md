@@ -16,7 +16,7 @@ GP Connect consumer assurance test scripts and supporting documentation.
 │   ├── send_document_online_consultation.feature
 │   └── structured_documents_migrate.feature
 │
-├── reference_cegedim__automated_tests_implementation/ # Reference implementation (Cegedim)
+├── reference_implementation_of_feature_tests/         # Reference implementation
 │   └── ...                                            # See its own README for details
 │
 ├── test_data_files/                                   # Test data (FHIR JSON bundles)
@@ -43,11 +43,11 @@ Each feature file maps to a GP Connect capability:
 
 ## Reference Implementation
 
-The `reference_cegedim__automated_tests_implementation/` folder contains a **working reference implementation** that shows how the feature files in `consumer_tests/` can be automated using Python, pytest-bdd, and Playwright against the Cegedim Pharmacy Services pre-production environment.
+The `reference_implementation_of_feature_tests/` folder contains a **working reference implementation** that shows how the feature files in `consumer_tests/` can be automated using Python, pytest-bdd, and Playwright against a consumer application pre-production environment.
 
-Suppliers should use this as a guide to build their own test automation that executes the same BDD scenarios against their own consumer application. See the [reference implementation README](reference_cegedim__automated_tests_implementation/README.md) for setup and usage details.
+Suppliers should use this as a guide to build their own test automation that executes the same BDD scenarios against their own consumer application. See the [reference implementation README](reference_implementation_of_feature_tests/README.md) for setup and usage details.
 
-For agent-specific implementation context and guardrails, see [AGENTS.md](reference_cegedim__automated_tests_implementation/AGENTS.md).
+For agent-specific implementation context and guardrails, see [AGENTS.md](reference_implementation_of_feature_tests/AGENTS.md).
 
 ## Test Data
 
