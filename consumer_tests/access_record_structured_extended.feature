@@ -360,7 +360,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Then I handle the error gracefully
     # SCAL: GPC-STR-TST-REF-07 | Test data: 9690937294
 
-  @GPC-STR-TST-REF-09 @referrals
+  @GPC-STR-TST-REF-09 @referrals @skip_supplier_not_implemented_out_of_scope
   Scenario: Forwards compatibility referrals
     Given I have sent a valid request for referrals
     When the provider returns a warning that referrals is not supported
@@ -409,7 +409,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Then I handle the error gracefully
     # SCAL: GPC-STR-TST-DIA-05 | Test data: 9690937294
 
-  @GPC-STR-TST-DIA-07 @diary_entries
+  @GPC-STR-TST-DIA-07 @diary_entries @skip_supplier_not_implemented_out_of_scope
   Scenario: Forwards compatibility diary entries
     Given I have sent a valid request for diary entries
     When the provider returns a warning that diary entries is not supported
@@ -463,19 +463,19 @@ Feature: Access Record Structured - Full Record (Extended)
     Background: Valid problems request sent
       Given I have sent a valid request for problems
 
-    @GPC-STR-TST-PRB-06 @problems
+    @GPC-STR-TST-PRB-06 @problems @skip_supplier_not_implemented_out_of_scope
     Scenario: Confidential problem item warning
       When I receive a confidential items warning for a problem
       Then I make the user aware of the confidential items warning
       # SCAL: GPC-STR-TST-PRB-06 | Test data: No Data
 
-    @GPC-STR-TST-PRB-07 @problems
+    @GPC-STR-TST-PRB-07 @problems @skip_supplier_not_implemented_out_of_scope
     Scenario: Confidential item linked to a problem warning
       When I receive a confidential items warning for an item linked to a problem
       Then I make the user aware of the confidential items warning
       # SCAL: GPC-STR-TST-PRB-07 | Test data: No Data
 
-    @GPC-STR-TST-PRB-08 @problems
+    @GPC-STR-TST-PRB-08 @problems @skip_supplier_not_implemented_out_of_scope
     Scenario: Forwards compatibility problems
       When the provider returns a warning that problems is not supported
       Then I handle the warning gracefully
@@ -515,7 +515,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Then I display all key information commensurate with the original record
     # SCAL: GPC-STR-TST-IMM-03 | Test data: 9690938207
 
-  @GPC-STR-TST-IMM-04 @immunisations
+  @GPC-STR-TST-IMM-04 @immunisations @skip_supplier_not_implemented_out_of_scope
   Scenario: Presenting immunisations not given
     Given I have received a response including immunisations not given
     When I display or use the immunisation information
@@ -536,14 +536,14 @@ Feature: Access Record Structured - Full Record (Extended)
     Then I handle the error gracefully
     # SCAL: GPC-STR-TST-IMM-06 | Test data: 9690938207
 
-  @GPC-STR-TST-IMM-07 @immunisations
+  @GPC-STR-TST-IMM-07 @immunisations @skip_supplier_not_implemented_out_of_scope
   Scenario: Confidential immunisations item warning
     Given I have sent a valid request for immunisations
     When I receive a confidential items warning for immunisations
     Then I make the user aware of the confidential items warning
     # SCAL: GPC-STR-TST-IMM-07 | Test data: No Data
 
-  @GPC-STR-TST-IMM-08 @immunisations
+  @GPC-STR-TST-IMM-08 @immunisations @skip_supplier_not_implemented_out_of_scope
   Scenario: Forwards compatibility immunisations
     Given I have sent a valid request for immunisations
     When the provider returns a warning that immunisations is not supported
@@ -554,7 +554,7 @@ Feature: Access Record Structured - Full Record (Extended)
   # UNCATEGORISED DATA TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-UNC-01 @uncategorised_data
+  @GPC-STR-TST-UNC-01 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: Request all uncategorised data
     Given the user wishes to view all uncategorised data
     When they request uncategorised data
@@ -562,7 +562,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-UNC-01 | Test data: 9690937286, 9690937294
 
-  @GPC-STR-TST-UNC-02 @uncategorised_data
+  @GPC-STR-TST-UNC-02 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: Uncategorised data from a specified date
     Given the user wishes to view uncategorised data from a specific date
     When they select with a from date
@@ -571,7 +571,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-UNC-02 | Test data: 9690937286
 
-  @GPC-STR-TST-UNC-03 @uncategorised_data
+  @GPC-STR-TST-UNC-03 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: Uncategorised data up to a specified date
     Given the user wishes to view uncategorised data up to a specific date
     When they select with a to date
@@ -580,7 +580,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-UNC-03 | Test data: 9690937286
 
-  @GPC-STR-TST-UNC-04 @uncategorised_data
+  @GPC-STR-TST-UNC-04 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: Uncategorised data for a date range
     Given the user wishes to view uncategorised data for a specific period
     When they select with from and to dates
@@ -590,49 +590,49 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-UNC-04 | Test data: 9690937286
 
-  @GPC-STR-TST-UNC-05 @uncategorised_data
+  @GPC-STR-TST-UNC-05 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: No uncategorised data available
     Given the user or system requests uncategorised data
     When I receive a response with no uncategorised data
     Then the response is processed confirming the reason for no data
     # SCAL: GPC-STR-TST-UNC-05 | Test data: 9690937286
 
-  @GPC-STR-TST-UNC-06 @uncategorised_data
+  @GPC-STR-TST-UNC-06 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: Representing hierarchical records
     Given I have received a response with hierarchical uncategorised data
     When I display or use the uncategorised data
     Then I represent the hierarchical structure correctly
     # SCAL: GPC-STR-TST-UNC-06 | Test data: No Data
 
-  @GPC-STR-TST-UNC-07 @uncategorised_data
+  @GPC-STR-TST-UNC-07 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: Representing blood pressure readings
     Given I have received a response with blood pressure readings in uncategorised data
     When I display or use the uncategorised data
     Then I represent the blood pressure readings correctly
     # SCAL: GPC-STR-TST-UNC-07 | Test data: No Data
 
-  @GPC-STR-TST-UNC-08 @uncategorised_data
+  @GPC-STR-TST-UNC-08 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: Supported uncategorised data elements
     Given I have made a valid uncategorised data request
     When I receive a successful response
     Then I display all key information commensurate with the original record
     # SCAL: GPC-STR-TST-UNC-08 | Test data: 9690937286
 
-  @GPC-STR-TST-UNC-09 @uncategorised_data
+  @GPC-STR-TST-UNC-09 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: Invalid parameter uncategorised data
     Given I have made a request for uncategorised data with invalid parameters
     When I receive an invalid parameter error response
     Then I handle the error gracefully
     # SCAL: GPC-STR-TST-UNC-09 | Test data: 9690937286
 
-  @GPC-STR-TST-UNC-10 @uncategorised_data
+  @GPC-STR-TST-UNC-10 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: Confidential uncategorised data item warning
     Given I have sent a valid request for uncategorised data
     When I receive a confidential items warning for uncategorised data
     Then I make the user aware of the confidential items warning
     # SCAL: GPC-STR-TST-UNC-10 | Test data: No Data
 
-  @GPC-STR-TST-UNC-11 @uncategorised_data
+  @GPC-STR-TST-UNC-11 @uncategorised_data @skip_supplier_not_implemented_out_of_scope
   Scenario: Forwards compatibility uncategorised data
     Given I have sent a valid request for uncategorised data
     When the provider returns a warning that uncategorised data is not supported
@@ -713,19 +713,19 @@ Feature: Access Record Structured - Full Record (Extended)
     Background: Valid consultations request sent
       Given I have sent a valid request for consultations
 
-    @GPC-STR-TST-ENC-09 @consultations
+    @GPC-STR-TST-ENC-09 @consultations @skip_supplier_not_implemented_out_of_scope
     Scenario: Confidential consultation warning
       When I receive a confidential items warning for a consultation
       Then I make the user aware of the confidential items warning
       # SCAL: GPC-STR-TST-ENC-09 | Test data: No Data
 
-    @GPC-STR-TST-ENC-10 @consultations
+    @GPC-STR-TST-ENC-10 @consultations @skip_supplier_not_implemented_out_of_scope
     Scenario: Confidential item within a consultation warning
       When I receive a confidential items warning for an item within a consultation
       Then I make the user aware of the confidential items warning
       # SCAL: GPC-STR-TST-ENC-10 | Test data: No Data
 
-    @GPC-STR-TST-ENC-11 @consultations
+    @GPC-STR-TST-ENC-11 @consultations @skip_supplier_not_implemented_out_of_scope
     Scenario: Forwards compatibility consultations
       When the provider returns a warning that consultations is not supported
       Then I handle the warning gracefully
@@ -735,56 +735,56 @@ Feature: Access Record Structured - Full Record (Extended)
   # LINKAGE TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-LNK01 @linkages
+  @GPC-STR-TST-LNK01 @linkages @skip_supplier_not_implemented_out_of_scope
   Scenario: Immunisations linked to problems
     Given I have received a response containing immunisations linked to problems
     When I display or use the linked data
     Then I present the linkage between immunisations and problems correctly
     # SCAL: GPC-STR-TST-LNK01 | Test data: 9690937286
 
-  @GPC-STR-TST-LNK02 @linkages
+  @GPC-STR-TST-LNK02 @linkages @skip_supplier_not_implemented_out_of_scope
   Scenario: Uncategorised data linked to problems
     Given I have received a response containing uncategorised data linked to problems
     When I display or use the linked data
     Then I present the linkage between uncategorised data and problems correctly
     # SCAL: GPC-STR-TST-LNK02 | Test data: 9690937286
 
-  @GPC-STR-TST-LNK03 @linkages
+  @GPC-STR-TST-LNK03 @linkages @skip_supplier_not_implemented_out_of_scope
   Scenario: Consultations linked to problems
     Given I have received a response containing consultations linked to problems
     When I display or use the linked data
     Then I present the linkage between consultations and problems correctly
     # SCAL: GPC-STR-TST-LNK03 | Test data: 9690937286
 
-  @GPC-STR-TST-LNK04 @linkages
+  @GPC-STR-TST-LNK04 @linkages @skip_supplier_not_implemented_out_of_scope
   Scenario: Investigations linked to problems
     Given I have received a response containing investigations linked to problems
     When I display or use the linked data
     Then I present the linkage between investigations and problems correctly
     # SCAL: GPC-STR-TST-LNK04 | Test data: 9690937286
 
-  @GPC-STR-TST-LNK05 @linkages
+  @GPC-STR-TST-LNK05 @linkages @skip_supplier_not_implemented_out_of_scope
   Scenario: Referrals linked to problems
     Given I have received a response containing referrals linked to problems
     When I display or use the linked data
     Then I present the linkage between referrals and problems correctly
     # SCAL: GPC-STR-TST-LNK05 | Test data: 9690937286
 
-  @GPC-STR-TST-LNK06 @linkages
+  @GPC-STR-TST-LNK06 @linkages @skip_supplier_not_implemented_out_of_scope
   Scenario: Diary entries linked to problems
     Given I have received a response containing diary entries linked to problems
     When I display or use the linked data
     Then I present the linkage between diary entries and problems correctly
     # SCAL: GPC-STR-TST-LNK06 | Test data: 9690937286
 
-  @GPC-STR-TST-LNK07 @linkages
+  @GPC-STR-TST-LNK07 @linkages @skip_supplier_not_implemented_out_of_scope
   Scenario: Medications linked to problems
     Given I have received a response containing medications linked to problems
     When I display or use the linked data
     Then I present the linkage between medications and problems correctly
     # SCAL: GPC-STR-TST-LNK07 | Test data: 9690937286
 
-  @GPC-STR-TST-LNK08 @linkages
+  @GPC-STR-TST-LNK08 @linkages @skip_supplier_not_implemented_out_of_scope
   Scenario: Allergies linked to problems
     Given I have received a response containing allergies linked to problems
     When I display or use the linked data
@@ -795,7 +795,7 @@ Feature: Access Record Structured - Full Record (Extended)
   # SEARCH QUERY TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-SRC01-01 @search_queries
+  @GPC-STR-TST-SRC01-01 @search_queries @skip_supplier_not_implemented_out_of_scope
   Scenario: Predefined search query 1
     Given the user wishes to run a predefined search
     When they request the last 3 consultations and all problems and all allergies including resolved for the last 365 days
@@ -803,7 +803,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-SRC01-01 | Test data: 9690937286
 
-  @GPC-STR-TST-SRC01-02 @search_queries
+  @GPC-STR-TST-SRC01-02 @search_queries @skip_supplier_not_implemented_out_of_scope
   Scenario: Predefined search query 2
     Given the user wishes to run a predefined search with additional clinical areas
     When they request the last 3 consultations, all problems, all allergies including resolved for the last 365 days, plus immunisations and uncategorised data
@@ -811,7 +811,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-SRC01-02 | Test data: 9690937286
 
-  @GPC-STR-TST-SRC02-01 @search_queries
+  @GPC-STR-TST-SRC02-01 @search_queries @skip_supplier_not_implemented_out_of_scope
   Scenario: Multiple parameter search including consultations
     Given the user wishes to request multiple clinical areas including consultations
     When I construct the request
@@ -819,7 +819,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-SRC02-01 | Test data: 9690937286
 
-  @GPC-STR-TST-SRC02-02 @search_queries
+  @GPC-STR-TST-SRC02-02 @search_queries @skip_supplier_not_implemented_out_of_scope
   Scenario: Multiple parameter search including problems
     Given the user wishes to request multiple clinical areas including problems
     When I construct the request
@@ -827,7 +827,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-SRC02-02 | Test data: 9690937286
 
-  @GPC-STR-TST-SRC02-03 @search_queries
+  @GPC-STR-TST-SRC02-03 @search_queries @skip_supplier_not_implemented_out_of_scope
   Scenario: Multiple clinical area search without problems or consultations
     Given the user wishes to request multiple clinical areas without problems or consultations
     When I construct the request
