@@ -67,7 +67,7 @@ Feature: Access Record Structured - Medications and Allergies
     And handles the prevention gracefully so the user is aware that GP Connect is not available for this patient
     # SCAL: GPC-CORE07-01 | Test data: 9658220290
 
-  @GPC-STR-TST-GEN-11 @error_handling @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-11 @error_handling @skip_requires_gp_provider_api_access
   Scenario: GPC-STR-TST-GEN-11 - Error Handling - Patient Not Found
     Given I have made a request to a GP Connect service
     When I receive a patient not found error response
@@ -75,7 +75,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-02 | Test data: 9999999999
 
-  @GPC-STR-TST-GEN-12 @error_handling @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-12 @error_handling @skip_requires_gp_provider_api_access
   Scenario: GPC-STR-TST-GEN-12 - Error Handling - Patient Dissent to Share
     Given I have made a request to a GP Connect service
     When I receive a patient dissent to share error response
@@ -83,7 +83,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-03 | Test data: 9658220169
 
-  @GPC-STR-TST-GEN-13 @error_handling @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-13 @error_handling @skip_requires_gp_provider_api_access
   Scenario: GPC-STR-TST-GEN-13 - Error Handling - Invalid resource
     Given I have made a request to a GP Connect service using an Invalid Resource
     When I receive an invalid resource error response
@@ -91,7 +91,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-04 | Test data: 9658218873
 
-  @GPC-STR-TST-GEN-14 @error_handling @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-14 @error_handling @skip_requires_gp_provider_api_access
   Scenario: GPC-STR-TST-GEN-14 - Error Handling - Invalid NHS Number
     Given I have made a request to a GP Connect service using an Invalid NHS Number
     When I receive an invalid NHS number error response
@@ -99,7 +99,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-05
 
-  @GPC-STR-TST-GEN-15 @error_handling @allergies @skip_api_access_not_exposed @skip_supplier_not_implemented_out_of_scope
+  @GPC-STR-TST-GEN-15 @error_handling @allergies @skip_requires_gp_provider_api_access @skip_supplier_not_implemented_out_of_scope
   Scenario: GPC-STR-TST-GEN-15 - Error Handling - Invalid parameter allergies
     Given I have made a request for allergies to a GP Connect service with invalid Allergies Parameters
     When I receive an invalid parameter error response
@@ -107,7 +107,7 @@ Feature: Access Record Structured - Medications and Allergies
     And I make available all the diagnostic details to appropriate people to enable fault resolution
     # SCAL: GPC-CORE13-ALL01 | Test data: 9658218873
 
-  @GPC-STR-TST-GEN-16 @error_handling @medications @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-16 @error_handling @medications @skip_requires_gp_provider_api_access
   Scenario: GPC-STR-TST-GEN-16 - Error Handling - Invalid parameter medications
     Given I have made a request for medications to a GP Connect service with invalid Medications Parameters
     When I receive an invalid parameter error response

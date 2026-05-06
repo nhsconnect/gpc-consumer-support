@@ -91,7 +91,7 @@ def pytest_bdd_apply_tag(tag, function):
             "GEN-09 temporarily skipped: NHS 9690938533 and 9690938541 are currently "
             "not s-marked in PDS, so the blocked sensitive-trace path cannot be validated."
         ),
-        "skip_api_access_not_exposed": "To be implemented once API access is exposed",
+        "skip_requires_gp_provider_api_access": "To be implemented once API access is exposed",
         "skip_supplier_not_implemented_out_of_scope": (
             "Supplier did not implement this scenario and it is out of scope."
         ),

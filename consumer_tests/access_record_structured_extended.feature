@@ -59,42 +59,42 @@ Feature: Access Record Structured - Full Record (Extended)
     Then the system prevents access and handles the prevention gracefully
     # SCAL: GPC-STR-TST-GEN-10 | Test data: 9690938681
 
-  @GPC-STR-TST-GEN-11 @general @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-11 @general @skip_requires_gp_provider_api_access
   Scenario: Patient Not Found
     Given I have made a request to a GP Connect service
     When I receive a patient not found error response
     Then I handle the error gracefully and make diagnostics available
     # SCAL: GPC-STR-TST-GEN-11 | Test data: 9999999999
 
-  @GPC-STR-TST-GEN-12 @general @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-12 @general @skip_requires_gp_provider_api_access
   Scenario: Patient Dissent to Share
     Given I have made a request to a GP Connect service
     When I receive a patient dissent to share error response
     Then I handle the error gracefully and make diagnostics available
     # SCAL: GPC-STR-TST-GEN-12 | Test data: 9690938576
 
-  @GPC-STR-TST-GEN-13 @general @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-13 @general @skip_requires_gp_provider_api_access
   Scenario: Invalid resource
     Given I have made a request using an invalid resource
     When I receive an invalid resource error response
     Then I handle the error gracefully and make diagnostics available
     # SCAL: GPC-STR-TST-GEN-13 | Test data: 9690937286
 
-  @GPC-STR-TST-GEN-14 @general @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-14 @general @skip_requires_gp_provider_api_access
   Scenario: Invalid NHS Number
     Given I have made a request using an invalid NHS Number
     When I receive an invalid NHS number error response
     Then I handle the error gracefully and make diagnostics available
     # SCAL: GPC-STR-TST-GEN-14 | Test data: N/A
 
-  @GPC-STR-TST-GEN-15 @general @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-15 @general @skip_requires_gp_provider_api_access
   Scenario: Invalid parameter allergies
     Given I have made a request for allergies with invalid parameters
     When I receive an invalid parameter error response
     Then I handle the error gracefully
     # SCAL: GPC-STR-TST-GEN-15 | Test data: 9690937286
 
-  @GPC-STR-TST-GEN-16 @general @skip_api_access_not_exposed
+  @GPC-STR-TST-GEN-16 @general @skip_requires_gp_provider_api_access
   Scenario: Invalid parameter medications
     Given I have made a request for medications with invalid parameters
     When I receive an invalid parameter error response
@@ -126,7 +126,7 @@ Feature: Access Record Structured - Full Record (Extended)
   # MEDICATION TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-MED-01 @medications @skip_api_access_not_exposed
+  @GPC-STR-TST-MED-01 @medications @skip_requires_gp_provider_api_access
   Scenario: Request all medications
     Given I am enabled to access GP Connect data for a given patient and I want to retrieve a full medication history
     When I make the medication request
@@ -144,7 +144,7 @@ Feature: Access Record Structured - Full Record (Extended)
     Then I display all key information commensurate with the original record meaning
     # SCAL: GPC-STR-TST-MED-02 | Test data: 9690937286
 
-  @GPC-STR-TST-MED-03 @medications @skip_api_access_not_exposed
+  @GPC-STR-TST-MED-03 @medications @skip_requires_gp_provider_api_access
   Scenario: Request medication by date
     Given I am enabled to access GP Connect data for a given patient and I want to retrieve medication details but I do not require a full medication history
     When I make the medication request
@@ -157,13 +157,13 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-MED-03 | Test data: 9690937286
 
-  @GPC-STR-TST-MED-04 @medications @skip_api_access_not_exposed
+  @GPC-STR-TST-MED-04 @medications @skip_requires_gp_provider_api_access
   Scenario: Request medication by future date rejected
     Given I am enabled to access GP Connect data and try to request medications by a future date
     Then I am prevented from submitting the request
     # SCAL: GPC-STR-TST-MED-04 | Test data: 9690937286
 
-  @GPC-STR-TST-MED-05 @medications @skip_api_access_not_exposed
+  @GPC-STR-TST-MED-05 @medications @skip_requires_gp_provider_api_access
   Scenario: Requesting medication issues
     Given I am enabled to access GP Connect data and my use case does or does not require medication issues
     When I make the medication request
@@ -235,7 +235,7 @@ Feature: Access Record Structured - Full Record (Extended)
   # INVESTIGATION TESTS
   # ---------------------------------------------------------------------------
 
-  @GPC-STR-TST-INV-01 @investigations @skip_api_access_not_exposed
+  @GPC-STR-TST-INV-01 @investigations @skip_requires_gp_provider_api_access
   Scenario: All investigations
     Given the user wishes to view all investigations
     When they request investigations
@@ -243,7 +243,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-INV-01 | Test data: 9690937294
 
-  @GPC-STR-TST-INV-02 @investigations @skip_api_access_not_exposed
+  @GPC-STR-TST-INV-02 @investigations @skip_requires_gp_provider_api_access
   Scenario: Investigations from a specified date
     Given the user wishes to view investigations from a specific date
     When they select with a from date
@@ -252,7 +252,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-INV-02 | Test data: 9690937294
 
-  @GPC-STR-TST-INV-03 @investigations @skip_api_access_not_exposed
+  @GPC-STR-TST-INV-03 @investigations @skip_requires_gp_provider_api_access
   Scenario: Investigations to a specified date
     Given the user wishes to view investigations up to a specific date
     When they select with a to date
@@ -261,7 +261,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-INV-03 | Test data: 9690937286
 
-  @GPC-STR-TST-INV-04 @investigations @skip_api_access_not_exposed
+  @GPC-STR-TST-INV-04 @investigations @skip_requires_gp_provider_api_access
   Scenario: Investigations in a date range
     Given the user wishes to view investigations for a specific period
     When they select with from and to dates
@@ -271,7 +271,7 @@ Feature: Access Record Structured - Full Record (Extended)
     And the resulting response is processed successfully by the Consumer
     # SCAL: GPC-STR-TST-INV-04 | Test data: 9690937286
 
-  @GPC-STR-TST-INV-05 @investigations @skip_api_access_not_exposed
+  @GPC-STR-TST-INV-05 @investigations @skip_requires_gp_provider_api_access
   Scenario: No investigations available
     Given the user or system requests investigations
     When I receive a response with no investigation data
@@ -285,14 +285,14 @@ Feature: Access Record Structured - Full Record (Extended)
     Then I display all key information commensurate with the original record
     # SCAL: GPC-STR-TST-INV-06 | Test data: 9690937286
 
-  @GPC-STR-TST-INV-07 @investigations @skip_api_access_not_exposed
+  @GPC-STR-TST-INV-07 @investigations @skip_requires_gp_provider_api_access
   Scenario: Invalid parameter investigations
     Given I have made a request for investigations with invalid parameters
     When I receive an invalid parameter error response
     Then I handle the error gracefully
     # SCAL: GPC-STR-TST-INV-07 | Test data: 9690937294
 
-  @GPC-STR-TST-INV-09 @investigations @skip_api_access_not_exposed
+  @GPC-STR-TST-INV-09 @investigations @skip_requires_gp_provider_api_access
   Scenario: Forwards compatibility investigations
     Given I have sent a valid request for investigations
     When the provider returns a warning that investigations is not supported

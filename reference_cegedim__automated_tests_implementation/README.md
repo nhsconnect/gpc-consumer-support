@@ -95,14 +95,57 @@ For all new or changed automated tests in this reference implementation, follow 
 
 If an MP4 flow recording exists under `supporting-documentation/`, use it as an additional guide to cross-check sequence and UI state transitions.
 
+## Test Coverage — Current Limitations and Future Scope
+
+### What is currently implemented
+
+All tests that run today are **pure UI automation**: Playwright drives the Cegedim browser application, searches for patients by demographics, navigates to clinical areas, and asserts what is visible on screen. The GP Connect API calls happen inside Cegedim's backend and the test layer never observes them directly.
+
+### Skip tags and what they mean
+
+The feature files use three skip tags to mark tests that cannot yet run:
+
+| Tag | Reason |
+|-----|---------|
+| `@skip_requires_gp_provider_api_access` | The test requires direct access to the GP Connect API request or response, which is not exposed by this consumer application in its current configuration. See below. |
+| `@skip_supplier_not_implemented_out_of_scope` | The clinical area (for example referrals, problems, consultations) has not yet been implemented in the Cegedim UI, so there are no screens or flows to automate. |
+| `@skip_sensitive_pds_data_unavailable` | The required test patient (s-flagged on PDS) is not currently available in the test environment. |
+
+### What `@skip_requires_gp_provider_api_access` tests actually require
+
+Scenarios tagged `@skip_requires_gp_provider_api_access` exist to assure that the consumer constructs a **valid GP Connect API request** and correctly **processes the API response**. These include tests such as MED-01, MED-03, MED-05, INV-01–04, GEN-11–16, and all search-conformance tests.
+
+They cannot be satisfied by UI observation alone because the assertions are about the API contract:
+- The FHIR `$gpc.getstructuredrecord` request must contain the correct parameters (correct NHS number, correct clinical area parameters, correct part-parameter values, absence of parameters where required).
+- The FHIR Bundle response must be received and must conform to the GP Connect specification.
+- The consumer must correctly render or process the response — and the UI must reflect it.
+
+The GP Connect API calls are made **server-side** by the consumer backend — the browser never sends them directly. This means browser-level interception (`page.route()`) cannot capture them. The correct approach is:
+
+1. **Drive the UI** — Playwright triggers the clinical area request through the normal user flow, exactly as today.
+2. **Capture server-side traffic** — a network proxy (for example mitmproxy or Charles Proxy) sits between the consumer backend and the GP Provider Test system, or the consumer supplier exposes structured API call logs from their test environment. Either way, the raw outbound FHIR request and inbound FHIR Bundle response are captured against each test run.
+3. **Assert the captured request** — validate the outbound request contains the correct parameters (NHS number, correct clinical area parameter, correct part-parameter values, absence of parameters where required).
+4. **Assert the captured response** — validate the returned FHIR Bundle conforms to the GP Connect specification (resource types, required fields, cardinalities, clinical area content).
+5. **Assert the UI** — validate the consumer application screen correctly represents what was in that FHIR Bundle, confirming it has processed the response successfully.
+
+At all points, the raw request body, the raw response body, and a timestamped video of the UI should be logged against the scenario ID for review.
+
+This approach keeps the consumer application as the system under test throughout — the test framework drives it via the UI and observes what it actually sends and receives, rather than constructing requests independently. The prerequisite is an agreed mechanism with the consumer supplier (Cegedim) and the NHS environment team to expose server-side GP Connect traffic for test observation.
+
+### What `@skip_supplier_not_implemented_out_of_scope` tests require
+
+These tests will become automatable using the same **pure UI approach** as current tests once the consumer supplier implements those clinical area screens. No API-layer access is needed — once referrals, problems, consultations, allergies, and immunisations appear in the UI, the step definitions can be built following the same Playwright page-object pattern used today.
+
+---
+
 ## Medication and Investigation Learnings (Current State)
 
 - MED-02 and MED-07 are implemented as UI-driven validations through the Patient GP Record medication tabs.
-- MED-01, MED-03, MED-04, and MED-05 are currently tagged `@skip_api_access_not_exposed` in `consumer_tests/access_record_structured_extended.feature` because the required API path is not exposed in this environment.
+- MED-01, MED-03, MED-04, and MED-05 are currently tagged `@skip_requires_gp_provider_api_access` in `consumer_tests/access_record_structured_extended.feature` because the required API path is not exposed in this environment.
 - For MED-02 (Repeat Medications), assert that more than one medication item is present and highlight asserted text from the top item using dynamically extracted medication text (do not hardcode medicine names).
 - For MED-07 (Acute Medications empty state), assert the exact two guidance lines and highlight both asserted lines for video evidence.
 - For any visible UI text assertion, always call the highlight helper on the exact asserted text so evidence videos show what was validated.
-- Investigation coverage in `consumer_tests/access_record_structured_extended.feature` is currently split by implementation mode: INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are tagged `@skip_api_access_not_exposed`; INV-06 is implemented as a UI-driven validation on the Patient GP Record `Investigations` tab.
+- Investigation coverage in `consumer_tests/access_record_structured_extended.feature` is currently split by implementation mode: INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are tagged `@skip_requires_gp_provider_api_access`; INV-06 is implemented as a UI-driven validation on the Patient GP Record `Investigations` tab.
 - For INV-06, follow the same UI evidence model used for MED-02: assert more than one investigation item is visible, click the top investigation item, and highlight asserted top-item text for video evidence.
 
 ## Running Tests

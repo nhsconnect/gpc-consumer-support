@@ -55,10 +55,40 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 - Dedicated scenario-specific anchors:
   - GEN-06 stale-PDS flow: family-name search `Smith` only. Keep this patient reserved for GEN-06, do not refresh PDS in other tests, and use it for the blocked `>24h` branch.
   - GEN-09 is currently skipped in automation: NHS `9690938533` and `9690938541` are not presently s-marked in PDS, so the blocked sensitive-trace branch cannot be validated until suitable data is restored.
-  - GEN-13 to GEN-16 are currently tagged `@skip_api_access_not_exposed` and skipped with reason `To be implemented once API access is exposed`.
+  - GEN-13 to GEN-16 are currently tagged `@skip_requires_gp_provider_api_access` and skipped with reason `To be implemented once API access is exposed`.
   - Investigations in extended structured are currently split:
-    - INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are tagged `@skip_api_access_not_exposed`.
+    - INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are tagged `@skip_requires_gp_provider_api_access`.
     - INV-06 is implemented through Patient GP Record UI (Investigations tab), not API response parsing.
+
+## Skip Tag Meanings
+
+Three skip tags are used across the feature files. Understand the distinction before attempting to unskip any scenario.
+
+### `@skip_requires_gp_provider_api_access`
+
+These scenarios cannot be satisfied by UI observation alone. The assertions are about the GP Connect API contract — the request the consumer sends, the response it receives, and that it correctly processes that response.
+
+The GP Connect API calls are made **server-side** by the consumer backend (Cegedim holds the mTLS certificates and ASID required to call the GP Provider). Browser-level interception (`page.route()`) cannot see these calls. The test framework must not construct or fire its own requests at the GP Provider — that would bypass the consumer entirely.
+
+The correct approach when these tests are unskipped:
+
+1. **Drive the UI** — Playwright triggers the clinical area request through the normal user flow, exactly as current tests do.
+2. **Capture server-side traffic** — a network proxy (for example mitmproxy) sits between the consumer backend and the GP Provider Test system, or the consumer supplier exposes structured API call logs from their test environment. The raw outbound FHIR request and inbound FHIR Bundle response are captured per test run.
+3. **Assert the captured request** — validate the outbound request contains the correct FHIR parameters (NHS number, correct clinical area parameter, correct part-parameter values, absence of parameters where required).
+4. **Assert the captured response** — validate the FHIR Bundle conforms to the GP Connect v1.5 specification (resource types, required fields, cardinalities, clinical area content).
+5. **Assert the UI** — validate the consumer application screen correctly represents what was in that FHIR Bundle, confirming it has processed the response successfully.
+
+At every stage, log: the raw outbound FHIR request body, the raw inbound FHIR response body, and a timestamped video of the UI, all named against the scenario ID.
+
+Prerequisite before any of these can be unskipped: an agreed mechanism with Cegedim and the NHS environment team to expose server-side GP Connect traffic for test observation.
+
+### `@skip_supplier_not_implemented_out_of_scope`
+
+The consumer supplier (Cegedim) has not yet implemented the relevant clinical area (referrals, problems, consultations, allergies, immunisations) in their UI. Once the screens exist, these tests can be implemented using the same pure UI Playwright approach as current tests — no API-layer access is needed.
+
+### `@skip_sensitive_pds_data_unavailable`
+
+The required test patient (s-flagged on PDS) is not currently available in the test environment. Do not attempt to implement GEN-09 until a suitable patient is confirmed available.
   - GEN-17 (GP2GP transfer warning) uses NHS `9690938096` by demographics family-name search `Beston`, then `#ChoosePatient`, then `#view-gp-record` before asserting warning text.
   - PDS verification state branches to account for in future scenarios:
     - Never verified: UI shows `Verify patient via PDS` and message `The patient's details have not been PDS verified`.

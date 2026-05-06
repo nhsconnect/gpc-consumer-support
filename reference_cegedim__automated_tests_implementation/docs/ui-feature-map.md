@@ -176,13 +176,13 @@ Home (pharmacy/home)
 - The current automated GEN-06 path covers the blocked `>24 hours old` branch using the reserved `Smith` patient; the `<24 hours sent` branch is not exercised by this dedicated stale-PDS flow.
 - GEN-09 PDS trace fail scenarios currently use: NHS `9690938533` + DOB `09/09/2020`, and NHS `9690938541` + DOB `28/03/1960`.
 - GEN-09 is currently skipped in automation because the supplied NHS numbers are not presently s-marked in PDS, so the blocked sensitive-trace path cannot be exercised with current data.
-- GEN-13 through GEN-16 are currently tagged `@skip_api_access_not_exposed` and intentionally skipped until API access is available.
+- GEN-13 through GEN-16 are currently tagged `@skip_requires_gp_provider_api_access` and intentionally skipped until API access is available.
 - GEN-17 warning assertions should call the text-highlight helper so evidence videos clearly show the asserted warning content.
-- MED-01, MED-03, MED-04 and MED-05 are currently tagged `@skip_api_access_not_exposed` and intentionally skipped pending API access in this environment.
+- MED-01, MED-03, MED-04 and MED-05 are currently tagged `@skip_requires_gp_provider_api_access` and intentionally skipped pending API access in this environment.
 - MED-02 and MED-07 currently run through the UI GP Record medication tabs and store a `medications_ui_mode` context flag in step definitions to bypass API-only response checks.
 - MED-02 assertions should dynamically extract top repeat-item medication text for highlighting (no hardcoded medicine names).
 - MED-07 assertions should exactly match both acute no-data guidance lines and highlight both lines for evidence videos.
-- INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are currently tagged `@skip_api_access_not_exposed`.
+- INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are currently tagged `@skip_requires_gp_provider_api_access`.
 - INV-06 is implemented as UI mode on the Investigations tab and stores an `investigations_ui_mode` context flag to avoid API-only response checks.
 - INV-06 assertions should click the top investigation item and highlight a visible top-item text anchor (short title/headline) for evidence videos.
 - Videos of UI flows are saved under `test-results/videos-manual/`.
