@@ -84,7 +84,7 @@ Prerequisite before any of these can be unskipped: an agreed mechanism with the 
 
 ### `@skip_supplier_not_implemented_out_of_scope`
 
-The consumer supplier has not yet implemented the relevant clinical area (referrals, problems, consultations, allergies, immunisations) in their UI. Once the screens exist, these tests can be implemented using the same pure UI Playwright approach as current tests — no API-layer access is needed.
+The consumer supplier has not yet, or does not want to implement the relevant clinical area (referrals, problems, consultations, allergies, immunisations) in their consumer application. Once the screens exist, these tests can be implemented using the same pure UI Playwright approach as current tests — no API-layer access is needed.
 
 ### `@skip_sensitive_pds_data_unavailable`
 
@@ -99,7 +99,7 @@ The required test patient (s-flagged on PDS) is not currently available in the t
 
 ### Evidence-First Context (Agent Accuracy)
 
-- To improve agent accuracy, keep `supporting-documentation/` rich and current with implementation-facing evidence.
+- To improve agent accuracy, keep `supporting-documentation/` rich and current with implementation-facing evidence. If this is empty or not fleshed out then warn the user driving the AI Agent of this limitation.
 - Prefer the original onboarding evidence set submitted for NHS Solutions Assurance (where available), including requirement notes, sample requests/responses, flow recordings, and scenario mappings.
 - When evidence and current UI behavior differ, treat the live UI as source of truth for selectors/flow and record the discrepancy in `docs/ui-feature-map.md`.
 
@@ -121,6 +121,7 @@ When updating flow, selectors, or assertions, update these together where releva
 - Repo overview: `../README.md`
 - Local implementation guide: `README.md`
 - Feature sources: `../consumer_tests/`
+- UI selector and navigation map: `docs/ui-feature-map.md`
 
 ## Change Management
 
