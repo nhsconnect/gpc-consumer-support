@@ -1,6 +1,6 @@
 # Reference Implementation — Automated Tests
 
-This folder is a **reference implementation** that demonstrates how a supplier can automate the GP Connect consumer assurance BDD tests defined in [`consumer_tests/`](../consumer_tests/).
+This folder is a **reference implementation** that demonstrates how a supplier can automate the GP Connect consumer assurance BDD tests defined in [`assurance_tests/SCAL_technical/`](../assurance_tests/SCAL_technical/).
 
 It is **not** intended to be run as-is by other suppliers and **will not work out of the box** — the `.env` file containing the login credentials for the test system is not committed to the repository. Instead, it serves as a worked example showing one way to wire up the Gherkin feature files with real step definitions, page objects, and test data against a specific consumer application.
 
@@ -8,13 +8,13 @@ For durable coding-agent context and guardrails, see [AGENTS.md](AGENTS.md).
 
 ## How Suppliers Should Use This
 
-1. **Read the feature files** in `consumer_tests/` — these define the scenarios every consumer must pass.
+1. **Read the feature files** in `assurance_tests/SCAL_technical/` — these define the scenarios every consumer must pass.
 2. **Use this reference implementation as a guide** to understand how to:
    - Map Gherkin steps to automated actions against your own consumer UI or API.
    - Structure test data fixtures for EMIS, TPP, and Medicus provider systems.
    - Organise page objects and step definitions.
 3. **Build your own implementation** targeting your consumer application, using whichever language, framework, and tooling you prefer.
-4. **Run the same `consumer_tests/` feature files** from your implementation to produce the assurance evidence required.
+4. **Run the same `assurance_tests/SCAL_technical/` feature files** from your implementation to produce the assurance evidence required.
 
 ## Structure
 
@@ -22,7 +22,7 @@ For durable coding-agent context and guardrails, see [AGENTS.md](AGENTS.md).
 reference_implementation_of_feature_tests/
 ├── .env                          # Environment credentials (gitignored)
 ├── conftest.py                   # Playwright auth fixtures, session setup
-├── pytest.ini                    # pytest config (points to ../consumer_tests/)
+├── pytest.ini                    # pytest config (points to ../assurance_tests/SCAL_technical/)
 ├── requirements.txt              # Python dependencies
 ├── pages/                        # Page Object Model (application-specific)
 │   ├── base_page.py
@@ -141,11 +141,11 @@ These tests will become automatable using the same **pure UI approach** as curre
 ## Medication and Investigation Learnings (Current State)
 
 - MED-02 and MED-07 are implemented as UI-driven validations through the Patient GP Record medication tabs.
-- MED-01, MED-03, MED-04, and MED-05 are currently tagged `@skip_requires_gp_provider_api_access` in `consumer_tests/access_record_structured_extended.feature` because the required API path is not exposed in this environment.
+- MED-01, MED-03, MED-04, and MED-05 are currently tagged `@skip_requires_gp_provider_api_access` in `assurance_tests/SCAL_technical/access_record_structured_extended.feature` because the required API path is not exposed in this environment.
 - For MED-02 (Repeat Medications), assert that more than one medication item is present and highlight asserted text from the top item using dynamically extracted medication text (do not hardcode medicine names).
 - For MED-07 (Acute Medications empty state), assert the exact two guidance lines and highlight both asserted lines for video evidence.
 - For any visible UI text assertion, always call the highlight helper on the exact asserted text so evidence videos show what was validated.
-- Investigation coverage in `consumer_tests/access_record_structured_extended.feature` is currently split by implementation mode: INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are tagged `@skip_requires_gp_provider_api_access`; INV-06 is implemented as a UI-driven validation on the Patient GP Record `Investigations` tab.
+- Investigation coverage in `assurance_tests/SCAL_technical/access_record_structured_extended.feature` is currently split by implementation mode: INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are tagged `@skip_requires_gp_provider_api_access`; INV-06 is implemented as a UI-driven validation on the Patient GP Record `Investigations` tab.
 - For INV-06, follow the same UI evidence model used for MED-02: assert more than one investigation item is visible, click the top investigation item, and highlight asserted top-item text for video evidence.
 
 ## Running Tests
@@ -160,10 +160,22 @@ pytest
 pytest -m access_record_structured
 
 # Run a single feature file
-pytest ../consumer_tests/access_record_structured.feature
+pytest ../assurance_tests/SCAL_technical/access_record_structured.feature
 
 # Run with headed browser
 pytest --headed
+```
+
+### Running a single test by tag i.e. the GPC ID
+
+Use `-k` with the GPC test ID as a keyword filter. The `-k` flag does substring matching against the test name and markers, so the hyphenated GPC IDs work without escaping:
+
+```bash
+# Run a single scenario by its GPC ID tag
+pytest -k "GPC-STR-TST-SRC01-02"
+
+# Combine with headed browser for debugging
+pytest -k "GPC-STR-TST-SRC01-02" --headed
 ```
 
 ## Markers

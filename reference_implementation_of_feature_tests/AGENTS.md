@@ -1,12 +1,12 @@
 # AGENTS.md — Reference Implementation Context
 
-This file guides coding agents on building step definitions for the feature files in the top-level `consumer_tests` directory and stores durable context for agents working in this folder.
+This file guides coding agents on building step definitions for the feature files in `assurance_tests/SCAL_technical/` and stores durable context for agents working in this folder.
 
 ## Scope
 
 - Primary implementation scope is focused on:
-  - `consumer_tests/access_record_structured.feature`
-  - `consumer_tests/access_record_structured_extended.feature`
+  - `assurance_tests/SCAL_technical/access_record_structured.feature`
+  - `assurance_tests/SCAL_technical/access_record_structured_extended.feature`
 - Keep supporting code and docs aligned to these two features unless requirements change.
 
 ## Working Directory
@@ -120,8 +120,22 @@ When updating flow, selectors, or assertions, update these together where releva
 
 - Repo overview: `../README.md`
 - Local implementation guide: `README.md`
-- Feature sources: `../consumer_tests/`
+- SCAL technical assurance feature sources: `../assurance_tests/SCAL_technical/`
+- Clinical assurance feature sources: `../assurance_tests/clinical/`
 - UI selector and navigation map: `docs/ui-feature-map.md`
+
+## Clinical Assurance Tests — Key Context
+
+The `../assurance_tests/clinical/` folder contains a separate set of feature files focused on **UI display verification** of clinical data. These are fundamentally different from the SCAL technical tests:
+
+- **Purpose**: Verify the consumer UI correctly displays medication/allergy/observation data from the GP record.
+- **Assertion target**: Visible on-screen text (drug names, dosages, dates, notes, prescribers) — NOT API request/response conformance.
+- **Source**: Derived from the NHS clinical testing team's spreadsheet-based manual test pack (`GP Connect ARS Clinical Test Pack using TPP data v1.8`).
+- **Test data**: Primarily the TPP gold patient Louise Job (9692136744) at WEST FARM SURGERY (A86005).
+- **Automation approach**: Pure UI — Playwright navigates to the medication/clinical area and asserts the expected data values are visible.
+- **No API-layer observation needed**: Unlike `@skip_requires_gp_provider_api_access` scenarios, these tests only need to see what appears on screen.
+
+When implementing step definitions for clinical assurance tests, the `Then` steps should assert visible text on the page matches the expected field values from the data table.
 
 ## Change Management
 

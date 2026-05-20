@@ -22,7 +22,7 @@ TEST_RESULTS_ROOT = Path("test-results")
 EXECUTION_DIR_PREFIX = "test-suite-execution"
 EXECUTION_DIR_ENV = "TEST_SUITE_EXECUTION_DIR"
 
-TEST_ID_PATTERN = re.compile(r"GPC[-_]STR[-_]TST[-_][A-Z0-9]+[-_]\d+(?:[-_]\d+)?", re.IGNORECASE)
+TEST_ID_PATTERN = re.compile(r"GPC[-_]STR[-_]TST[-_][A-Z]+\d*(?:[-_]\d+)?", re.IGNORECASE)
 
 
 def _sanitize_for_filename(value: str) -> str:

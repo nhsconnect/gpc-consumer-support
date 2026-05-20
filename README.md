@@ -5,16 +5,14 @@ GP Connect consumer assurance test scripts and supporting documentation.
 ## Repository Structure
 
 ```text
-├── consumer_tests/                                    # BDD feature files (Gherkin)
-│   ├── foundations.feature
-│   ├── spine_integration.feature
-│   ├── access_record_html.feature
-│   ├── access_record_structured.feature
-│   ├── access_record_structured_extended.feature
-│   ├── access_document.feature
-│   ├── send_document_consultation_summary.feature
-│   ├── send_document_online_consultation.feature
-│   └── structured_documents_migrate.feature
+├── assurance_tests/
+│   ├── SCAL_technical/                                # BDD feature files — SCAL technical assurance (Gherkin)
+│   │   ├── access_record_structured.feature
+│   │   ├── access_record_structured_extended.feature
+│   │   └── ...
+│   │
+│   └── clinical/                                      # BDD feature files — Clinical assurance
+│       └── access_record_structured_medications.feature
 │
 ├── reference_implementation_of_feature_tests/         # Reference implementation
 │   └── ...                                            # See its own README for details
@@ -23,9 +21,9 @@ GP Connect consumer assurance test scripts and supporting documentation.
 └── images/                                            # Documentation images
 ```
 
-## consumer_tests
+## assurance_tests/SCAL_technical
 
-The `consumer_tests/` folder contains the **supplier-agnostic BDD feature files** that define the GP Connect consumer assurance test scenarios in Gherkin syntax. These are the tests that every consumer supplier must pass.
+The `assurance_tests/SCAL_technical/` folder contains the **supplier-agnostic BDD feature files** that define the GP Connect consumer assurance test scenarios in Gherkin syntax. These are the tests that every consumer supplier must pass.
 
 Each feature file maps to a GP Connect capability:
 
@@ -41,9 +39,19 @@ Each feature file maps to a GP Connect capability:
 | `send_document_online_consultation.feature` | Send Document — Online Consultation |
 | `structured_documents_migrate.feature` | Structured to Documents Migration |
 
+## assurance_tests/clinical
+
+The `assurance_tests/clinical/` folder contains **clinical assurance BDD feature files** that validate the consumer correctly displays clinical data retrieved from GP provider systems.
+
+| Feature file | Capability |
+|---|---|
+| `access_record_structured_medications.feature` | Medications — Acute, Repeat, Prescribed Elsewhere, Discontinued |
+
+These tests are data-driven and verify correct rendering of specific medication records (drug names, dosages, dates, prescribers, notes) from the GP Connect structured record response.
+
 ## Reference Implementation
 
-The `reference_implementation_of_feature_tests/` folder contains a **working reference implementation** that shows how the feature files in `consumer_tests/` can be automated using Python, pytest-bdd, and Playwright against a consumer application pre-production environment.
+The `reference_implementation_of_feature_tests/` folder contains a **working reference implementation** that shows how the feature files in `assurance_tests/SCAL_technical/` can be automated using Python, pytest-bdd, and Playwright against a consumer application pre-production environment.
 
 Suppliers should use this as a guide to build their own test automation that executes the same BDD scenarios against their own consumer application. See the [reference implementation README](reference_implementation_of_feature_tests/README.md) for setup and usage details.
 
