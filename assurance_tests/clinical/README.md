@@ -37,7 +37,7 @@ GP Practice: WEST FARM SURGERY (A86005)
 | Feature file | Scope |
 |---|---|
 | `access_record_structured_medications.feature` | Medications — Acute, Repeat, Prescribed Elsewhere, Discontinued + related Uncategorised/Investigations |
-| `access_record_structured_allergies.feature` | _(future)_ Allergies |
+| `access_record_structured_allergies.feature` | Allergies — Active, Resolved, Adverse Reactions, Problems, Intolerances, Negation Records |
 
 ## Relationship to SCAL Technical Assurance Tests
 
