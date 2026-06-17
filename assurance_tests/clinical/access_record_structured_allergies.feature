@@ -8,12 +8,16 @@ Feature: Clinical Assurance - Access Record Structured Allergies
   # Test patients: See patient table below
   # GP Practice: WEST FARM SURGERY (A86005)
   #
-  # Patient 1: NHS TBC — Bisoprolol (active), Naproxen (resolved)
-  # Patient 2: NHS TBC — Multiple allergies (Doxycycline, Aspirin, Peanut, etc.)
+  # STATUS: WIP — Awaiting allergy test data setup in the GP provider system.
+  #         NHS numbers and field values marked "TBC" will be populated once the
+  #         test engineer has configured consistent test data across providers.
+  #
+  # Patient 1: NHS TBC — Allergy to Bisoprolol (active), Allergy to Naproxen (resolved)
+  # Patient 2: NHS TBC — Multiple allergies (Allergy to Doxycycline, Allergy to Aspirin, Peanut Allergy, etc.)
   # Patient 3: NHS TBC — No known allergy (SNOMED negation)
   # Patient 4: NHS TBC — Empty (new patient, no allergy records)
-  # Patient 5: NHS TBC — Conflicting data (No known allergy + Ibuprofen + transfer degraded)
-  # Patient 6: NHS TBC — Multiple codes for same allergy (Phenoxymethylpenicillin, Codeine)
+  # Patient 5: NHS TBC — Conflicting data (No known allergy + Allergy to Ibuprofen + transfer degraded)
+  # Patient 6: NHS TBC — Multiple codes for same allergy (Allergy to Phenoxymethylpenicillin, Codeine)
   #
   # NOTE: NHS numbers above are placeholders (TBC) — replace with actual test patient NHS numbers
   #       once the test data is set up in the GP provider system.
@@ -28,18 +32,18 @@ Feature: Clinical Assurance - Access Record Structured Allergies
     and optional fields populated.
 
     @ALG_1
-    Scenario: ALG_1 - Active allergy with mandatory and optional fields (Patient 1 - Bisoprolol)
+    Scenario: ALG_1 - Active allergy with mandatory and optional fields (Patient 1 - Allergy to Bisoprolol)
       Given the consumer requests the structured record for patient "PATIENT_1_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field                | value                   |
-        | Allergy              | Bisoprolol              |
-        | Clinical Status      | Active                  |
-        | Verification Status  | Unconfirmed             |
-        | Category             | Medication              |
-        | Asserted Date        | TBC                     |
-        | Recorder             | TBC                     |
-        | Additional Details   | TBC                     |
+        | field                | value                          |
+        | Allergy              | Allergy to Bisoprolol          |
+        | Clinical Status      | Active                         |
+        | Verification Status  | Unconfirmed                    |
+        | Category             | Medication                     |
+        | Asserted Date        | TBC                            |
+        | Recorder             | TBC                            |
+        | Additional Details   | TBC                            |
       # Mandatory fields: Allergy Name, Clinical Status, Verification Status, Category, Asserted Date, Recorder
       # Optional fields present: Additional details (max character length as allowed by provider)
       # Note: Some optional fields (Type, Criticality, Onset, Asserter, Last Occurrence, Severity, Reaction)
@@ -57,13 +61,13 @@ Feature: Clinical Assurance - Access Record Structured Allergies
       Given the consumer requests the structured record for patient "PATIENT_1_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field            | value        |
-        | Allergy          | Bisoprolol   |
-        | Clinical Status  | Active       |
+        | field            | value                         |
+        | Allergy          | Allergy to Bisoprolol         |
+        | Clinical Status  | Active                        |
       And the allergy list contains an entry with the following details:
-        | field            | value        |
-        | Allergy          | Naproxen     |
-        | Clinical Status  | Resolved     |
+        | field            | value                         |
+        | Allergy          | Allergy to Naproxen           |
+        | Clinical Status  | Resolved                      |
 
   # ---------------------------------------------------------------------------
   # Additional Details - Max Length (ALG_4)
@@ -77,9 +81,9 @@ Feature: Clinical Assurance - Access Record Structured Allergies
       Given the consumer requests the structured record for patient "PATIENT_1_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field              | value        |
-        | Allergy            | Bisoprolol   |
-        | Additional Details | TBC          |
+        | field              | value                         |
+        | Allergy            | Allergy to Bisoprolol         |
+        | Additional Details | TBC                           |
       # Intended Result: Consumer accepts maximum provider supported length of additional details
       # The additional details field should contain the maximum length string allowed by the provider
 
@@ -95,9 +99,9 @@ Feature: Clinical Assurance - Access Record Structured Allergies
       Given the consumer requests the structured record for patient "PATIENT_1_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field                | value        |
-        | Allergy              | Bisoprolol   |
-        | Verification Status  | Unconfirmed  |
+        | field                | value                         |
+        | Allergy              | Allergy to Bisoprolol         |
+        | Verification Status  | Unconfirmed                   |
       # Per GP Connect spec, Verification Status is always "Unconfirmed"
 
   # ---------------------------------------------------------------------------
@@ -112,11 +116,11 @@ Feature: Clinical Assurance - Access Record Structured Allergies
       Given the consumer requests the structured record for patient "PATIENT_1_NHS_TBC"
       When the consumer displays only active allergies
       Then the allergy list contains an entry with the following details:
-        | field            | value        |
-        | Allergy          | Bisoprolol   |
-        | Clinical Status  | Active       |
-      And the allergy "Naproxen" is not displayed
-      # The resolved allergy (Naproxen) should be excluded from the active allergy list
+        | field            | value                         |
+        | Allergy          | Allergy to Bisoprolol         |
+        | Clinical Status  | Active                        |
+      And the allergy "Allergy to Naproxen" is not displayed
+      # The resolved allergy (Allergy to Naproxen) should be excluded from the active allergy list
 
   # ---------------------------------------------------------------------------
   # Multiple Active Allergies (ALG_10)
@@ -130,11 +134,11 @@ Feature: Clinical Assurance - Access Record Structured Allergies
       Given the consumer requests the structured record for patient "PATIENT_2_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field   | value        |
-        | Allergy | Doxycycline  |
+        | field   | value                       |
+        | Allergy | Allergy to Doxycycline       |
       And the allergy list contains an entry with the following details:
-        | field   | value    |
-        | Allergy | Aspirin  |
+        | field   | value                       |
+        | Allergy | Allergy to Aspirin           |
       And the allergy list contains an entry with the following details:
         | field   | value          |
         | Allergy | Peanut Allergy |
@@ -171,23 +175,23 @@ Feature: Clinical Assurance - Access Record Structured Allergies
     Tests that the consumer correctly handles full, partial, and missing asserted dates.
 
     @ALG_12
-    Scenario: ALG_12 - Full asserted date display - Day, Month, Year (Patient 2 - Doxycycline)
+    Scenario: ALG_12 - Full asserted date display - Day, Month, Year (Patient 2 - Allergy to Doxycycline)
       Given the consumer requests the structured record for patient "PATIENT_2_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field          | value        |
-        | Allergy        | Doxycycline  |
-        | Asserted Date  | TBC          |
+        | field          | value                       |
+        | Allergy        | Allergy to Doxycycline       |
+        | Asserted Date  | TBC                          |
       # The full date (day, month, year) should be displayed
 
     @ALG_18
-    Scenario: ALG_18 - Partial asserted date - Month, Year (Patient 2 - Aspirin)
+    Scenario: ALG_18 - Partial asserted date - Month, Year (Patient 2 - Allergy to Aspirin)
       Given the consumer requests the structured record for patient "PATIENT_2_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field          | value    |
-        | Allergy        | Aspirin  |
-        | Asserted Date  | TBC      |
+        | field          | value                       |
+        | Allergy        | Allergy to Aspirin           |
+        | Asserted Date  | TBC                          |
       # Only Month and Year should be displayed (no day component)
 
     @ALG_19
@@ -218,13 +222,13 @@ Feature: Clinical Assurance - Access Record Structured Allergies
     Tests that the consumer displays special characters in additional details without truncation.
 
     @ALG_13
-    Scenario: ALG_13 - Special characters in additional details (Patient 2 - Doxycycline)
+    Scenario: ALG_13 - Special characters in additional details (Patient 2 - Allergy to Doxycycline)
       Given the consumer requests the structured record for patient "PATIENT_2_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field              | value        |
-        | Allergy            | Doxycycline  |
-        | Additional Details | TBC          |
+        | field              | value                       |
+        | Allergy            | Allergy to Doxycycline       |
+        | Additional Details | TBC                          |
       # Additional details contain special characters (e.g., &, @, #, parentheses)
       # System should display them exactly as received without truncation or modification
 
@@ -236,15 +240,15 @@ Feature: Clinical Assurance - Access Record Structured Allergies
     Tests that resolved allergies are retrieved and displayed with end date and reason.
 
     @ALG_14
-    Scenario: ALG_14 - Resolved allergy with end date and reason (Patient 2 - Ibuprofen)
+    Scenario: ALG_14 - Resolved allergy with end date and reason (Patient 2 - Allergy to Ibuprofen)
       Given the consumer requests the structured record for patient "PATIENT_2_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field              | value     |
-        | Allergy            | Ibuprofen |
-        | Clinical Status    | Resolved  |
-        | Allergy End Date   | TBC       |
-        | Allergy End Reason | TBC       |
+        | field              | value                       |
+        | Allergy            | Allergy to Ibuprofen         |
+        | Clinical Status    | Resolved                     |
+        | Allergy End Date   | TBC                          |
+        | Allergy End Reason | TBC                          |
       # Resolved allergies should be in a separate section from active allergies
 
   # ---------------------------------------------------------------------------
@@ -354,10 +358,32 @@ Feature: Clinical Assurance - Access Record Structured Allergies
         | field   | value              |
         | Allergy | No known allergy   |
       And the allergy list contains an entry with the following details:
-        | field   | value      |
-        | Allergy | Ibuprofen  |
-      # Patient 5 has both a "No known allergy" negation AND an active allergy to Ibuprofen
+        | field   | value                       |
+        | Allergy | Allergy to Ibuprofen         |
+      # Patient 5 has both a "No known allergy" negation AND an active Allergy to Ibuprofen
       # The consumer should display both records as received without modification
+
+  # ---------------------------------------------------------------------------
+  # Transfer-Degraded Resolved Allergy (ALG_26)
+  # ---------------------------------------------------------------------------
+
+  Rule: Transfer-Degraded Resolved Allergy Display (ALG_26)
+    Tests that a previously active allergy that has been resolved and transfer-degraded
+    is displayed correctly in the resolved allergies section.
+
+    @ALG_26
+    Scenario: ALG_26 - Transfer-degraded resolved allergy displayed with end date and reason (Patient 5)
+      Given the consumer requests the structured record for patient "PATIENT_5_NHS_TBC"
+      When the consumer displays the allergies
+      Then the allergy list contains an entry with the following details:
+        | field              | value                                                |
+        | Allergy            | Allergy to Clopidogrel                               |
+        | Clinical Status    | Resolved                                             |
+        | Allergy End Date   | TBC                                                  |
+        | Allergy End Reason | TBC                                                  |
+      # Transfer-degraded SNOMED code 196461000000101 (original code 1373513002)
+      # The original allergy term should be preserved and displayed as text
+      # Resolved transfer-degraded allergies should appear in the resolved allergy section
 
   # ---------------------------------------------------------------------------
   # Legacy Terminology / Transfer Degraded Codes (ALG_29)
@@ -388,11 +414,11 @@ Feature: Clinical Assurance - Access Record Structured Allergies
       Given the consumer requests the structured record for patient "PATIENT_6_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field   | value                   |
-        | Allergy | Phenoxymethylpenicillin |
+        | field   | value                                  |
+        | Allergy | Allergy to Phenoxymethylpenicillin      |
       And the allergy list contains an entry with the following details:
-        | field   | value                   |
-        | Allergy | Phenoxymethylpenicillin |
+        | field   | value                                  |
+        | Allergy | Allergy to Phenoxymethylpenicillin      |
       And the allergy list contains an entry with the following details:
         | field   | value             |
         | Allergy | Codeine           |
@@ -400,8 +426,8 @@ Feature: Clinical Assurance - Access Record Structured Allergies
         | field   | value             |
         | Allergy | Codeine           |
       # Patient 6 has:
-      #   Allergy 1 = Phenoxymethylpenicillin (recorded as allergy)
-      #   Allergy 2 = Phenoxymethylpenicillin (recorded as Problem)
+      #   Allergy 1 = Allergy to Phenoxymethylpenicillin (recorded as allergy)
+      #   Allergy 2 = Allergy to Phenoxymethylpenicillin (recorded as Problem)
       #   Allergy 3 = Codeine 293597001 (date X)
       #   Allergy 4 = Codeine 293597001 (date Y, different from Allergy 3)
       # All entries should be preserved without overwriting
@@ -414,17 +440,17 @@ Feature: Clinical Assurance - Access Record Structured Allergies
     Tests that the consumer correctly displays an allergy record that has only mandatory fields populated.
 
     @ALG_31
-    Scenario: ALG_31 - Allergy with only mandatory fields (Patient 6 - Phenoxymethylpenicillin)
+    Scenario: ALG_31 - Allergy with only mandatory fields (Patient 6 - Allergy to Phenoxymethylpenicillin)
       Given the consumer requests the structured record for patient "PATIENT_6_NHS_TBC"
       When the consumer displays the allergies
       Then the allergy list contains an entry with the following details:
-        | field                | value                   |
-        | Allergy              | Phenoxymethylpenicillin |
-        | Clinical Status      | Active                  |
-        | Verification Status  | Unconfirmed             |
-        | Category             | Medication              |
-        | Asserted Date        | TBC                     |
-        | Recorder             | TBC                     |
+        | field                | value                                  |
+        | Allergy              | Allergy to Phenoxymethylpenicillin      |
+        | Clinical Status      | Active                                 |
+        | Verification Status  | Unconfirmed                            |
+        | Category             | Medication                             |
+        | Asserted Date        | TBC                                    |
+        | Recorder             | TBC                                    |
       # All optional fields (Type, Criticality, Onset, Asserter, Last Occurrence,
       # Additional details, Severity, Reaction details) have no values
 
@@ -441,8 +467,6 @@ Feature: Clinical Assurance - Access Record Structured Allergies
   #       Reason: Not all provider systems support this field
   # 9  - Verification of allowed Severity values (Low, Mild, Severe)
   #       Reason: Not all provider systems support this field
-  # 26 - Verify display of transfer-degraded Resolved Allergy Records
-  #       Reason: Requires GPC 1.6.2 implementation (not universally available)
   # 28 - Verify handling of Pre-Coordinated Allergy Code
   #       Reason: Not all provider systems support pre-coordinated allergy codes
   # 32 - Post-coordinated allergy code
