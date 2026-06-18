@@ -16,7 +16,7 @@ Feature: Clinical Assurance - Access Record Structured Allergies
   # Patient 2: NHS TBC — Multiple allergies (Allergy to Doxycycline, Allergy to Aspirin, Peanut Allergy, etc.)
   # Patient 3: NHS TBC — No known allergy (SNOMED negation)
   # Patient 4: NHS TBC — Empty (new patient, no allergy records)
-  # Patient 5: NHS TBC — Conflicting data (No known allergy + Allergy to Ibuprofen + transfer degraded)
+  # Patient 5: NHS TBC — Conflicting data (No known allergy + Allergy to Ibuprofen + transfer degraded + legacy terminology)
   # Patient 6: NHS TBC — Multiple codes for same allergy (Allergy to Phenoxymethylpenicillin, Codeine)
   #
   # NOTE: NHS numbers above are placeholders (TBC) — replace with actual test patient NHS numbers
@@ -43,11 +43,18 @@ Feature: Clinical Assurance - Access Record Structured Allergies
         | Category             | Medication                     |
         | Asserted Date        | TBC                            |
         | Recorder             | TBC                            |
+        | Type                 | TBC                            |
+        | Criticality          | TBC                            |
+        | Onset                | TBC                            |
+        | Asserter             | TBC                            |
+        | Last Occurrence      | TBC                            |
         | Additional Details   | TBC                            |
+        | Severity             | TBC                            |
+        | Reaction Details     | TBC                            |
       # Mandatory fields: Allergy Name, Clinical Status, Verification Status, Category, Asserted Date, Recorder
-      # Optional fields present: Additional details (max character length as allowed by provider)
-      # Note: Some optional fields (Type, Criticality, Onset, Asserter, Last Occurrence, Severity, Reaction)
-      # may not be supported by all provider systems
+      # Optional fields: Type, Criticality, Onset, Asserter, Last Occurrence, Additional Details,
+      #   Severity (reaction.severity), Reaction Details (reaction)
+      # All optional fields are included to ensure supplier agnosticism — values depend on provider system
 
   # ---------------------------------------------------------------------------
   # Clinical Status Values (ALG_2)
@@ -250,6 +257,7 @@ Feature: Clinical Assurance - Access Record Structured Allergies
         | Allergy End Date   | TBC                          |
         | Allergy End Reason | TBC                          |
       # Resolved allergies should be in a separate section from active allergies
+      # Applicability: TPP (not applicable to EMIS as EMIS already implemented GPC 1.6.2)
 
   # ---------------------------------------------------------------------------
   # Adverse Reaction Records (ALG_15)
@@ -313,6 +321,27 @@ Feature: Clinical Assurance - Access Record Structured Allergies
       # SNOMED codes: 59037007 (drug), 72354005 (oral contraceptive), 738069006 (cow milk)
 
   # ---------------------------------------------------------------------------
+  # Substance-Only Allergy Records (ALG_22)
+  # ---------------------------------------------------------------------------
+
+  Rule: Substance-Only Allergy Records (ALG_22)
+    Tests that the consumer handles allergy records coded with a substance-only code
+    (rather than a full allergy concept).
+
+    @ALG_22
+    Scenario: ALG_22 - Substance-only allergy records displayed (Patient 2)
+      Given the consumer requests the structured record for patient "PATIENT_2_NHS_TBC"
+      When the consumer displays the allergies
+      Then the allergy list contains an entry with the following details:
+        | field   | value                       |
+        | Allergy | Allergy to Doxycycline       |
+      And the allergy list contains an entry with the following details:
+        | field   | value                       |
+        | Allergy | Allergy to Aspirin           |
+      # Substance-only records (not full allergy concept codes) should still be displayed
+      # Applicability: TPP
+
+  # ---------------------------------------------------------------------------
   # No Known Allergies - SNOMED Negation (ALG_23)
   # ---------------------------------------------------------------------------
 
@@ -360,8 +389,15 @@ Feature: Clinical Assurance - Access Record Structured Allergies
       And the allergy list contains an entry with the following details:
         | field   | value                       |
         | Allergy | Allergy to Ibuprofen         |
-      # Patient 5 has both a "No known allergy" negation AND an active Allergy to Ibuprofen
-      # The consumer should display both records as received without modification
+      And the allergy list contains an entry with the following details:
+        | field   | value                                         |
+        | Allergy | [V]Personal history of clopidogrel allergy    |
+      # Patient 5 has:
+      #   Allergy 1 = No known allergy (SNOMED negation)
+      #   Allergy 2 = Allergy to Ibuprofen (pre-coordinated code)
+      #   Allergy 3 = Transfer-degraded Clopidogrel (resolved) — tested separately by ALG_26
+      #   Allergy 4 = [V]Personal history of clopidogrel allergy (legacy terminology) — tested separately by ALG_29
+      # The consumer should display all records as received without modification
 
   # ---------------------------------------------------------------------------
   # Transfer-Degraded Resolved Allergy (ALG_26)
@@ -384,6 +420,26 @@ Feature: Clinical Assurance - Access Record Structured Allergies
       # Transfer-degraded SNOMED code 196461000000101 (original code 1373513002)
       # The original allergy term should be preserved and displayed as text
       # Resolved transfer-degraded allergies should appear in the resolved allergy section
+      # Applicability: EMIS
+
+  # ---------------------------------------------------------------------------
+  # Pre-Coordinated Allergy Code (ALG_28)
+  # ---------------------------------------------------------------------------
+
+  Rule: Pre-Coordinated Allergy Code (ALG_28)
+    Tests that the consumer correctly handles a pre-coordinated allergy code (a single SNOMED
+    code that captures both the substance and the allergy/intolerance concept).
+
+    @ALG_28
+    Scenario: ALG_28 - Pre-coordinated allergy code displayed (Patient 5 - Allergy to Ibuprofen)
+      Given the consumer requests the structured record for patient "PATIENT_5_NHS_TBC"
+      When the consumer displays the allergies
+      Then the allergy list contains an entry with the following details:
+        | field   | value                       |
+        | Allergy | Allergy to Ibuprofen         |
+      # The allergy is coded with a pre-coordinated SNOMED code (single concept for substance + allergy)
+      # The consumer should display the allergy name correctly from the pre-coordinated code
+      # Applicability: EMIS
 
   # ---------------------------------------------------------------------------
   # Legacy Terminology / Transfer Degraded Codes (ALG_29)
@@ -420,16 +476,19 @@ Feature: Clinical Assurance - Access Record Structured Allergies
         | field   | value                                  |
         | Allergy | Allergy to Phenoxymethylpenicillin      |
       And the allergy list contains an entry with the following details:
-        | field   | value             |
-        | Allergy | Codeine           |
+        | field          | value             |
+        | Allergy        | Codeine           |
+        | Asserted Date  | TBC_DATE_X        |
       And the allergy list contains an entry with the following details:
-        | field   | value             |
-        | Allergy | Codeine           |
+        | field          | value             |
+        | Allergy        | Codeine           |
+        | Asserted Date  | TBC_DATE_Y        |
       # Patient 6 has:
       #   Allergy 1 = Allergy to Phenoxymethylpenicillin (recorded as allergy)
       #   Allergy 2 = Allergy to Phenoxymethylpenicillin (recorded as Problem)
       #   Allergy 3 = Codeine 293597001 (date X)
       #   Allergy 4 = Codeine 293597001 (date Y, different from Allergy 3)
+      # The two Codeine entries have different Asserted Dates to prove both are preserved
       # All entries should be preserved without overwriting
 
   # ---------------------------------------------------------------------------
@@ -455,32 +514,91 @@ Feature: Clinical Assurance - Access Record Structured Allergies
       # Additional details, Severity, Reaction details) have no values
 
   # ---------------------------------------------------------------------------
+  # Onset Date Formats (ALG_33, ALG_34, ALG_35, ALG_36)
+  # ---------------------------------------------------------------------------
+
+  Rule: Onset Date Display (ALG_33, ALG_34, ALG_35, ALG_36)
+    Tests that the consumer correctly handles full, partial, and missing onset dates
+    (date when the allergy/intolerance first manifested).
+
+    @ALG_33
+    Scenario: ALG_33 - Full onset date display - Day, Month, Year (Patient 2 - Allergy to Doxycycline)
+      Given the consumer requests the structured record for patient "PATIENT_2_NHS_TBC"
+      When the consumer displays the allergies
+      Then the allergy list contains an entry with the following details:
+        | field   | value                       |
+        | Allergy | Allergy to Doxycycline       |
+        | Onset   | TBC                          |
+      # The full onset date (day, month, year) should be displayed
+      # Applicability: EMIS
+
+    @ALG_34
+    Scenario: ALG_34 - Partial onset date - Month, Year (Patient 2 - Allergy to Aspirin)
+      Given the consumer requests the structured record for patient "PATIENT_2_NHS_TBC"
+      When the consumer displays the allergies
+      Then the allergy list contains an entry with the following details:
+        | field   | value                       |
+        | Allergy | Allergy to Aspirin           |
+        | Onset   | TBC                          |
+      # Only Month and Year should be displayed (no day component)
+      # Applicability: EMIS
+
+    @ALG_35
+    Scenario: ALG_35 - Partial onset date - Year only (Patient 2 - Peanut Allergy)
+      Given the consumer requests the structured record for patient "PATIENT_2_NHS_TBC"
+      When the consumer displays the allergies
+      Then the allergy list contains an entry with the following details:
+        | field   | value          |
+        | Allergy | Peanut Allergy |
+        | Onset   | TBC            |
+      # Only Year should be displayed (no day or month component)
+      # Applicability: EMIS
+
+    @ALG_36
+    Scenario: ALG_36 - Missing onset date handled gracefully (Patient 2 - Influenza Vaccine)
+      Given the consumer requests the structured record for patient "PATIENT_2_NHS_TBC"
+      When the consumer displays the allergies
+      Then the allergy list contains an entry with the following details:
+        | field   | value                     |
+        | Allergy | Influenza Vaccine Allergy |
+        | Onset   |                           |
+      # Onset date is missing/blank - system should not auto-populate or infer a date
+      # Applicability: EMIS
+
+  # ---------------------------------------------------------------------------
+  # Error Message Handling (ALG_37)
+  # ---------------------------------------------------------------------------
+
+  Rule: Failed Retrieval Error Messages (ALG_37)
+    Tests that the consumer displays appropriate error messages when allergy data retrieval fails.
+
+    @ALG_37
+    Scenario: ALG_37 - Error message displayed when allergy data retrieval fails
+      Given the consumer requests the structured record for a patient where retrieval fails
+      When the consumer attempts to display the allergies
+      Then the system displays an appropriate error message
+      # The system should display a meaningful error message if data cannot be retrieved
+      # The error should not be silently swallowed or display misleading information
+
+  # ---------------------------------------------------------------------------
   # Test cases excluded from this feature file (documented for reference)
   # ---------------------------------------------------------------------------
   # The following test cases are not included as scenarios above:
   #
+  # NOT APPLICABLE (neither EMIS nor TPP):
   # 3  - Verify max character length of allergy reaction details
-  #       Reason: Not needed (confirmed during clinical review)
-  # 7  - Verify max character length of reason for ending allergy
-  #       Reason: Not needed (confirmed during clinical review)
+  #       Reason: Not applicable (None)
+  # 7  - Verify max character length of reason for ending allergy reaction
+  #       Reason: Not applicable (None)
   # 8  - Verification of allowed Criticality values (Low, High, Unable to access)
-  #       Reason: Not all provider systems support this field
+  #       Reason: Not applicable (None)
   # 9  - Verification of allowed Severity values (Low, Mild, Severe)
-  #       Reason: Not all provider systems support this field
-  # 28 - Verify handling of Pre-Coordinated Allergy Code
-  #       Reason: Not all provider systems support pre-coordinated allergy codes
+  #       Reason: Not applicable (None)
   # 32 - Post-coordinated allergy code
-  #       Reason: Not available in any provider system
-  # 33 - Verify Full Date for Allergy Onset (Day, Month, Year)
-  #       Reason: Not all provider systems support the Onset field
-  # 34 - Verify partial Onset date (Month, Year)
-  #       Reason: Not all provider systems support the Onset field
-  # 35 - Verify partial Onset date (Year)
-  #       Reason: Not all provider systems support the Onset field
-  # 36 - Verify Handling of Missing Allergy Onset Date
-  #       Reason: Not all provider systems support the Onset field
+  #       Reason: Not applicable (not available in any provider system)
+  # 38 - Verify handling of special characters in reaction details (free text)
+  #       Reason: Not applicable (checking Additional Details for special characters suffices)
   #
   # COVERED BY EXISTING:
   # 21 - Verify separation of Active and Resolved Allergies → covered by ALG_10 + ALG_14
-  # 22 - Verify handling of Substance-Only Allergy Records → covered by ALG_10 (Patient 2 Allergy 1 and 2)
-  # 27 - Verify transfer-degraded allergy for migrated records → covered by ALG_29 (Patient 5)
+  # 27 - Verify transfer-degraded allergy for migrated records → covered by ALG_26
