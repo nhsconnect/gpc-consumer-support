@@ -1,13 +1,37 @@
 # AGENTS.md — Reference Implementation Context
 
-This file guides coding agents on building step definitions for the feature files in `assurance_tests/SCAL_technical/` and stores durable context for agents working in this folder.
+This file provides context for coding agents building step definitions for the GP Connect consumer assurance feature files in `assurance_tests/`. It documents the patterns, guardrails, and durable context from this specific reference implementation.
+
+> **CRITICAL: This folder (`reference_implementation_of_feature_tests/`) is a read-only reference.**
+> Do NOT modify any files in this folder. It exists as a worked example for a specific consumer application. When building a new implementation for a different consumer, create your own project folder and use this as a guide.
+
+## Consumer-Specific vs Universal Concepts
+
+This reference implementation was built against one specific consumer application. Many of the page objects, navigation flows, and helper patterns you see here are **specific to that consumer or its class of system** and will not exist in yours. Do not copy them blindly.
+
+**Concepts that are specific to this consumer or its class:**
+
+- `nms_episode_page.py` — NMS (New Medicine Service) is a pharmacy-specific workflow. If the target consumer is not a pharmacy system, there is no NMS screen. You will not need this page object at all. Your patient search entry point will be completely different.
+- PDS 24-hour refresh gate — this consumer requires PDS verification to be refreshed within 24 hours before the GP record can be viewed. Other consumers may handle PDS verification differently, automatically, or not expose it as a user-facing step.
+- Login flow and session management — entirely application-specific.
+- Navigation path from patient search → GP record → clinical area tabs — specific to this consumer's screen structure.
+
+**Concepts that are universal across all GP Connect consumers:**
+
+- The feature files in `assurance_tests/` — every consumer must satisfy the same Gherkin scenarios.
+- The GP Connect FHIR API contract — `$gpc.getstructuredrecord` with the same parameters.
+- The test assertions specified in the tests — drug names, dosages, allergy details, dates must appear on screen or in the logs produced.
+- The evidence model — video capture, highlighting asserted text, artefact naming.
+
+**When building a new implementation:** expect to replace the entire page object layer and most step definition wiring. Your consumer will have its own screens, its own navigation, and potentially concepts that do not exist in this reference at all. Ask the test engineer about the target consumer's UI structure before writing any page objects.
 
 ## Scope
 
-- Primary implementation scope is focused on:
-  - `assurance_tests/SCAL_technical/access_record_structured.feature`
-  - `assurance_tests/SCAL_technical/access_record_structured_extended.feature`
-- Keep supporting code and docs aligned to these two features unless requirements change.
+- The feature files that must be automated are in:
+  - `assurance_tests/SCAL_technical/` (SCAL technical assurance)
+  - `assurance_tests/clinical/` (clinical data display assurance)
+- This reference implementation covers a subset — primarily the SCAL technical structured record features.
+- Keep supporting code and docs aligned to the target feature files.
 
 ## Working Directory
 
@@ -31,6 +55,19 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 ```
 
 ## Execution Guardrails
+
+### Do Not Modify the Reference Implementation
+
+- The `reference_implementation_of_feature_tests/` folder is a **read-only reference**. Never edit, delete, or add files in this folder.
+- When building a new test implementation for a different consumer, create a separate project folder (e.g. `my_consumer_tests/`) and use the reference as a guide.
+- The reference implementation's page objects, step definitions, and helpers are specific to one consumer — they are not a starting template to be forked in-place.
+
+### Ask the Test Engineer — Do Not Guess
+
+- Before writing any page objects or navigation code, **ask the test engineer** about the target consumer application's UI structure, screens, login flow, and patient search mechanism.
+- Do not assume the target consumer has the same screens, navigation, or workflows as the reference implementation.
+- If you are uncertain about any aspect of the consumer's behaviour — a selector, a navigation step, a clinical area's availability, how PDS works in this system — **stop and ask** rather than guessing.
+- Use `playwright-cli` to verify real UI behaviour, but ask the test engineer first to understand what you are looking at.
 
 ### Mandatory Visual Evidence Rule
 

@@ -18,6 +18,26 @@ For durable coding-agent context and guardrails, see [AGENTS.md](AGENTS.md).
    - Point an AI coding agent (e.g. GitHub Copilot, Claude) at the [AGENTS.md](AGENTS.md) file in your own test environment and let it build the implementation for you using playwright-cli.
 4. **Run the same `assurance_tests/SCAL_technical/` and `assurance_tests/clinical/` feature files** from your implementation to produce the assurance evidence required.
 
+## Consumer-Specific Concepts
+
+This reference implementation was built against a specific consumer application. Some of the patterns and page objects you see here are **specific to that application or its class of consumer** and will not apply to every GP Connect consumer.
+
+Examples of concepts that vary:
+
+| Concept | Why it varies |
+|---------|---------------|
+| **NMS episode page** (`nms_episode_page.py`) | NMS (New Medicine Service) is a pharmacy workflow. If your consumer is not a pharmacy system, you will not have an NMS screen at all. Your patient search flow may be completely different. |
+| **PDS refresh before viewing GP record** | This consumer requires PDS verification to be refreshed every 24 hours before the GP record can be viewed. Other consumers may handle PDS differently, or may not expose this step to the user at all. |
+| **Login flow** | The login page, authentication mechanism, and session handling are entirely application-specific. |
+| **Navigation to clinical areas** | The route from patient search → GP record → medications/allergies tabs is specific to this consumer's UI structure. Your application will have its own navigation. |
+
+Conversely, some concepts are **universal across all GP Connect consumers**:
+
+- The feature files in `assurance_tests/` — every consumer must satisfy the same scenarios.
+- The GP Connect FHIR API contract — every consumer sends the same `$gpc.getstructuredrecord` requests.
+
+When building your own implementation, **expect to replace the entire page object layer** and much of the step definition wiring. The feature files and the general testing approach (drive the UI, assert visible data, capture evidence) are what you should carry across.
+
 ## Structure
 
 ```text
