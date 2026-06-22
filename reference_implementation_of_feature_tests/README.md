@@ -188,10 +188,10 @@ cd reference_implementation_of_feature_tests
 pytest
 
 # Run a specific capability
-pytest -m access_record_structured
+pytest -m access_record_structured_extended
 
 # Run a single feature file
-pytest ../assurance_tests/SCAL_technical/access_record_structured.feature
+pytest ../assurance_tests/SCAL_technical/access_record_structured_extended.feature
 
 # Run with headed browser
 pytest --headed
