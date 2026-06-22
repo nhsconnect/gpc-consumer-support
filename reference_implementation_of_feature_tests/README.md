@@ -18,6 +18,24 @@ For durable coding-agent context and guardrails, see [AGENTS.md](AGENTS.md).
    - Point an AI coding agent (e.g. GitHub Copilot, Claude) at the [AGENTS.md](AGENTS.md) file in your own test environment and let it build the implementation for you using playwright-cli.
 4. **Run the same `assurance_tests/SCAL_technical/` and `assurance_tests/clinical/` feature files** from your implementation to produce the assurance evidence required.
 
+## Prerequisites — API Request/Response Observability
+
+A significant proportion of the SCAL technical assurance tests (tagged `@skip_requires_gp_provider_api_access` in this reference) require the test framework to **observe the actual GP Connect API requests and responses** exchanged between the consumer backend and the GP provider system.
+
+These tests cannot be satisfied by UI observation alone — they assert that:
+
+- The consumer sends a correctly formed FHIR `$gpc.getstructuredrecord` request (correct NHS number, correct clinical area parameters, correct part-parameter values).
+- The GP provider returns a conformant FHIR Bundle response.
+- The consumer correctly processes and displays that response.
+
+**Before starting automation of these tests, the test engineer must set up a mechanism to capture server-side API traffic.** Options include:
+
+- A network proxy between the consumer backend and the GP Provider Test system.
+- Structured API call logs exposed by the consumer application in its test environment.
+- Any other mechanism that provides the raw outbound request and inbound response per test scenario.
+
+Without this observability, only the UI-only subset of tests can be automated. The test framework should still drive the UI to trigger the API calls — it must not construct or fire its own requests at the GP Provider directly.
+
 ## Consumer-Specific Concepts
 
 This reference implementation was built against a specific consumer application. Some of the patterns and page objects you see here are **specific to that application or its class of consumer** and will not apply to every GP Connect consumer.
@@ -160,16 +178,6 @@ This approach keeps the consumer application as the system under test throughout
 These tests will become automatable using the same **pure UI approach** as current tests once the consumer supplier implements those clinical area screens. No API-layer access is needed — once referrals, problems, consultations, allergies, and immunisations appear in the UI, the step definitions can be built following the same Playwright page-object pattern used today.
 
 ---
-
-## Medication and Investigation Learnings (Current State)
-
-- MED-02 and MED-07 are implemented as UI-driven validations through the Patient GP Record medication tabs.
-- MED-01, MED-03, MED-04, and MED-05 are currently tagged `@skip_requires_gp_provider_api_access` in `assurance_tests/SCAL_technical/access_record_structured_extended.feature` because the required API path is not exposed in this environment.
-- For MED-02 (Repeat Medications), assert that more than one medication item is present and highlight asserted text from the top item using dynamically extracted medication text (do not hardcode medicine names).
-- For MED-07 (Acute Medications empty state), assert the exact two guidance lines and highlight both asserted lines for video evidence.
-- For any visible UI text assertion, always call the highlight helper on the exact asserted text so evidence videos show what was validated.
-- Investigation coverage in `assurance_tests/SCAL_technical/access_record_structured_extended.feature` is currently split by implementation mode: INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are tagged `@skip_requires_gp_provider_api_access`; INV-06 is implemented as a UI-driven validation on the Patient GP Record `Investigations` tab.
-- For INV-06, follow the same UI evidence model used for MED-02: assert more than one investigation item is visible, click the top investigation item, and highlight asserted top-item text for video evidence.
 
 ## Running Tests
 

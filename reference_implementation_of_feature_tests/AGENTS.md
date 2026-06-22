@@ -69,6 +69,14 @@ pytest tests/step_defs/test_access_record_structured_extended.py
 - If you are uncertain about any aspect of the consumer's behaviour — a selector, a navigation step, a clinical area's availability, how PDS works in this system — **stop and ask** rather than guessing.
 - Use `playwright-cli` to verify real UI behaviour, but ask the test engineer first to understand what you are looking at.
 
+### Require API Observability — Do Not Work Around It
+
+- A large proportion of SCAL technical tests require access to the **actual GP Connect API requests and responses** exchanged between the consumer backend and the GP provider. These are tagged `@skip_requires_gp_provider_api_access` in the feature files.
+- If API observability (proxy logs, structured API call logs, or equivalent) has not been set up, **do not attempt to implement these tests**. Do not try to satisfy API-contract assertions through UI observation alone — it is not possible.
+- Ask the test engineer whether API observability is available. If not, flag it as a blocker and focus on the UI-only tests that can proceed without it.
+- When API observability is available, the test framework must still **drive the UI** to trigger the API calls (the consumer is the system under test). Never construct or fire FHIR requests directly at the GP Provider — that bypasses the consumer entirely.
+- For each API-observed test, log: the raw outbound FHIR request body, the raw inbound FHIR response body, and a timestamped video of the UI, all named against the scenario ID.
+
 ### Mandatory Visual Evidence Rule
 
 - Verify UI flow and selectors with `playwright-cli` before editing page objects or step definitions. Do not guess selectors.
