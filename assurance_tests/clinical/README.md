@@ -7,6 +7,7 @@ This folder contains **clinical assurance BDD feature files** that verify GP Con
 These tests are **UI display verification** — they validate that medication, observation, and investigation data from the GP record appears correctly on screen in the consumer application. They are not API conformance tests.
 
 The focus is:
+
 - Correct drug names, dosages, quantities, and dates are shown
 - Notes (prescriber notes, patient notes) are displayed without truncation
 - Special characters are rendered correctly
@@ -16,9 +17,16 @@ The focus is:
 
 ## Source
 
-These tests are derived from the **GP Connect ARS Clinical Test Pack** (spreadsheet-based) created by the NHS clinical testing team. The spreadsheet contains manually-executed test evidence; the feature files here express the same test cases in Gherkin so they can be automated.
+These tests are derived from two sources:
 
-Source file: `GP Connect ARS Clinical Test Pack using TPP data v1.8 1.xlsx` (not in source control — test data originates from a GP provider system but the feature files are supplier-agnostic)
+| Feature | Source |
+|---------|--------|
+| Medications | **GP Connect ARS Clinical Test Pack** (spreadsheet): `GP Connect ARS Clinical Test Pack using TPP data v1.8 1.xlsx` |
+| Allergies | **Confluence — Allergy Test Cases**: [Allergy - Test cases](https://nhsd-confluence.digital.nhs.uk/spaces/DIM/pages/1373783539/Allergy+-+Test+cases) (NHS internal; exported page used as source) |
+
+The spreadsheet contains manually-executed test evidence for medications; the Confluence page defines the allergy test cases including patient scenarios, expected field values, and edge cases. The feature files here express both sets of test cases in Gherkin so they can be automated.
+
+Note: Neither source file is in source control — test data originates from GP provider systems but the feature files are supplier-agnostic.
 
 ## Test Data
 
@@ -38,6 +46,8 @@ GP Practice: WEST FARM SURGERY (A86005)
 |---|---|
 | `access_record_structured_medications.feature` | Medications — Acute, Repeat, Prescribed Elsewhere, Discontinued + related Uncategorised/Investigations |
 | `access_record_structured_allergies.feature` | Allergies — Active, Resolved, Adverse Reactions, Problems, Intolerances, Negation Records |
+
+> **TODO:** Other areas of Access Record Structured (e.g. Immunisations, Consultations, Problems, Observations, Referrals, Documents) have not yet had their clinical test cases captured and documented. Feature files for these areas will be added once the corresponding test case documentation is available.
 
 ## Relationship to SCAL Technical Assurance Tests
 

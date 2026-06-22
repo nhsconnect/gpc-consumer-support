@@ -1,6 +1,6 @@
 # Reference Implementation — Automated Tests
 
-This folder is a **reference implementation** that demonstrates how a supplier can automate the GP Connect consumer assurance BDD tests defined in [`assurance_tests/SCAL_technical/`](../assurance_tests/SCAL_technical/).
+This folder is a **reference implementation** that demonstrates how a supplier can automate the GP Connect consumer assurance BDD tests defined in [`assurance_tests/SCAL_technical/`](../assurance_tests/SCAL_technical/) and [`assurance_tests/clinical/`](../assurance_tests/clinical/).
 
 It is **not** intended to be run as-is by other suppliers and **will not work out of the box** — the `.env` file containing the login credentials for the test system is not committed to the repository. Instead, it serves as a worked example showing one way to wire up the Gherkin feature files with real step definitions, page objects, and test data against a specific consumer application.
 
@@ -8,13 +8,15 @@ For durable coding-agent context and guardrails, see [AGENTS.md](AGENTS.md).
 
 ## How Suppliers Should Use This
 
-1. **Read the feature files** in `assurance_tests/SCAL_technical/` — these define the scenarios every consumer must pass.
+1. **Read the feature files** in `assurance_tests/SCAL_technical/` and `assurance_tests/clinical/` — these define the scenarios every consumer must pass.
 2. **Use this reference implementation as a guide** to understand how to:
    - Map Gherkin steps to automated actions against your own consumer UI or API.
    - Structure test data fixtures for EMIS, TPP, and Medicus provider systems.
    - Organise page objects and step definitions.
-3. **Build your own implementation** targeting your consumer application, using whichever language, framework, and tooling you prefer.
-4. **Run the same `assurance_tests/SCAL_technical/` feature files** from your implementation to produce the assurance evidence required.
+3. **Build your own implementation** targeting your consumer application — either:
+   - Write it manually using whichever language, framework, and tooling you prefer, or
+   - Point an AI coding agent (e.g. GitHub Copilot, Claude) at the [AGENTS.md](AGENTS.md) file in your own test environment and let it build the implementation for you using playwright-cli.
+4. **Run the same `assurance_tests/SCAL_technical/` and `assurance_tests/clinical/` feature files** from your implementation to produce the assurance evidence required.
 
 ## Structure
 
@@ -116,6 +118,7 @@ The feature files use three skip tags to mark tests that cannot yet run:
 Scenarios tagged `@skip_requires_gp_provider_api_access` exist to assure that the consumer constructs a **valid GP Connect API request** and correctly **processes the API response**. These include tests such as MED-01, MED-03, MED-05, INV-01–04, GEN-11–16, and all search-conformance tests.
 
 They cannot be satisfied by UI observation alone because the assertions are about the API contract:
+
 - The FHIR `$gpc.getstructuredrecord` request must contain the correct parameters (correct NHS number, correct clinical area parameters, correct part-parameter values, absence of parameters where required).
 - The FHIR Bundle response must be received and must conform to the GP Connect specification.
 - The consumer must correctly render or process the response — and the UI must reflect it.
