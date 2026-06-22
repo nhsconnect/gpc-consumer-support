@@ -1,188 +1,167 @@
-# UI → Feature Map
+# UI → Feature Map (Template)
 
-Use this document to record how the consumer application UI maps to the access record structured
-GP Connect BDD feature files.  This should drive the step
-definitions and page-object selectors for that capability area.
+This document records how **your** consumer application UI maps to the GP Connect BDD feature files in `assurance_tests/`. It should drive the step definitions and page-object selectors for each capability area.
+
+> **This is a template.** When building your own test implementation, create a copy of this file in your project and populate it with the real navigation paths, selectors, and API calls for your consumer application. Use `playwright-cli` to discover the actual UI structure before filling this in.
+
+---
+
+## How to Use This Document
+
+This file serves as **persistent memory between AI coding sessions**. When an AI agent (Copilot, Claude, etc.) uses `playwright-cli` to discover your consumer's UI structure, it should record what it learns here so that future sessions don't have to rediscover the same flows, selectors, and quirks from scratch.
+
+### Purpose
+
+- A durable record of **discovered UI navigation paths, selectors, and behaviours** that persists across agent sessions.
+- Reduces repeated exploration — the AI reads this file at the start of a session to recall what was previously confirmed.
+- Drives the page objects and step definitions by providing verified selector/flow knowledge.
+
+### Source of Truth
+
+**The live application is always the source of truth — not this file.** This document is a cache of observations that will drift over time as the consumer UI changes. When the AI detects that a recorded flow no longer works (selectors missing, navigation changed, new screens added), it should:
+
+1. Use `playwright-cli` to rediscover the current UI state.
+2. Update this file with the corrected paths and selectors.
+3. Update the corresponding page objects and step definitions.
+
+Treat discrepancies as a signal to re-explore, not as a bug in the application.
+
+### What to Record
+
+1. For each clinical area (medications, allergies, investigations, etc.), document the **navigation path** from login to the screen where assertions are made.
+2. Record the **selectors** for each interactive element — confirmed via `playwright-cli`.
+3. Map the **BDD scenarios** to the UI steps required to reach and assert the expected state.
+4. Note any **API calls** triggered by UI actions, if observable.
+5. Record **quirks and gotchas** (loading states, conditional overlays, timing issues) that affect test reliability.
+
+---
 
 ## Access Record: Structured
 
-**Feature files:** `access_record_structured.feature`, `access_record_structured_extended.feature`  
-**Page objects:** `HomePage`, `NmsEpisodePage`, `GpRecordPage`, `StructuredRecordPage` (facade: `AccessRecordStructuredPage`)
+**Feature files:** `access_record_structured.feature`, `access_record_structured_extended.feature`
+**Page objects:** *(list your page object classes here)*
 
-### Common navigation path
+### Common Navigation Path
 
-```text
-Home (pharmacy/home)
-  └─ [nav link] click the NMS link displayed:
-
-href="/pharmacy/new-medicine-service"
-  └─ then click the Start New NMS button
-    └─ navigate to pharmacy/nms-episode
-      └─ search for the patient using family name, given name, date of birth, and postcode
-        └─ click the first patient result button (`#ChoosePatient`)
-          └─ if View GP Record (`#view-gp-record`) is disabled, check PDS verification state:
-            └─ never verified: show text `The patient's details have not been PDS verified` and link `Verify patient via PDS`
-            └─ previously verified but now stale: show link `Refresh patient data via PDS`
-            └─ wait for the patient details route to refresh
-              └─ click View GP Record (`#view-gp-record`)
-                └─ clinical area toggles → Submit
-```
-
-### GEN-09 PDS Trace path (registered practice cannot be confirmed)
+Document the path from login to the structured record clinical area. Every consumer will be different. Example structure:
 
 ```text
-Home (pharmacy/home)
-  └─ click NMS link
-    └─ click Start New NMS
-      └─ on pharmacy/nms-episode click Add New Patient (`#add-new-patient`)
-        └─ click NHS NUMBER SEARCH (`[id='patient-search=NHS NUMBER SEARCH']`)
-          └─ enter NHS number + date of birth
-            └─ click Search (`#submit`)
-              └─ verify access is blocked when registered practice cannot be confirmed (including s-flag cases)
+Login page
+  └─ Authenticate (your auth mechanism)
+    └─ Home / landing screen
+      └─ Patient search (your search mechanism — demographics, NHS number, etc.)
+        └─ Select patient from results
+          └─ [If applicable] PDS verification / refresh step
+            └─ View GP Record / clinical summary
+              └─ Select clinical area (medications, allergies, etc.)
 ```
 
-### GEN-06 stale PDS trace path (>24 hours old)
+### PDS Verification Path (if applicable)
+
+Some consumers require PDS verification before the GP record can be viewed. Document the specific flow if your consumer has one:
 
 ```text
-Home (pharmacy/home)
-  └─ click NMS link
-    └─ click Start New NMS
-      └─ on pharmacy/nms-episode search for reserved GEN-06 patient by family name `Smith`
-        └─ click the first patient result button (`#ChoosePatient`)
-          └─ verify View GP Record (`#view-gp-record`) is disabled
-            └─ if `Refresh patient data via PDS` is displayed, treat it as the recovery path once the stale-PDS state needs clearing
+After selecting a patient:
+  └─ [If PDS not verified] Show verification prompt
+    └─ Trigger PDS trace
+      └─ On success → enable GP record access
+  └─ [If PDS stale] Show refresh prompt
+    └─ Trigger PDS refresh
+      └─ On success → enable GP record access
 ```
 
-### GEN-17 GP2GP transfer warning path
+> **Note:** Not all consumers expose PDS verification as a user-facing step. Some handle it automatically in the backend. Document what your consumer actually does.
+
+### Patient Search Path (NHS Number Trace)
+
+If your consumer supports searching by NHS number (required for some GEN scenarios):
 
 ```text
-Home (pharmacy/home)
-  └─ click NMS link
-    └─ click Start New NMS
-      └─ search patient by demographics using family name `Beston` (NHS `9690938096`)
-        └─ click the first patient result button (`#ChoosePatient`)
-          └─ click View GP Record (`#view-gp-record`)
-            └─ assert warning text is visible:
-              └─ `Information not available`
-              └─ `Patient record transfer from previous GP practice not yet complete; information recorded before`
+Navigate to patient search
+  └─ Switch to NHS number search mode (if applicable)
+    └─ Enter NHS number + date of birth
+      └─ Submit search
+        └─ Handle result (patient found / not found / access blocked)
 ```
 
-### MED-02 path (valid medications response via UI)
+### Medications Path
 
 ```text
-Home (pharmacy/home)
-  └─ click NMS link
-    └─ click Start New NMS
-      └─ search patient by demographics (Skelly/Horace + DOB + postcode)
-        └─ click first Choose Patient (`#ChoosePatient`)
-          └─ click View GP Record (`#view-gp-record`)
-            └─ if demographics confirmation overlay appears, click CONFIRM DETAILS
-              └─ open Repeat Medications tab
-                └─ assert medication range control is visible
-                  └─ assert Repeat item count > 1
-                    └─ extract top item medication text dynamically and highlight asserted text
+Navigate to patient's GP record
+  └─ Open medications area
+    └─ [Tab/section for medication type: Acute, Repeat, etc.]
+      └─ Assert expected medication data is visible
 ```
 
-### MED-07 path (empty acute medications via UI)
+### Allergies Path
 
 ```text
-Home (pharmacy/home)
-  └─ click NMS link
-    └─ click Start New NMS
-      └─ search patient by demographics (Skelly/Horace + DOB + postcode)
-        └─ click first Choose Patient (`#ChoosePatient`)
-          └─ click View GP Record (`#view-gp-record`)
-            └─ if demographics confirmation overlay appears, click CONFIRM DETAILS
-              └─ open Acute Medications tab
-                └─ assert exact two-line no-data guidance message
-                  └─ highlight both asserted lines for evidence videos
+Navigate to patient's GP record
+  └─ Open allergies area
+    └─ Assert expected allergy data is visible (clinical status, category, reactions, etc.)
 ```
 
-### INV-06 path (supported investigations elements via UI)
+### Investigations Path
 
 ```text
-Home (pharmacy/home)
-  └─ click NMS link
-    └─ click Start New NMS
-      └─ search patient by demographics (Skelly/Horace + DOB + postcode)
-        └─ click first Choose Patient (`#ChoosePatient`)
-          └─ click View GP Record (`#view-gp-record`)
-            └─ if demographics confirmation overlay appears, click CONFIRM DETAILS
-              └─ open Investigations tab
-                └─ assert investigations list has more than one item
-                  └─ click top investigation item
-                    └─ highlight top-item asserted text for evidence videos
+Navigate to patient's GP record
+  └─ Open investigations area
+    └─ Assert investigation items are listed
+      └─ Click an investigation to expand details (if applicable)
 ```
+
+---
 
 ### Selectors
 
+Record the actual selectors discovered via `playwright-cli` for your consumer:
+
 | Element | Selector | Notes |
 | --- | --- | --- |
-| Nav link | <!-- fill in --> | |
-| Family name input | `#familyName` | **First field** on the form |
-| Given name input | `#givenName` | Second field on the form |
-| Date of birth input | `#dateOfBirth` | Format: `DD/MM/YYYY` |
-| Postcode input | `#postcode` | |
-| Search button | `#submit` | Submits demographic search on `pharmacy/nms-episode` |
-| Add new patient button | `#add-new-patient` | Entry point for PDS trace NHS-number route |
-| NHS number search mode | `[id='patient-search=NHS NUMBER SEARCH']` | Must be selected for GEN-09 |
-| Choose patient button | `#ChoosePatient` | Click the first/top result where multiple patients are shown |
-| View GP Record button | `#view-gp-record` | Required after selecting a patient to enter record view; may be disabled if PDS trace is stale |
-| Verify patient via PDS link | role link with name `Verify patient via PDS` | Displayed for patients that have never been PDS verified |
-| Not PDS verified message | text `The patient's details have not been PDS verified` | Companion state text for the never-verified branch |
-| Refresh patient data via PDS link | role link with name `Refresh patient data via PDS` | Optional recovery path when the patient trace is older than 24 hours and View GP Record is disabled |
-| Confirm details button | role button with name `CONFIRM DETAILS` | Displayed on Patient GP Record demographics confirmation overlay |
-| Medications heading | role heading with name `Medications` | Use as GP record anchor after confirmation overlay |
-| Acute Medications tab | role button with name `Acute Medications` | Used by MED-07 empty guidance assertion |
-| Repeat Medications tab | role button with name `Repeat Medications` | Used by MED-02 valid medications assertion |
-| Medication range filter | role button with name `Showing 15 months of medication data` (fallback `#select`) | Expected visible on medication tab content |
-| Repeat medication items | role button with name containing `Most Recent Issue Date` | Repeat medication cards summary controls |
-| Investigations tab | role button with name `Investigations` | Used by INV-06 supported-investigation UI validation |
-| Investigation list rows | `tbody tr` (fallback visible button candidates in investigations content) | Assert item count > 1 for INV-06 |
-| Acute empty message line 1 | text `No Issued Acute Medication data is recorded for this patient.` | MED-07 exact assertion line 1 |
-| Acute empty message line 2 | text `There may be some unissued medication data available in the 'Not Issued' tab` | MED-07 exact assertion line 2 |
-| NHS number input | `#nhsNumber` (fallbacks: `#nhs-number`, `input[name='nhsNumber']`) | Used by GEN-09 PDS trace route |
-| Submit / retrieve button | <!-- fill in --> | |
-| Medications toggle | <!-- fill in --> | |
-| Allergies toggle | <!-- fill in --> | |
-| Response / results panel | <!-- fill in --> | |
-| Error display | <!-- fill in --> | |
+| Login username field | *(e.g. `#username`)* | |
+| Login password field | *(e.g. `#password`)* | |
+| Login submit button | *(e.g. `#login-submit`)* | |
+| Patient search input | *(your selector)* | |
+| Search submit button | *(your selector)* | |
+| Patient result row / button | *(your selector)* | Click to select a patient |
+| View GP Record button | *(your selector)* | May be absent or named differently in your consumer |
+| PDS verification prompt | *(your selector, if applicable)* | |
+| Medications tab/section | *(your selector)* | |
+| Allergies tab/section | *(your selector)* | |
+| Investigations tab/section | *(your selector)* | |
+| Clinical data display area | *(your selector)* | Where structured record content renders |
+| Error / warning display | *(your selector)* | |
 
-### API calls triggered
+---
 
-| UI action | Endpoint | Method | Key params | Expected response |
+### API Calls Triggered (if observable)
+
+If your test framework can observe the GP Connect API calls (via proxy, logs, or network capture):
+
+| UI Action | Endpoint | Method | Key Params | Expected Response |
 | --- | --- | --- | --- | --- |
-| Submit structured request | <!-- e.g. /aggregator/structured --> | POST | `nhsNumber`, clinical areas | 200 + FHIR Bundle |
-| <!-- next --> | | | | |
+| Request structured record | *(your consumer's backend endpoint)* | POST | `nhsNumber`, clinical area params | 200 + FHIR Bundle |
+| PDS trace | *(your consumer's PDS endpoint, if applicable)* | GET/POST | NHS number, demographics | 200 + patient details |
 
-### BDD scenario → UI step mapping
+---
 
-| Scenario tag | Given | When | Then |
+### BDD Scenario → UI Step Mapping
+
+Map each scenario tag to the UI actions required:
+
+| Scenario Tag | Given (setup) | When (action) | Then (assertion) |
 | --- | --- | --- | --- |
-| <!-- fill in --> | | | |
+| `@GPC-STR-TST-MED-02` | Search patient, navigate to GP record | Open repeat medications | Assert medication items visible, highlight top item text |
+| `@GPC-STR-TST-MED-07` | Search patient, navigate to GP record | Open acute medications | Assert empty-state guidance message visible |
+| `@GPC-STR-TST-GEN-06` | Search patient with stale PDS trace | Attempt to view GP record | Assert access is blocked, refresh prompt shown |
+| *(add your scenarios)* | | | |
 
 ---
 
 ## Notes
 
-- All GP Connect routes redirect to `/pharmacy/home` in this tenant unless the capability is explicitly enabled.
-- Most patient searches for this workflow should be performed from `pharmacy/nms-episode` using family name, given name, date of birth, and postcode.
-- The PDS patient-details call (`/aggregator/pds/patient-details`) requires `birthDate`, `givenName`, `familyName`, `gender`, `postCode` alongside `nhsNumber` to return HTTP 200 — NHS number alone returns 400.
-- Patient banner selectors (`.patient-banner *`) are shared across HTML and Access Document pages but may not be present in all capability routes.
-- Demographic mismatch: when PDS-returned details differ from locally-held data, the differing fields are highlighted in **red** in the patient demographics section.
-- When a patient PDS trace is more than 24 hours old, `View GP Record` can be disabled. Some UI states also show `Refresh patient data via PDS` as the recovery path.
-- If a patient has never been PDS verified, the UI can show `Verify patient via PDS` and the text `The patient's details have not been PDS verified` instead of `Refresh patient data via PDS`.
-- GEN-06 now uses a dedicated stale-PDS family-name search anchor: `Smith`. Do not use this patient in other tests so the >24h stale trace state remains available for GEN-06.
-- The current automated GEN-06 path covers the blocked `>24 hours old` branch using the reserved `Smith` patient; the `<24 hours sent` branch is not exercised by this dedicated stale-PDS flow.
-- GEN-09 PDS trace fail scenarios currently use: NHS `9690938533` + DOB `09/09/2020`, and NHS `9690938541` + DOB `28/03/1960`.
-- GEN-09 is currently skipped in automation because the supplied NHS numbers are not presently s-marked in PDS, so the blocked sensitive-trace path cannot be exercised with current data.
-- GEN-13 through GEN-16 are currently tagged `@skip_requires_gp_provider_api_access` and intentionally skipped until API access is available.
-- GEN-17 warning assertions should call the text-highlight helper so evidence videos clearly show the asserted warning content.
-- MED-01, MED-03, MED-04 and MED-05 are currently tagged `@skip_requires_gp_provider_api_access` and intentionally skipped pending API access in this environment.
-- MED-02 and MED-07 currently run through the UI GP Record medication tabs and store a `medications_ui_mode` context flag in step definitions to bypass API-only response checks.
-- MED-02 assertions should dynamically extract top repeat-item medication text for highlighting (no hardcoded medicine names).
-- MED-07 assertions should exactly match both acute no-data guidance lines and highlight both lines for evidence videos.
-- INV-01, INV-02, INV-03, INV-04, INV-05, INV-07 and INV-09 are currently tagged `@skip_requires_gp_provider_api_access`.
-- INV-06 is implemented as UI mode on the Investigations tab and stores an `investigations_ui_mode` context flag to avoid API-only response checks.
-- INV-06 assertions should click the top investigation item and highlight a visible top-item text anchor (short title/headline) for evidence videos.
-- Videos of UI flows are saved under `test-results/videos-manual/`.
+- Keep this document updated as your consumer UI changes — selectors drift over time.
+- Use `playwright-cli` to verify selectors before each implementation session.
+- Record any consumer-specific quirks (e.g. confirmation overlays, loading states, conditional UI elements) that affect test reliability.
+- For assertions against visible UI text, always call your highlight helper so evidence videos clearly show what was validated.
+- Videos and test artefacts should be saved under `test-results/` with timestamped folder names.
