@@ -7,7 +7,7 @@ class HomePage(BasePage):
 
     def open_new_nms_episode(self) -> None:
         self.navigate()
-        self.page.get_by_role("link", name="NMS").click()
+        self.page.get_by_role("link", name="New Medicine Service").click()
         self.wait_for_load()
 
         start_btn = self.page.get_by_role("button", name="Start New NMS")
