@@ -1,0 +1,32 @@
+# Environment and secrets
+.env
+local.env
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+.venv/
+
+# Test output
+test-results/
+.pytest_cache/
+
+# OS
+.DS_Store
+
+# Playwright local artifacts
+.playwright-cli/
+.playwright/
+reference_implementation_of_feature_tests/.playwright-cli/
+reference_implementation_of_feature_tests/.playwright/
+
+# Agent-local metadata
+reference_implementation_of_feature_tests/.claude/
+
+# Runtime logs
+*.log
+
+# VS Code settings
+.vscode/
